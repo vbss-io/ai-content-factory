@@ -3,7 +3,7 @@ import { inject } from '@/infra/dependency-injection/Registry'
 import type { HttpServer } from '@/infra/http/HttpServer'
 import { HttpStatusCodes } from '@/infra/http/HttpStatusCodes'
 
-export class ChatController {
+export class StatusController {
   @inject('httpServer')
   private readonly httpServer!: HttpServer
 
