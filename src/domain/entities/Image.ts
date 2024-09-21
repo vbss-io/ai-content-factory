@@ -1,12 +1,14 @@
-import { type ImageCreate } from '@/domain/entities/dto/Image.dto'
+import { type ImageCreate, type ImageRestore } from '@/domain/entities/dto/Image.dto'
 
 export class Image {
-  id?: string | undefined
+  id?: string
+
   private constructor (
     id: string | undefined,
-    readonly prompt: string,
     readonly width: number,
     readonly height: number,
+    readonly seed: number,
+    readonly info: string,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -16,18 +18,20 @@ export class Image {
   static create (input: ImageCreate): Image {
     return new Image(
       undefined,
-      input.prompt,
       input.width,
-      input.height
+      input.height,
+      input.seed,
+      input.info
     )
   }
 
-  static restore (input: Image): Image {
+  static restore (input: ImageRestore): Image {
     return new Image(
       input.id,
-      input.prompt,
       input.width,
       input.height,
+      input.seed,
+      input.info,
       input.createdAt,
       input.updatedAt
     )
