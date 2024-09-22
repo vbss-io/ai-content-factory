@@ -1,10 +1,10 @@
 import { inject } from '@/infra/dependency-injection/Registry'
 import { type ImagineOutput } from '@/infra/gateways/dto/ImagineImageGateway.dto'
 import { type HttpClient } from '@/infra/http/HttpClient'
-import { type ImagineImageInput } from '@/infra/schemas/ImagineImageSchema'
+import { type RequestImageInput } from '@/infra/schemas/RequestImageSchema'
 
 export interface ImagineImageGateway {
-  imagine: (input: ImagineImageInput) => Promise<ImagineOutput>
+  imagine: (input: RequestImageInput) => Promise<ImagineOutput>
 }
 
 export class StableDiffusionGatewayHttp implements ImagineImageGateway {
@@ -14,7 +14,7 @@ export class StableDiffusionGatewayHttp implements ImagineImageGateway {
   @inject('httpClient')
   private readonly httpClient!: HttpClient
 
-  async imagine (input: ImagineImageInput): Promise<ImagineOutput> {
+  async imagine (input: RequestImageInput): Promise<ImagineOutput> {
     const response = await this.httpClient.post({
       url: `${this.url}/sdapi/v1/txt2img`,
       body: {
@@ -38,7 +38,7 @@ export class StableDiffusionGatewayHttp implements ImagineImageGateway {
       steps: info.steps,
       model: info.sd_model_name,
       origin: 'Stable Diffusion',
-      infotext: info.infotexts.join(' ')
+      info: info.infotexts.join(' ')
     }
   }
 }
