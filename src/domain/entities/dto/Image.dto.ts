@@ -3,6 +3,7 @@ export interface ImageCreate {
   height: number
   seed: number
   info: string
+  path: string
 }
 
 export type ImageRestore = ImageCreate & {

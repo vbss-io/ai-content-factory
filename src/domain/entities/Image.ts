@@ -9,6 +9,7 @@ export class Image {
     readonly height: number,
     readonly seed: number,
     readonly info: string,
+    readonly path: string,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -21,7 +22,8 @@ export class Image {
       input.width,
       input.height,
       input.seed,
-      input.info
+      input.info,
+      input.path
     )
   }
 
@@ -32,6 +34,7 @@ export class Image {
       input.height,
       input.seed,
       input.info,
+      input.path,
       input.createdAt,
       input.updatedAt
     )
