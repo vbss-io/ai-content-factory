@@ -13,7 +13,7 @@ export class RabbitMQAdapter implements Queue {
 
   async connect (): Promise<void> {
     try {
-      this.connection = await amqp.connect('amqp://localhost')
+      this.connection = await amqp.connect(String(process.env.QUEUE_URI))
     } catch {
       throw new QueueConnectionError()
     }
