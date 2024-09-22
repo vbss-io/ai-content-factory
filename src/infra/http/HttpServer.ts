@@ -1,4 +1,3 @@
-import { type DatabaseConnection } from '@/infra/database/DatabaseConnection'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { NotFoundError } from '@/infra/error/ErrorCatalog'
 import type { ErrorHandler } from '@/infra/error/ErrorHandler'
@@ -13,9 +12,6 @@ export interface HttpServer {
 export class ExpressAdapter implements HttpServer {
   @inject('errorHandler')
   private readonly errorHandler!: ErrorHandler
-
-  @inject('databaseConnection')
-  private readonly databaseConnection!: DatabaseConnection
 
   app: any
 
@@ -36,7 +32,6 @@ export class ExpressAdapter implements HttpServer {
   }
 
   async start (port?: number): Promise<any> {
-    await this.databaseConnection.connect()
     this.app.use('/*', () => {
       throw new NotFoundError()
     })
