@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const ImagineImageSchema = z.object({
+export const RequestImageSchema = z.object({
   prompt: z.string({
     required_error: 'prompt is required',
     invalid_type_error: 'prompt must be a string'
@@ -31,8 +31,7 @@ export const ImagineImageSchema = z.object({
   }).optional().default('Karras'),
   save_images: z.boolean({
     invalid_type_error: 'save_images must be a boolean'
-  }).optional().default(true),
-  config: z.any().optional()
+  }).optional().default(true)
 })
 
-export type ImagineImageInput = z.infer<typeof ImagineImageSchema>
+export type RequestImageInput = z.infer<typeof RequestImageSchema>
