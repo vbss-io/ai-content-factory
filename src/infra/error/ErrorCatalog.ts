@@ -7,6 +7,29 @@ export class DatabaseConnectionError extends CustomError {
   }
 }
 
+export class QueueConnectionError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.InternalServerError, 'Queue Connection Error')
+  }
+}
+
+export class BatchIdError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.InternalServerError, 'Cannot process batch without Id')
+  }
+}
+
+export class BatchNotFoundError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.InternalServerError, 'Batch Not found')
+  }
+}
+
+export class ImagineGatewayError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.InternalServerError, 'Error to Imagine')
+  }
+}
 export class NotFoundError extends CustomError {
   constructor () {
     super(HttpStatusCodes.NotFound, 'Not found')
