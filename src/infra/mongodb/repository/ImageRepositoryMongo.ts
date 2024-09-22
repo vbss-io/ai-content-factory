@@ -5,9 +5,11 @@ import { type ImageDocument, ImageModel } from '@/infra/mongodb/model/ImageModel
 export class ImageRepositoryMongo implements ImageRepository {
   async create (image: Image): Promise<Image> {
     const userDoc = new ImageModel({
-      prompt: image.prompt,
       width: image.width,
-      height: image.height
+      height: image.height,
+      seed: image.seed,
+      info: image.info,
+      path: image.path
     })
     const savedDoc = await userDoc.save()
     return this.toDomain(savedDoc)
@@ -17,9 +19,11 @@ export class ImageRepositoryMongo implements ImageRepository {
     const id = imageDoc._id as any
     return Image.restore({
       id: id.toString(),
-      prompt: imageDoc.prompt,
       width: imageDoc.width,
       height: imageDoc.height,
+      seed: imageDoc.seed,
+      info: imageDoc.info,
+      path: imageDoc.path,
       createdAt: imageDoc.createdAt,
       updatedAt: imageDoc.updatedAt
     })
