@@ -1,6 +1,18 @@
 import { CustomError } from '@/infra/error/CustomError'
 import { HttpStatusCodes } from '@/infra/http/HttpStatusCodes'
 
+export class NotFoundError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.NotFound, 'Not Found')
+  }
+}
+
+export class NotImplemented extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.NotFound, 'Not Implemented')
+  }
+}
+
 export class DatabaseConnectionError extends CustomError {
   constructor () {
     super(HttpStatusCodes.InternalServerError, 'Database Connection Error')
@@ -21,7 +33,7 @@ export class BatchIdError extends CustomError {
 
 export class BatchNotFoundError extends CustomError {
   constructor () {
-    super(HttpStatusCodes.InternalServerError, 'Batch Not found')
+    super(HttpStatusCodes.NotFound, 'Batch Not found')
   }
 }
 
@@ -30,8 +42,57 @@ export class ImagineGatewayError extends CustomError {
     super(HttpStatusCodes.InternalServerError, 'Error to Imagine')
   }
 }
-export class NotFoundError extends CustomError {
+
+export class GatewayNotImplemented extends CustomError {
   constructor () {
-    super(HttpStatusCodes.NotFound, 'Not found')
+    super(HttpStatusCodes.NotFound, 'Gateway Not Implemented')
+  }
+}
+
+export class ProcessImageError extends CustomError {
+  constructor (message: string) {
+    super(HttpStatusCodes.BadRequest, message)
+  }
+}
+
+export class ImageNotFoundError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.NotFound, 'Image Not found')
+  }
+}
+
+export class DifferentPasswordAndConfirmation extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'password and confirmPassword must be equals')
+  }
+}
+
+export class UserAlreadyExist extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'username already exists')
+  }
+}
+
+export class UserAuthenticationError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'wrong username or password')
+  }
+}
+
+export class MissingAuthorizationToken extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.Unauthorized, 'Missing Authorization Token')
+  }
+}
+
+export class NotAllowedError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.Unauthorized, 'Not Allowed Error')
+  }
+}
+
+export class AuthError extends CustomError {
+  constructor (message: string) {
+    super(HttpStatusCodes.Unauthorized, message)
   }
 }
