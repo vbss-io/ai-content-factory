@@ -14,22 +14,20 @@ export class RequestImage {
   private readonly queue!: Queue
 
   async execute (input: RequestImageInput): Promise<RequestImageOutput> {
+    const inputConfiguration = { ...input, sampler: input.sampler_index, size: input.batch_size, negativePrompt: input.negative_prompt }
+    const batchConfiguration = Batch.getConfigurations(input.gateway, inputConfiguration)
     const batch = Batch.create({
       prompt: input.prompt,
-      sampler: input.sampler_index,
-      scheduler: input.scheduler,
-      steps: input.steps,
       images: [],
-      size: input.batch_size,
-      negativePrompt: input.negative_prompt
+      ...batchConfiguration
     })
     const repositoryBatch = await this.batchRepository.create(batch)
     repositoryBatch.register('imageRequested', async (domainEvent: DomainEvent) => {
       await this.queue.publish(domainEvent.eventName, domainEvent.data)
     })
-    await repositoryBatch.request({ width: input.width, height: input.height })
+    await repositoryBatch.request({ gateway: input.gateway, dimensions: { width: input.width, height: input.height } })
     return {
-      batchId: repositoryBatch.id as string,
+      batchId: repositoryBatch.id,
       batchStatus: batch.status
     }
   }
