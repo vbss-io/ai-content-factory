@@ -1,3 +1,4 @@
+import { type AuthHandler } from '@/infra/auth/AuthHandler'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { NotFoundError } from '@/infra/error/ErrorCatalog'
 import type { ErrorHandler } from '@/infra/error/ErrorHandler'
@@ -13,12 +14,16 @@ export class ExpressAdapter implements HttpServer {
   @inject('errorHandler')
   private readonly errorHandler!: ErrorHandler
 
+  @inject('authHandler')
+  private readonly authHandler!: AuthHandler
+
   app: any
 
   constructor () {
     this.app = express()
     this.app.use(cors())
     this.app.use(express.json())
+    this.app.use(this.authHandler.handle.bind(this.authHandler))
   }
 
   register (method: string, url: string, callback: any, code = 200): void {
