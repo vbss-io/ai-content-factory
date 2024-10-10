@@ -1,6 +1,10 @@
 import { z } from 'zod'
 
 export const RequestImageSchema = z.object({
+  gateway: z.enum(['automatic1111', 'goApiMidjourney'], {
+    required_error: 'gateway is required',
+    message: 'gateway must be automatic1111 or goApiMidjourney'
+  }),
   prompt: z.string({
     required_error: 'prompt is required',
     invalid_type_error: 'prompt must be a string'
@@ -16,7 +20,7 @@ export const RequestImageSchema = z.object({
   }).optional().default(1),
   steps: z.number({
     invalid_type_error: 'steps must be a number'
-  }).optional().default(5),
+  }).optional().default(20),
   width: z.number({
     invalid_type_error: 'width must be a number'
   }).optional().default(512),
@@ -28,10 +32,7 @@ export const RequestImageSchema = z.object({
   }).optional().default('DPM++ 2M'),
   scheduler: z.string({
     invalid_type_error: 'scheduler must be a string'
-  }).optional().default('Karras'),
-  save_images: z.boolean({
-    invalid_type_error: 'save_images must be a boolean'
-  }).optional().default(true)
+  }).optional().default('Karras')
 })
 
 export type RequestImageInput = z.infer<typeof RequestImageSchema>
