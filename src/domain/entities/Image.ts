@@ -1,15 +1,17 @@
 import { type ImageCreate, type ImageRestore } from '@/domain/entities/dto/Image.dto'
+import { AspectRatio } from './vo/AspectRatio'
 
 export class Image {
-  id?: string
+  id: string
 
   private constructor (
-    id: string | undefined,
+    id: string,
     readonly width: number,
     readonly height: number,
+    readonly aspectRatio: string,
     readonly seed: number,
-    readonly info: string,
     readonly path: string,
+    readonly batchId: string,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -17,13 +19,16 @@ export class Image {
   }
 
   static create (input: ImageCreate): Image {
+    const aspectRatio = new AspectRatio(input.width, input.height)
+
     return new Image(
-      undefined,
+      '',
       input.width,
       input.height,
+      aspectRatio.getValue(),
       input.seed,
-      input.info,
-      input.path
+      input.path,
+      input.batchId
     )
   }
 
@@ -32,9 +37,10 @@ export class Image {
       input.id,
       input.width,
       input.height,
+      input.aspectRatio,
       input.seed,
-      input.info,
       input.path,
+      input.batchId,
       input.createdAt,
       input.updatedAt
     )
