@@ -1,11 +1,14 @@
 import { ImageController } from '@/application/controllers/ImageController'
+import { DeleteImageById } from '@/application/usecases/DeleteImageById'
+import { GetImageById } from '@/application/usecases/GetImageById'
+import { GetImages } from '@/application/usecases/GetImages'
 import { ProcessImage } from '@/application/usecases/ProcessImage'
 import { RequestImage } from '@/application/usecases/RequestImage'
 import { inject, Registry } from '@/infra/dependency-injection/Registry'
-import { StableDiffusionGatewayHttp } from '@/infra/gateways/ImagineImageGateway'
-import { BatchRepositoryMongo } from '@/infra/mongodb/repository/BatchRepositoryMongo'
 import { ImageRepositoryMongo } from '@/infra/mongodb/repository/ImageRepositoryMongo'
 import { type Queue } from '@/infra/queue/Queue'
+import { ByIdSchema } from '@/infra/schemas/ByIdSchema'
+import { GetAllSchema } from '@/infra/schemas/GetAllSchema'
 import { RequestImageSchema } from '@/infra/schemas/RequestImageSchema'
 import { ZodAdapter } from '@/infra/validate/InputValidate'
 
@@ -16,16 +19,22 @@ export class ImageModule {
   constructor () {
     void this.queue.register('imageRequested', 'imageRequested.processImage')
     const requestImageValidate = new ZodAdapter(RequestImageSchema)
+    const byIdValidate = new ZodAdapter(ByIdSchema)
+    const getAllValidate = new ZodAdapter(GetAllSchema)
     Registry.getInstance().provide('requestImageValidate', requestImageValidate)
-    const imagineImageGateway = new StableDiffusionGatewayHttp()
-    Registry.getInstance().provide('imagineImageGateway', imagineImageGateway)
+    Registry.getInstance().provide('byIdValidate', byIdValidate)
+    Registry.getInstance().provide('getAllValidate', getAllValidate)
     const imageRepository = new ImageRepositoryMongo()
-    const batchRepository = new BatchRepositoryMongo()
     Registry.getInstance().provide('imageRepository', imageRepository)
-    Registry.getInstance().provide('batchRepository', batchRepository)
     const requestImage = new RequestImage()
+    const getImageById = new GetImageById()
+    const deleteImageById = new DeleteImageById()
+    const getImages = new GetImages()
     const processImage = new ProcessImage()
     Registry.getInstance().provide('requestImage', requestImage)
+    Registry.getInstance().provide('getImageById', getImageById)
+    Registry.getInstance().provide('deleteImageById', deleteImageById)
+    Registry.getInstance().provide('getImages', getImages)
     Registry.getInstance().provide('processImage', processImage)
     new ImageController()
   }
