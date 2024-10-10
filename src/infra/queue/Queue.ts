@@ -38,8 +38,12 @@ export class RabbitMQAdapter implements Queue {
         const input = JSON.parse(msg.content.toString() as string)
         await callback(input)
         await channel.ack(msg)
-      } catch {
-        channel.reject(msg, true)
+      } catch (error: any) {
+        if (error?.message?.includes('Midjourney')) {
+          await channel.ack(msg)
+        } else {
+          await channel.reject(msg, true)
+        }
       }
     })
   }
