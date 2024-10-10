@@ -14,7 +14,6 @@ export class GetImageById {
 
   async execute ({ id }: GetImageByIdInput): Promise<GetImageByIdOutput> {
     const image = await this.imageRepository.getImageById(id)
-    console.log(image)
     if (!image) throw new ImageNotFoundError()
     const batch = await this.batchRepository.getBatchById(image.batchId) as Batch
     return {
