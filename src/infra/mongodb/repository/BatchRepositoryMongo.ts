@@ -25,14 +25,20 @@ export class BatchRepositoryMongo implements BatchRepository {
     await BatchModel.findByIdAndUpdate(id, { ...rest }, { new: true }).exec()
   }
 
-  async findById (id: string): Promise<Batch | undefined> {
+  async deleteById (id: string): Promise<void> {
+    await BatchModel.findOneAndDelete({ _id: id })
+  }
+
+  async getBatchById (id: string): Promise<Batch | undefined> {
     const batchDoc = await BatchModel.findById(id)
     if (!batchDoc) return
     return this.toDomain(batchDoc)
   }
 
-  async findAll (): Promise<Batch[]> {
-    const batchDocs = await BatchModel.find()
+  async getBatches (page: number, searchMask?: string): Promise<Batch[]> {
+    const pageSize = 25
+    const offset = (page - 1) * pageSize
+    const batchDocs = await BatchModel.find().skip(offset).limit(pageSize)
     return batchDocs.map((batchDoc) => {
       return this.toDomain(batchDoc)
     })
@@ -52,6 +58,7 @@ export class BatchRepositoryMongo implements BatchRepository {
       images: batchDoc.images,
       origin: batchDoc.origin,
       size: batchDoc.size,
+      errorMessage: batchDoc.errorMessage,
       createdAt: batchDoc.createdAt,
       updatedAt: batchDoc.updatedAt
     })

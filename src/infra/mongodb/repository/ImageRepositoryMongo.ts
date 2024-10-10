@@ -7,12 +7,37 @@ export class ImageRepositoryMongo implements ImageRepository {
     const userDoc = new ImageModel({
       width: image.width,
       height: image.height,
+      aspectRatio: image.aspectRatio,
       seed: image.seed,
-      info: image.info,
-      path: image.path
+      path: image.path,
+      batchId: image.batchId
     })
     const savedDoc = await userDoc.save()
     return this.toDomain(savedDoc)
+  }
+
+  async update (image: Image): Promise<void> {
+    const { id, ...rest } = image
+    await ImageModel.findByIdAndUpdate(id, { ...rest }, { new: true }).exec()
+  }
+
+  async deleteById (id: string): Promise<void> {
+    await ImageModel.findOneAndDelete({ _id: id })
+  }
+
+  async getImageById (id: string): Promise<Image | undefined> {
+    const imageDoc = await ImageModel.findById(id)
+    if (!imageDoc) return
+    return this.toDomain(imageDoc)
+  }
+
+  async getImages (page: number, searchMask?: string): Promise<Image[]> {
+    const pageSize = 25
+    const offset = (page - 1) * pageSize
+    const imageDocs = await ImageModel.find().skip(offset).limit(pageSize)
+    return imageDocs.map((imageDoc) => {
+      return this.toDomain(imageDoc)
+    })
   }
 
   private toDomain (imageDoc: ImageDocument): Image {
@@ -21,9 +46,10 @@ export class ImageRepositoryMongo implements ImageRepository {
       id: id.toString(),
       width: imageDoc.width,
       height: imageDoc.height,
+      aspectRatio: imageDoc.aspectRatio,
       seed: imageDoc.seed,
-      info: imageDoc.info,
       path: imageDoc.path,
+      batchId: imageDoc.batchId,
       createdAt: imageDoc.createdAt,
       updatedAt: imageDoc.updatedAt
     })
