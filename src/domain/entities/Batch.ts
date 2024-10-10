@@ -1,4 +1,4 @@
-import { type BatchCreate, type BatchProcessUpdate, type BatchRestore } from '@/domain/entities/dto/Batch.dto'
+import { type BatchConfiguration, type BatchCreate, type BatchProcessUpdate, type BatchRestore } from '@/domain/entities/dto/Batch.dto'
 import { type ImageRequestedData, ImageRequested } from '@/domain/events/ImageRequested'
 import { BatchIdError } from '@/infra/error/ErrorCatalog'
 import { Observable } from '@/infra/events/Observer'
@@ -103,5 +103,40 @@ export class Batch extends Observable {
   removeImage (imageId: string): void {
     const newImages = this.images.filter((id) => id !== imageId)
     this.images = newImages
+  }
+
+  static isAutomatic1111 (gateway: string): boolean {
+    return gateway === 'automatic1111'
+  }
+
+  static isGoApiMidjourney (gateway: string): boolean {
+    return gateway === 'goApiMidjourney'
+  }
+
+  static getConfigurations (gateway: string, input: BatchConfiguration): BatchConfiguration {
+    const negativePrompt = input.negativePrompt ?? 'none'
+    const baseConfiguration = {
+      sampler: 'none',
+      scheduler: 'none',
+      steps: 0,
+      size: 0,
+      negativePrompt: 'none'
+    }
+    if (this.isAutomatic1111(gateway)) {
+      return {
+        sampler: input.sampler,
+        scheduler: input.scheduler,
+        steps: input.steps,
+        size: input.size,
+        negativePrompt
+      }
+    }
+    if (this.isGoApiMidjourney(gateway)) {
+      return {
+        ...baseConfiguration,
+        size: 4
+      }
+    }
+    return baseConfiguration
   }
 }
