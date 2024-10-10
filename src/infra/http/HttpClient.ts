@@ -8,6 +8,7 @@ export interface HttpClientGetInput {
   url: string
   params?: any
   headers?: any
+  responseType?: string
 }
 
 export interface HttpClientPostInput {
@@ -18,7 +19,7 @@ export interface HttpClientPostInput {
 }
 
 export interface HttpClient {
-  get: ({ url, params, headers }: HttpClientGetInput) => Promise<any>
+  get: ({ url, params, headers, responseType }: HttpClientGetInput) => Promise<any>
   post: ({ url, body, params, headers }: HttpClientPostInput) => Promise<any>
   put: ({ url, body, params, headers }: HttpClientPostInput) => Promise<any>
   patch: ({ url, body, params, headers }: HttpClientPostInput) => Promise<any>
@@ -26,8 +27,10 @@ export interface HttpClient {
 }
 
 export class AxiosAdapter implements HttpClient {
-  async get ({ url, params = {}, headers = {} }: HttpClientGetInput): Promise<any> {
-    const response = await axios.get(url, { params, headers })
+  async get ({ url, params = {}, headers = {}, responseType }: HttpClientGetInput): Promise<any> {
+    const options = { params, headers }
+    if (responseType) Object.assign(options, { responseType })
+    const response = await axios.get(url, options)
     return response.data
   }
 
