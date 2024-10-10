@@ -4,15 +4,17 @@ export interface BatchCreate {
   sampler: string
   scheduler: string
   steps: number
-  modelName?: string
   images: string[]
-  origin?: string
   size: number
 }
 
 export type BatchRestore = BatchCreate & {
   id: string
   status: string
+  origin: string
+  modelName: string
+  negativePrompt: string
+  errorMessage: string
   createdAt: Date
   updatedAt: Date
 }
