@@ -1,6 +1,7 @@
 import { type DeleteImageById } from '@/application/usecases/DeleteImageById'
 import { type GetImageById } from '@/application/usecases/GetImageById'
 import { type GetImages } from '@/application/usecases/GetImages'
+import { type GetRandomLandscapeImage } from '@/application/usecases/GetRandomLandscapeImage'
 import { type ProcessImage } from '@/application/usecases/ProcessImage'
 import { type RequestImage } from '@/application/usecases/RequestImage'
 import { type ImageRequestedData } from '@/domain/events/ImageRequested'
@@ -41,6 +42,9 @@ export class ImageController {
   @inject('getImages')
   private readonly getImages!: GetImages
 
+  @inject('getRandomLandscapeImage')
+  private readonly getRandomLandscapeImage!: GetRandomLandscapeImage
+
   @inject('processImage')
   private readonly processImage!: ProcessImage
 
@@ -64,6 +68,10 @@ export class ImageController {
       const page = Number(params?.page ?? 1)
       const inputParsed = this.getAllValidate.validate({ ...params, page })
       return await this.getImages.execute(inputParsed)
+    }, HttpStatusCodes.OK)
+
+    this.httpServer.register('get', '/image/banner', async () => {
+      return await this.getRandomLandscapeImage.execute()
     }, HttpStatusCodes.OK)
 
     void this.queue.consume('imageRequested.processImage', async (input: ImageRequestedData) => {
