@@ -1,8 +1,8 @@
 {
-  "name": "vbss-video-ai",
+  "name": "ai-content-factory",
   "version": "1.0.0",
   "main": "./build/server",
-  "repository": "git@github.com:vitorbss12/vbss-video-ai.git",
+  "repository": "git@github.com:vbss-io/ai-content-factory.git",
   "author": "Vitor Bastos <vbss-services@outlook.com>",
   "license": "MIT",
   "scripts": {
