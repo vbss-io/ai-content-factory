@@ -6,4 +6,5 @@ export interface ImageRepository {
   deleteById: (id: string) => Promise<void>
   getImageById: (id: string) => Promise<Image | undefined>
   getImages: (page: number, searchMask?: string) => Promise<Image[]>
+  getRandomLandscapeImage: () => Promise<Image | undefined>
 }
