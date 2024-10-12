@@ -2,6 +2,7 @@ import { ImageController } from '@/application/controllers/ImageController'
 import { DeleteImageById } from '@/application/usecases/DeleteImageById'
 import { GetImageById } from '@/application/usecases/GetImageById'
 import { GetImages } from '@/application/usecases/GetImages'
+import { GetRandomLandscapeImage } from '@/application/usecases/GetRandomLandscapeImage'
 import { ProcessImage } from '@/application/usecases/ProcessImage'
 import { RequestImage } from '@/application/usecases/RequestImage'
 import { inject, Registry } from '@/infra/dependency-injection/Registry'
@@ -30,11 +31,13 @@ export class ImageModule {
     const getImageById = new GetImageById()
     const deleteImageById = new DeleteImageById()
     const getImages = new GetImages()
+    const getRandomLandscapeImage = new GetRandomLandscapeImage()
     const processImage = new ProcessImage()
     Registry.getInstance().provide('requestImage', requestImage)
     Registry.getInstance().provide('getImageById', getImageById)
     Registry.getInstance().provide('deleteImageById', deleteImageById)
     Registry.getInstance().provide('getImages', getImages)
+    Registry.getInstance().provide('getRandomLandscapeImage', getRandomLandscapeImage)
     Registry.getInstance().provide('processImage', processImage)
     new ImageController()
   }
