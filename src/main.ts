@@ -10,7 +10,7 @@ import { Registry } from '@/infra/dependency-injection/Registry'
 import { ExpressErrorHandler } from '@/infra/error/ErrorHandler'
 import { AxiosAdapter } from '@/infra/http/HttpClient'
 import { ExpressAdapter, type HttpServer } from '@/infra/http/HttpServer'
-import { RabbitMQAdapter } from '@/infra/queue/Queue'
+import { InMemoryQueueAdapter } from '@/infra/queue/Queue'
 import { AzureStorageAdapter } from '@/infra/storage/ImageStorage'
 import { ExpressAuthHandler } from './infra/auth/AuthHandler'
 import { JWTAdapter } from './infra/auth/TokenAuthentication'
@@ -28,7 +28,7 @@ async function main (): Promise<any> {
   httpServer = new ExpressAdapter()
   const httpClient = new AxiosAdapter()
   const imageStorage = new AzureStorageAdapter()
-  const queue = new RabbitMQAdapter()
+  const queue = new InMemoryQueueAdapter()
   await queue.connect()
   const databaseConnection = new MongooseAdapter(String(process.env.MONGO_URI))
   await databaseConnection.connect()
