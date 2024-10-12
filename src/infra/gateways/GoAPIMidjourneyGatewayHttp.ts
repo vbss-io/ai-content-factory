@@ -137,7 +137,7 @@ export class GoAPIMidjourneyGatewayHttp implements ImagineImageGateway {
       scheduler: 'none',
       steps: 0,
       model: 'Midjourney',
-      origin: 'Midjourney',
+      origin: 'GoApi.ai',
       taskId: 'any'
     }
   }

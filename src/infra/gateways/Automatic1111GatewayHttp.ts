@@ -38,7 +38,7 @@ export class Automatic1111GatewayHttp implements ImagineImageGateway {
       scheduler: response.parameters.scheduler,
       steps: info.steps,
       model: info.sd_model_name,
-      origin: 'Stable Diffusion',
+      origin: 'Automatic1111',
       taskId: 'none'
     }
   }
