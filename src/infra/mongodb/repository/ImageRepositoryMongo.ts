@@ -40,6 +40,15 @@ export class ImageRepositoryMongo implements ImageRepository {
     })
   }
 
+  async getRandomLandscapeImage (): Promise<Image | undefined> {
+    const [imageDoc] = await ImageModel.aggregate([
+      { $match: { $expr: { $gt: ['$width', '$height'] } } },
+      { $sample: { size: 1 } }
+    ])
+    if (!imageDoc) return
+    return this.toDomain(imageDoc as ImageDocument)
+  }
+
   private toDomain (imageDoc: ImageDocument): Image {
     const id = imageDoc._id as any
     return Image.restore({
