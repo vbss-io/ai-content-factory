@@ -1,6 +1,6 @@
-import { type BatchConfiguration, type BatchCreate, type BatchProcessUpdate, type BatchRestore } from '@/domain/entities/dto/Batch.dto'
+import { type BatchConfigurationInput, type BatchConfigurationOutput, type BatchCreate, type BatchProcessUpdate, type BatchRestore } from '@/domain/entities/dto/Batch.dto'
 import { type ImageRequestedData, ImageRequested } from '@/domain/events/ImageRequested'
-import { BatchIdError } from '@/infra/error/ErrorCatalog'
+import { BatchIdError, DalleDimensionsError } from '@/infra/error/ErrorCatalog'
 import { Observable } from '@/infra/events/Observer'
 
 export class Batch extends Observable {
@@ -113,7 +113,19 @@ export class Batch extends Observable {
     return gateway === 'goApiMidjourney'
   }
 
-  static getConfigurations (gateway: string, input: BatchConfiguration): BatchConfiguration {
+  static isOpenAiDalle (gateway: string): boolean {
+    return gateway === 'openAiDalle3'
+  }
+
+  static dalleDimensionsCheck (width: number, height: number): void {
+    const allowedDimensions = ['1024x1024', '1024x1792', '1792x1024']
+    const dimension = `${width}x${height}`
+    if (!allowedDimensions.includes(dimension)) {
+      throw new DalleDimensionsError()
+    }
+  }
+
+  static getConfigurations (gateway: string, input: BatchConfigurationInput): BatchConfigurationOutput {
     const negativePrompt = input.negativePrompt ?? 'none'
     const baseConfiguration = {
       sampler: 'none',
@@ -135,6 +147,13 @@ export class Batch extends Observable {
       return {
         ...baseConfiguration,
         size: 4
+      }
+    }
+    if (this.isOpenAiDalle(gateway)) {
+      this.dalleDimensionsCheck(input.width, input.height)
+      return {
+        ...baseConfiguration,
+        size: input.size
       }
     }
     return baseConfiguration
