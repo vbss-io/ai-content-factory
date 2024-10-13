@@ -24,7 +24,17 @@ export interface BatchProcessUpdate {
   modelName: string
 }
 
-export interface BatchConfiguration {
+export interface BatchConfigurationInput {
+  sampler: string
+  scheduler: string
+  steps: number
+  size: number
+  negativePrompt?: string
+  width: number
+  height: number
+}
+
+export interface BatchConfigurationOutput {
   sampler: string
   scheduler: string
   steps: number
