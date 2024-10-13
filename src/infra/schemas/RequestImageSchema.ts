@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
 export const RequestImageSchema = z.object({
-  gateway: z.enum(['automatic1111', 'goApiMidjourney'], {
+  gateway: z.enum(['automatic1111', 'goApiMidjourney', 'openAiDalle3'], {
     required_error: 'gateway is required',
-    message: 'gateway must be automatic1111 or goApiMidjourney'
+    message: 'gateway must be automatic1111, goApiMidjourney or openAiDalle3'
   }),
   prompt: z.string({
     required_error: 'prompt is required',
