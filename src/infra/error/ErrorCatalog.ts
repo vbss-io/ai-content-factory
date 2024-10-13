@@ -96,3 +96,9 @@ export class AuthError extends CustomError {
     super(HttpStatusCodes.Unauthorized, message)
   }
 }
+
+export class DalleDimensionsError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'Dalle dimension allowed: 1024x1024, 1024x1792 or 1792x1024')
+  }
+}
