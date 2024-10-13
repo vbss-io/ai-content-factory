@@ -1,5 +1,5 @@
-import { type LogIn } from '@/application/usecases/LogIn'
-import { type SignIn } from '@/application/usecases/SignIn'
+import { type LogIn } from '@/application/usecases/User/LogIn'
+import { type SignIn } from '@/application/usecases/User/SignIn'
 import { inject } from '@/infra/dependency-injection/Registry'
 import type { HttpServer } from '@/infra/http/HttpServer'
 import { HttpStatusCodes } from '@/infra/http/HttpStatusCodes'

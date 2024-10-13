@@ -1,4 +1,4 @@
-import { type ProcessImageInput } from '@/application/usecases/dto/ProcessImage.dto'
+import { type ProcessImageInput } from '@/application/usecases/Image/dto/ProcessImage.dto'
 import { Image } from '@/domain/entities/Image'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { type ImageRepository } from '@/domain/repository/ImageRepository'

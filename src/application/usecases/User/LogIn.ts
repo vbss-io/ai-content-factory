@@ -1,4 +1,4 @@
-import { type LogInInput, type LogInOutput } from '@/application/usecases/dto/LogIn.dto'
+import { type LogInInput, type LogInOutput } from '@/application/usecases/User/dto/LogIn.dto'
 import { type UserRepository } from '@/domain/repository/UserRepository'
 import { type PasswordAuthentication } from '@/infra/auth/PasswordAuthentication'
 import { type TokenAuthentication } from '@/infra/auth/TokenAuthentication'
@@ -21,6 +21,10 @@ export class LogIn {
     const passwordMatch = await this.passwordAuthentication.compare(password, user.hash)
     if (!passwordMatch) throw new UserAuthenticationError()
     const token = this.tokenAuthentication.encode({ id: user.id, username: user.username, role: user.role }, process.env.SECRET_KEY as string)
-    return { token }
+    return {
+      token,
+      username: user.username,
+      role: user.role
+    }
   }
 }

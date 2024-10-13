@@ -5,4 +5,6 @@ export interface LogInInput {
 
 export interface LogInOutput {
   token: string
+  username: string
+  role: string
 }

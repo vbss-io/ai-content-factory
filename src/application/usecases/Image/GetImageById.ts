@@ -1,4 +1,4 @@
-import { type GetImageByIdInput, type GetImageByIdOutput } from '@/application/usecases/dto/GetImageById.dto'
+import { type GetImageByIdInput, type GetImageByIdOutput } from '@/application/usecases/Image/dto/GetImageById.dto'
 import { type Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { type ImageRepository } from '@/domain/repository/ImageRepository'

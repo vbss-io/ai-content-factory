@@ -1,5 +1,5 @@
 import { StatusController } from '@/application/controllers/StatusController'
-import { CheckStatus } from '@/application/usecases/CheckStatus'
+import { CheckStatus } from '@/application/usecases/Status/CheckStatus'
 import { Registry } from '@/infra/dependency-injection/Registry'
 
 export class StatusModule {

@@ -1,4 +1,4 @@
-import { type SignInInput, type SignInOutput } from '@/application/usecases/dto/SignIn.dto'
+import { type SignInInput, type SignInOutput } from '@/application/usecases/User/dto/SignIn.dto'
 import { User } from '@/domain/entities/User'
 import { type UserRepository } from '@/domain/repository/UserRepository'
 import { type PasswordAuthentication } from '@/infra/auth/PasswordAuthentication'
@@ -24,6 +24,10 @@ export class SignIn {
     const user = User.create({ username, hash, role: 'user' })
     const createdUser = await this.userRepository.create(user)
     const token = this.tokenAuthentication.encode({ id: createdUser.id, username: createdUser.username, role: createdUser.role }, process.env.SECRET_KEY as string)
-    return { token }
+    return {
+      token,
+      username: user.username,
+      role: user.role
+    }
   }
 }

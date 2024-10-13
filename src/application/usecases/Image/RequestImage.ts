@@ -1,4 +1,4 @@
-import { type RequestImageOutput } from '@/application/usecases/dto/RequestImage.dto'
+import { type RequestImageOutput } from '@/application/usecases/Image/dto/RequestImage.dto'
 import { Batch } from '@/domain/entities/Batch'
 import { type DomainEvent } from '@/domain/events/DomainEvent'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'

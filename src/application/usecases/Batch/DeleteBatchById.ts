@@ -1,10 +1,10 @@
+import { type DeleteBatchByIdInput } from '@/application/usecases/Batch/dto/DeleteBatchById.dto'
 import { type Image } from '@/domain/entities/Image'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { type ImageRepository } from '@/domain/repository/ImageRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { BatchNotFoundError } from '@/infra/error/ErrorCatalog'
 import { type ImageStorage } from '@/infra/storage/ImageStorage'
-import { type DeleteBatchByIdInput } from './dto/DeleteBatchById.dto'
 
 export class DeleteBatchById {
   @inject('imageRepository')

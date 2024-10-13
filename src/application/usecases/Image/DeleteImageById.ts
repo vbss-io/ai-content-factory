@@ -1,4 +1,4 @@
-import { type DeleteImageByIdInput } from '@/application/usecases/dto/DeleteImageById.dto'
+import { type DeleteImageByIdInput } from '@/application/usecases/Image/dto/DeleteImageById.dto'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { type ImageRepository } from '@/domain/repository/ImageRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
