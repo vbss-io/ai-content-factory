@@ -102,3 +102,9 @@ export class DalleDimensionsError extends CustomError {
     super(HttpStatusCodes.BadRequest, 'Dalle dimension allowed: 1024x1024, 1024x1792 or 1792x1024')
   }
 }
+
+export class PromptGenerationError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'Error to generate prompt')
+  }
+}
