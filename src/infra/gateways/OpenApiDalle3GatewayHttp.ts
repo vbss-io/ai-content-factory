@@ -13,7 +13,6 @@ export class OpenAIDalle3GatewayHttp implements ImagineImageGateway {
   private readonly httpClient!: HttpClient
 
   async imagine (input: ImagineInput): Promise<ImagineOutput> {
-    console.log('entrei')
     const dimensions = `${input.width}x${input.height}`
     const request = await this.httpClient.post({
       url: `${this.url}/v1/images/generations`,

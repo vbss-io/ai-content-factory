@@ -10,7 +10,6 @@ export class CronAdapter implements Cron {
   cronJob: CronJob | undefined
 
   async start (): Promise<void> {
-    console.log('cron starting')
     const cron = CronJob.from({
       cronTime: '0 */12 * * *',
       // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -26,7 +25,7 @@ export class CronAdapter implements Cron {
     try {
       await automaticRequestImage.execute()
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 }
