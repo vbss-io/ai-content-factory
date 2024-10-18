@@ -8,6 +8,7 @@ export interface ImagineInput {
   scheduler: string
   negative_prompt?: string
   seed?: number
+  isAutomaticCall?: boolean
 }
 
 export interface ImagineOutput {
