@@ -73,9 +73,9 @@ export class Batch extends Observable {
     )
   }
 
-  async request ({ gateway, dimensions }: Omit<ImageRequestedData, 'batchId'>): Promise<void> {
+  async request ({ gateway, dimensions, isAutomatic }: Omit<ImageRequestedData, 'batchId'>): Promise<void> {
     if (!this.id) throw new BatchIdError()
-    await this.notify(new ImageRequested({ batchId: this.id, gateway, dimensions }))
+    await this.notify(new ImageRequested({ batchId: this.id, gateway, isAutomatic, dimensions }))
   }
 
   process (): void {
