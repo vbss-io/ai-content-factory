@@ -5,7 +5,7 @@ import { inject } from '@/infra/dependency-injection/Registry'
 import { type HttpClient } from '@/infra/http/HttpClient'
 
 export class GoAPIMidjourneyGatewayHttp implements ImagineImageGateway {
-  protected DELAY = 60000
+  protected DELAY = 120000
   protected MAX_TRIES = 10
   protected url = process.env.MIDJOURNEY_URL
   protected baseConfig = {
@@ -78,7 +78,8 @@ export class GoAPIMidjourneyGatewayHttp implements ImagineImageGateway {
     const imageIndexes = ['1', '2', '3', '4']
     const images = []
     for (const imageIndex of imageIndexes) {
-      if (imageIndex === '1') {
+      const processAll = input.isAutomaticCall ? true : imageIndex === '1'
+      if (processAll) {
         const upscaleRequest = await this.httpClient.post({
           url: `${this.url}/mj/v2/upscale`,
           body: {
