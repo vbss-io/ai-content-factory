@@ -1,4 +1,5 @@
 import { type AuthHandler } from '@/infra/auth/AuthHandler'
+import { type Cron } from '@/infra/cron/Cron'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { NotFoundError } from '@/infra/error/ErrorCatalog'
 import type { ErrorHandler } from '@/infra/error/ErrorHandler'
@@ -16,6 +17,9 @@ export class ExpressAdapter implements HttpServer {
 
   @inject('authHandler')
   private readonly authHandler!: AuthHandler
+
+  @inject('cron')
+  private readonly cron!: Cron
 
   app: any
 
@@ -41,6 +45,7 @@ export class ExpressAdapter implements HttpServer {
       throw new NotFoundError()
     })
     this.app.use(this.errorHandler.handle)
+    await this.cron.start()
     return this.app.listen(port)
   }
 }
