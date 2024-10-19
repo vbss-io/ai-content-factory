@@ -1,6 +1,7 @@
 import { type DeleteBatchById } from '@/application/usecases/Batch/DeleteBatchById'
 import { type GetBatchById } from '@/application/usecases/Batch/GetBatchById'
 import { type GetBatches } from '@/application/usecases/Batch/GetBatches'
+import { type GetBatchFilters } from '@/application/usecases/Batch/GetBatchFilters'
 import { inject } from '@/infra/dependency-injection/Registry'
 import type { HttpServer } from '@/infra/http/HttpServer'
 import { HttpStatusCodes } from '@/infra/http/HttpStatusCodes'
@@ -27,6 +28,9 @@ export class BatchController {
   @inject('getBatches')
   private readonly getBatches!: GetBatches
 
+  @inject('getBatchFilters')
+  private readonly getBatchFilters!: GetBatchFilters
+
   constructor () {
     this.httpServer.register('get', '/batch', async (params: ByIdInput) => {
       const inputParsed = this.byIdValidate.validate(params)
@@ -42,6 +46,10 @@ export class BatchController {
       const page = Number(params?.page ?? 1)
       const inputParsed = this.getAllValidate.validate({ ...params, page })
       return await this.getBatches.execute(inputParsed)
+    }, HttpStatusCodes.OK)
+
+    this.httpServer.register('get', '/batch/filters', async () => {
+      return await this.getBatchFilters.execute()
     }, HttpStatusCodes.OK)
   }
 }
