@@ -9,6 +9,7 @@ export const prompt = `
 
   The outputs should match specific resolution formats, as follows:
 
+  automatic1111 accepts only 1080x1920, 1920x1080, 1080x1080
   Midjourney accepts only 816x1456 or 1456x816.
   DALL·E accepts only 1024x1024, 1024x1792, or 1792x1024.
   When crafting the descriptions, ensure they are geared towards landscapes, weather effects, or natural scenes without human presence. Use rich and evocative imagery to guide the AI in creating atmospheric, vibrant, or peaceful visuals.
