@@ -18,10 +18,13 @@ export class AutomaticRequestImage {
 
   async execute (): Promise<void> {
     const gateways = ['goApiMidjourney', 'openAiDalle3']
+    // const gateways = ['automatic1111']
     for (const gateway of gateways) {
       const promptToUse = prompt.replace('replace_gateway', gateway)
       const response = await this.promptGateway.generatePrompt(promptToUse)
-      const batchConfiguration = Batch.getConfigurations(gateway, { ...response, size: 1, sampler: 'none', scheduler: 'none', steps: 0 })
+      let config = { size: 1, sampler: 'none', scheduler: 'none', steps: 0 }
+      if (gateway === 'automatic1111') config = { size: 1, sampler: 'DPM++ 2M', scheduler: 'Karras', steps: 20 }
+      const batchConfiguration = Batch.getConfigurations(gateway, { ...response, ...config })
       const batch = Batch.create({
         prompt: response.prompt,
         images: [],
