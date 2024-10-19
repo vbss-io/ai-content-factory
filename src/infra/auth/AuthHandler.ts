@@ -14,7 +14,8 @@ export class ExpressAuthHandler implements AuthHandler {
     { method: 'POST', path: '/login' },
     { method: 'GET', path: '/image' },
     { method: 'GET', path: '/images' },
-    { method: 'GET', path: '/image/banner' }
+    { method: 'GET', path: '/image/banner' },
+    { method: 'GET', path: '/image/filters' }
   ]
 
   @inject('tokenAuthentication')
