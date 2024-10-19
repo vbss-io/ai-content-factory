@@ -1,6 +1,7 @@
 import { Image } from '@/domain/entities/Image'
 import { type ImageRepository } from '@/domain/repository/ImageRepository'
 import { type ImageDocument, ImageModel } from '@/infra/mongodb/model/ImageModel'
+import { type PipelineStage, Types } from 'mongoose'
 
 export class ImageRepositoryMongo implements ImageRepository {
   async create (image: Image): Promise<Image> {
@@ -10,7 +11,7 @@ export class ImageRepositoryMongo implements ImageRepository {
       aspectRatio: image.aspectRatio,
       seed: image.seed,
       path: image.path,
-      batchId: image.batchId
+      batchId: new Types.ObjectId(image.batchId)
     })
     const savedDoc = await userDoc.save()
     return this.toDomain(savedDoc)
@@ -31,12 +32,46 @@ export class ImageRepositoryMongo implements ImageRepository {
     return this.toDomain(imageDoc)
   }
 
-  async getImages (page: number, searchMask?: string): Promise<Image[]> {
-    const pageSize = 25
-    const offset = (page - 1) * pageSize
-    const imageDocs = await ImageModel.find().skip(offset).limit(pageSize)
+  async getImagesByIds (ids: string[]): Promise<Image[] | []> {
+    const findOptions = { _id: { $in: ids } }
+    const imageDocs = await ImageModel.find(findOptions)
     return imageDocs.map((imageDoc) => {
       return this.toDomain(imageDoc)
+    })
+  }
+
+  async getImages (page: number, searchMask?: string, sampler?: string, scheduler?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Image[]> {
+    const pageSize = 25
+    const offset = (page - 1) * pageSize
+    const aggregateOptions: PipelineStage[] = [
+      {
+        $lookup: {
+          from: 'batches',
+          localField: 'batchId',
+          foreignField: '_id',
+          as: 'batch'
+        }
+      }
+    ]
+    if (searchMask) {
+      const regex = new RegExp(`${searchMask}`, 'i')
+      aggregateOptions.push({
+        $match: {
+          $or: [
+            { 'batch.prompt': regex },
+            { 'batch.negativePrompt': regex }
+          ]
+        }
+      })
+    }
+    if (sampler) aggregateOptions.push({ $match: { 'batch.sampler': sampler } })
+    if (scheduler) aggregateOptions.push({ $match: { 'batch.scheduler': scheduler } })
+    if (aspectRatio) aggregateOptions.push({ $match: { aspectRatio } })
+    if (origin) aggregateOptions.push({ $match: { 'batch.origin': origin } })
+    if (modelName) aggregateOptions.push({ $match: { 'batch.modelName': modelName } })
+    const imageDocs = await ImageModel.aggregate(aggregateOptions).skip(offset).limit(pageSize).exec()
+    return imageDocs.map((imageDoc) => {
+      return this.toDomain(imageDoc as ImageDocument)
     })
   }
 
@@ -58,7 +93,7 @@ export class ImageRepositoryMongo implements ImageRepository {
       aspectRatio: imageDoc.aspectRatio,
       seed: imageDoc.seed,
       path: imageDoc.path,
-      batchId: imageDoc.batchId,
+      batchId: String(imageDoc.batchId),
       createdAt: imageDoc.createdAt,
       updatedAt: imageDoc.updatedAt
     })
