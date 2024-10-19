@@ -18,7 +18,7 @@ const ImageSchema: Schema = new Schema(
     aspectRatio: { type: String, required: true },
     seed: { type: String, required: true },
     path: { type: String, required: true },
-    batchId: { type: String, required: true }
+    batchId: { type: Schema.ObjectId, ref: 'Batch' }
   },
   { timestamps: true, versionKey: false }
 )
