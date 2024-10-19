@@ -5,5 +5,5 @@ export interface BatchRepository {
   update: (batch: Batch) => Promise<void>
   deleteById: (id: string) => Promise<void>
   getBatchById: (id: string) => Promise<Batch | undefined>
-  getBatches: (page: number, searchMask?: string) => Promise<Batch[]>
+  getBatches: (page: number, searchMask?: string, sampler?: string, scheduler?: string, status?: string, origin?: string, modelName?: string) => Promise<Batch[]>
 }
