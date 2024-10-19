@@ -35,10 +35,25 @@ export class BatchRepositoryMongo implements BatchRepository {
     return this.toDomain(batchDoc)
   }
 
-  async getBatches (page: number, searchMask?: string): Promise<Batch[]> {
+  async getBatches (page: number, searchMask?: string, sampler?: string, scheduler?: string, status?: string, origin?: string, modelName?: string): Promise<Batch[]> {
     const pageSize = 25
     const offset = (page - 1) * pageSize
-    const batchDocs = await BatchModel.find().skip(offset).limit(pageSize)
+    const findOptions = {}
+    if (searchMask) {
+      const regex = new RegExp(`${searchMask}`, 'i')
+      Object.assign(findOptions, {
+        $or: [
+          { prompt: regex },
+          { negativePrompt: regex }
+        ]
+      })
+    }
+    if (sampler) Object.assign(findOptions, { sampler })
+    if (scheduler) Object.assign(findOptions, { scheduler })
+    if (status) Object.assign(findOptions, { status })
+    if (origin) Object.assign(findOptions, { origin })
+    if (modelName) Object.assign(findOptions, { modelName })
+    const batchDocs = await BatchModel.find(findOptions).skip(offset).limit(pageSize)
     return batchDocs.map((batchDoc) => {
       return this.toDomain(batchDoc)
     })
