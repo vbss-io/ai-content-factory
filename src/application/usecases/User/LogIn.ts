@@ -1,7 +1,7 @@
 import { type LogInInput, type LogInOutput } from '@/application/usecases/User/dto/LogIn.dto'
+import { type PasswordAuthentication } from '@/domain/auth/PasswordAuthentication'
 import { type UserRepository } from '@/domain/repository/UserRepository'
-import { type PasswordAuthentication } from '@/infra/auth/PasswordAuthentication'
-import { type TokenAuthentication } from '@/infra/auth/TokenAuthentication'
+import { type TokenAuthentication } from '@/infra/auth/JWTAdapter'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { UserAuthenticationError } from '@/infra/error/ErrorCatalog'
 

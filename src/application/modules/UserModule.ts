@@ -1,7 +1,7 @@
 import { UserController } from '@/application/controllers/UserController'
 import { LogIn } from '@/application/usecases/User/LogIn'
 import { SignIn } from '@/application/usecases/User/SignIn'
-import { BcryptAdapter } from '@/infra/auth/PasswordAuthentication'
+import { BcryptAdapter } from '@/infra/auth/BcryptAdapter'
 import { Registry } from '@/infra/dependency-injection/Registry'
 import { UserRepositoryMongo } from '@/infra/mongodb/repository/UserRepositoryMongo'
 import { LogInSchema } from '@/infra/schemas/LogInSchema'

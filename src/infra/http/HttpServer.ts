@@ -1,4 +1,4 @@
-import { type AuthHandler } from '@/infra/auth/AuthHandler'
+import { type AuthHandler } from '@/domain/auth/AuthHandler'
 import { type Cron } from '@/infra/cron/Cron'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { NotFoundError } from '@/infra/error/ErrorCatalog'

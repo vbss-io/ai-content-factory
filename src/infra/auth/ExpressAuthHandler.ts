@@ -1,12 +1,9 @@
-import { type TokenAuthentication } from '@/infra/auth/TokenAuthentication'
+import { type AuthHandler } from '@/domain/auth/AuthHandler'
+import { type TokenAuthentication } from '@/infra/auth/JWTAdapter'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { AuthError, MissingAuthorizationToken } from '@/infra/error/ErrorCatalog'
+import { AuthError, MissingAuthorizationToken, NotAllowedError } from '@/infra/error/ErrorCatalog'
 import { type RequestFacade } from '@/infra/facade/RequestFacade'
 import type { NextFunction, Request, Response } from 'express'
-
-export interface AuthHandler {
-  handle: (req: any, res: any, next: any) => Promise<any>
-}
 
 export class ExpressAuthHandler implements AuthHandler {
   protected byPassRoutes = [
@@ -36,7 +33,7 @@ export class ExpressAuthHandler implements AuthHandler {
     if (!token) throw new MissingAuthorizationToken()
     try {
       const { id, username, role } = await this.tokenAuthentication.decode(token, process.env.SECRET_KEY as string)
-      // if (!role || role !== 'administrator') throw new NotAllowedError()
+      if (!role || role !== 'administrator') throw new NotAllowedError()
       this.requestFacade.setUser({ id, username, role })
     } catch (error: any) {
       throw new AuthError(error.message as string)

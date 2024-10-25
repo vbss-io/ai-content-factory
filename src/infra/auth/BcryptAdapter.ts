@@ -1,9 +1,5 @@
+import { type PasswordAuthentication } from '@/domain/auth/PasswordAuthentication'
 import bcrypt from 'bcryptjs'
-
-export interface PasswordAuthentication {
-  hash: (password: string) => Promise<string>
-  compare: (password: string, hashedPassword: string) => Promise<boolean>
-}
 
 export class BcryptAdapter implements PasswordAuthentication {
   async hash (password: string): Promise<string> {
