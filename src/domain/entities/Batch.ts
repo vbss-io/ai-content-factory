@@ -1,5 +1,6 @@
 import { type BatchConfigurationInput, type BatchConfigurationOutput, type BatchCreate, type BatchProcessUpdate, type BatchRestore } from '@/domain/entities/dto/Batch.dto'
-import { type ImageRequestedData, ImageRequested } from '@/domain/events/ImageRequested'
+import { ImageRequested, type ImageRequestedData } from '@/domain/events/ImageRequested'
+import { VideoRequested, type VideoRequestedData } from '@/domain/events/VideoRequested'
 import { BatchIdError, DalleDimensionsError } from '@/infra/error/ErrorCatalog'
 import { Observable } from '@/infra/events/Observer'
 
@@ -10,6 +11,8 @@ export class Batch extends Observable {
   modelName: string
   errorMessage: string
   images: string[]
+  videos: string[]
+  taskId: string
 
   private constructor (
     id: string,
@@ -19,11 +22,14 @@ export class Batch extends Observable {
     readonly scheduler: string,
     readonly steps: number,
     images: string[],
+    videos: string[],
     readonly size: number,
     origin: string,
     modelName: string,
     readonly negativePrompt: string,
     errorMessage: string,
+    readonly type: string,
+    taskId: string,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -31,13 +37,16 @@ export class Batch extends Observable {
     this.id = id
     this.status = status
     this.images = images ?? []
+    this.videos = videos ?? []
     this.origin = origin
     this.modelName = modelName
     this.errorMessage = errorMessage
+    this.taskId = taskId
   }
 
   static create (input: BatchCreate): Batch {
     const status = 'queued'
+    const type = input.type ?? 'image'
     return new Batch(
       '',
       status,
@@ -46,10 +55,13 @@ export class Batch extends Observable {
       input.scheduler,
       input.steps,
       input.images,
+      input.videos,
       input.size,
       '',
       '',
       input.negativePrompt ?? '',
+      '',
+      type,
       ''
     )
   }
@@ -63,19 +75,27 @@ export class Batch extends Observable {
       input.scheduler,
       input.steps,
       input.images,
+      input.videos,
       input.size,
       input.origin,
       input.modelName,
       input.negativePrompt,
       input.errorMessage,
+      input.type,
+      input.taskId,
       input.createdAt,
       input.updatedAt
     )
   }
 
-  async request ({ gateway, dimensions, isAutomatic }: Omit<ImageRequestedData, 'batchId'>): Promise<void> {
+  async requestImage ({ gateway, dimensions, isAutomatic }: Omit<ImageRequestedData, 'batchId'>): Promise<void> {
     if (!this.id) throw new BatchIdError()
     await this.notify(new ImageRequested({ batchId: this.id, gateway, isAutomatic, dimensions }))
+  }
+
+  async requestVideo ({ gateway, dimensions, isAutomatic, imageUrl }: Omit<VideoRequestedData, 'batchId'>): Promise<void> {
+    if (!this.id) throw new BatchIdError()
+    await this.notify(new VideoRequested({ batchId: this.id, gateway, isAutomatic, dimensions, imageUrl }))
   }
 
   process (): void {
@@ -105,6 +125,19 @@ export class Batch extends Observable {
     this.images = newImages
   }
 
+  addVideo (videoId: string): void {
+    this.videos.push(videoId)
+  }
+
+  removeVideo (videoId: string): void {
+    const newVideos = this.videos.filter((id) => id !== videoId)
+    this.videos = newVideos
+  }
+
+  setTaskId (id: string): void {
+    this.taskId = id
+  }
+
   static isAutomatic1111 (gateway: string): boolean {
     return gateway === 'automatic1111'
   }
@@ -125,15 +158,16 @@ export class Batch extends Observable {
     }
   }
 
-  static getConfigurations (gateway: string, input: BatchConfigurationInput): BatchConfigurationOutput {
-    const negativePrompt = input.negativePrompt ?? 'none'
+  static getConfigurations (gateway: string, input?: BatchConfigurationInput): BatchConfigurationOutput {
     const baseConfiguration = {
       sampler: 'none',
       scheduler: 'none',
       steps: 0,
-      size: 0,
+      size: 1,
       negativePrompt: 'none'
     }
+    if (!input) return baseConfiguration
+    const negativePrompt = input.negativePrompt ?? 'none'
     if (this.isAutomatic1111(gateway)) {
       return {
         sampler: input.sampler,

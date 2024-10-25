@@ -5,7 +5,9 @@ export interface BatchCreate {
   scheduler: string
   steps: number
   images: string[]
+  videos: string[]
   size: number
+  type?: string
 }
 
 export type BatchRestore = BatchCreate & {
@@ -15,6 +17,8 @@ export type BatchRestore = BatchCreate & {
   modelName: string
   negativePrompt: string
   errorMessage: string
+  type: string
+  taskId: string
   createdAt: Date
   updatedAt: Date
 }
