@@ -4,6 +4,7 @@ import { GetImageById } from '@/application/usecases/Image/GetImageById'
 import { GetImageFilters } from '@/application/usecases/Image/GetImageFilters'
 import { GetImages } from '@/application/usecases/Image/GetImages'
 import { GetRandomLandscapeImage } from '@/application/usecases/Image/GetRandomLandscapeImage'
+import { LikeImage } from '@/application/usecases/Image/LikeImage'
 import { ProcessImage } from '@/application/usecases/Image/ProcessImage'
 import { RequestImage } from '@/application/usecases/Image/RequestImage'
 import { inject, Registry } from '@/infra/dependency-injection/Registry'
@@ -38,6 +39,7 @@ export class ImageModule {
     const getRandomLandscapeImage = new GetRandomLandscapeImage()
     const processImage = new ProcessImage()
     const getImageFilters = new GetImageFilters()
+    const likeImage = new LikeImage()
     Registry.getInstance().provide('requestImage', requestImage)
     Registry.getInstance().provide('getImageById', getImageById)
     Registry.getInstance().provide('deleteImageById', deleteImageById)
@@ -45,6 +47,7 @@ export class ImageModule {
     Registry.getInstance().provide('getRandomLandscapeImage', getRandomLandscapeImage)
     Registry.getInstance().provide('processImage', processImage)
     Registry.getInstance().provide('getImageFilters', getImageFilters)
+    Registry.getInstance().provide('likeImage', likeImage)
     new ImageController()
   }
 }
