@@ -1,5 +1,5 @@
-import { type ImageCreate, type ImageRestore } from '@/domain/entities/dto/Image.dto'
-import { AspectRatio } from '@/domain/vo/AspectRatio'
+import { type ImageCreate, type ImageRestore } from '@/domain/entities/dtos/Image.dto'
+import { AspectRatio } from '@/domain/vos/AspectRatio'
 
 export class Image {
   id: string

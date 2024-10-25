@@ -1,8 +1,8 @@
 import { type ImagineImageGateway } from '@/domain/gateways/ImagineImageGateway'
-import { GatewayNotImplemented } from '@/infra/error/ErrorCatalog'
-import { Automatic1111GatewayHttp } from '@/infra/gateways/Automatic1111GatewayHttp'
-import { GoAPIMidjourneyGatewayHttp } from '@/infra/gateways/GoAPIMidjourneyGatewayHttp'
-import { OpenAIDalle3GatewayHttp } from '@/infra/gateways/OpenApiDalle3GatewayHttp'
+import { GatewayNotImplemented } from '@/infra/errors/ErrorCatalog'
+import { Automatic1111GatewayHttp } from '@/infra/gateways/image/Automatic1111GatewayHttp'
+import { GoAPIMidjourneyGatewayHttp } from '@/infra/gateways/image/GoAPIMidjourneyGatewayHttp'
+import { OpenAIDalle3GatewayHttp } from '@/infra/gateways/image/OpenApiDalle3GatewayHttp'
 
 export class ImagineImageGatewayFactory {
   static create (gateway: string): ImagineImageGateway {

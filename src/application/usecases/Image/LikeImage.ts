@@ -1,8 +1,8 @@
-import { type LikeImageInput } from '@/application/usecases/Image/dto/LikeImage.dto'
-import { type ImageRepository } from '@/domain/repository/ImageRepository'
-import { type UserRepository } from '@/domain/repository/UserRepository'
+import { type LikeImageInput } from '@/application/usecases/Image/dtos/LikeImage.dto'
+import { type ImageRepository } from '@/domain/repositories/ImageRepository'
+import { type UserRepository } from '@/domain/repositories/UserRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { ImageNotFoundError, UserAuthenticationError } from '@/infra/error/ErrorCatalog'
+import { ImageNotFoundError, UserAuthenticationError } from '@/infra/errors/ErrorCatalog'
 
 export class LikeImage {
   @inject('userRepository')

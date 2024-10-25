@@ -2,12 +2,12 @@ import { type DeleteBatchById } from '@/application/usecases/Batch/DeleteBatchBy
 import { type GetBatchById } from '@/application/usecases/Batch/GetBatchById'
 import { type GetBatches } from '@/application/usecases/Batch/GetBatches'
 import { type GetBatchFilters } from '@/application/usecases/Batch/GetBatchFilters'
+import { type HttpServer } from '@/domain/http/HttpServer'
+import { HttpStatusCodes } from '@/domain/http/HttpStatusCodes'
+import { type InputValidate } from '@/domain/validate/InputValidate'
 import { inject } from '@/infra/dependency-injection/Registry'
-import type { HttpServer } from '@/infra/http/HttpServer'
-import { HttpStatusCodes } from '@/infra/http/HttpStatusCodes'
 import { type ByIdInput } from '@/infra/schemas/ByIdSchema'
 import { type GetAllInput } from '@/infra/schemas/GetAllSchema'
-import { type InputValidate } from '@/infra/validate/InputValidate'
 
 export class BatchController {
   @inject('httpServer')

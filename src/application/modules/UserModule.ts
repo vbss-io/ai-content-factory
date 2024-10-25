@@ -3,10 +3,10 @@ import { LogIn } from '@/application/usecases/User/LogIn'
 import { SignIn } from '@/application/usecases/User/SignIn'
 import { BcryptAdapter } from '@/infra/auth/BcryptAdapter'
 import { Registry } from '@/infra/dependency-injection/Registry'
-import { UserRepositoryMongo } from '@/infra/mongodb/repository/UserRepositoryMongo'
+import { UserRepositoryMongo } from '@/infra/repositories/UserRepositoryMongo'
 import { LogInSchema } from '@/infra/schemas/LogInSchema'
 import { SignInSchema } from '@/infra/schemas/SignInSchema'
-import { ZodAdapter } from '@/infra/validate/InputValidate'
+import { ZodAdapter } from '@/infra/validate/ZodAdapter'
 
 export class UserModule {
   constructor () {

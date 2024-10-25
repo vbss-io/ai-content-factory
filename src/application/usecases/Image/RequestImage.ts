@@ -1,9 +1,9 @@
-import { type RequestImageOutput } from '@/application/usecases/Image/dto/RequestImage.dto'
+import { type RequestImageOutput } from '@/application/usecases/Image/dtos/RequestImage.dto'
 import { Batch } from '@/domain/entities/Batch'
 import { type DomainEvent } from '@/domain/events/DomainEvent'
-import { type BatchRepository } from '@/domain/repository/BatchRepository'
+import { type Queue } from '@/domain/queue/Queue'
+import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { type Queue } from '@/infra/queue/Queue'
 import { type RequestImageInput } from '@/infra/schemas/RequestImageSchema'
 
 export class RequestImage {

@@ -1,10 +1,10 @@
-import { type DeleteImageByIdInput } from '@/application/usecases/Image/dto/DeleteImageById.dto'
+import { type DeleteImageByIdInput } from '@/application/usecases/Image/dtos/DeleteImageById.dto'
 import { type Batch } from '@/domain/entities/Batch'
-import { type BatchRepository } from '@/domain/repository/BatchRepository'
-import { type ImageRepository } from '@/domain/repository/ImageRepository'
+import { type BatchRepository } from '@/domain/repositories/BatchRepository'
+import { type ImageRepository } from '@/domain/repositories/ImageRepository'
+import { type ImageStorage } from '@/domain/storage/ImageStorage'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { ImageNotFoundError } from '@/infra/error/ErrorCatalog'
-import { type ImageStorage } from '@/infra/storage/ImageStorage'
+import { ImageNotFoundError } from '@/infra/errors/ErrorCatalog'
 
 export class DeleteImageById {
   @inject('imageRepository')

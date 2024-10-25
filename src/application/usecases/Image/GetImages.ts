@@ -1,5 +1,5 @@
-import { type GetImagesInput, type GetImagesOutput } from '@/application/usecases/Image/dto/GetImages.dto'
-import { type ImageRepository } from '@/domain/repository/ImageRepository'
+import { type GetImagesInput, type GetImagesOutput } from '@/application/usecases/Image/dtos/GetImages.dto'
+import { type ImageRepository } from '@/domain/repositories/ImageRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
 
 export class GetImages {

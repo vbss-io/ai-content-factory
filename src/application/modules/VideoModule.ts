@@ -6,12 +6,12 @@ import { GetVideos } from '@/application/usecases/Video/GetVideos'
 import { LikeVideo } from '@/application/usecases/Video/LikeVideo'
 import { ProcessVideo } from '@/application/usecases/Video/ProcessVideo'
 import { RequestVideo } from '@/application/usecases/Video/RequestVideo'
+import { type Queue } from '@/domain/queue/Queue'
 import { inject, Registry } from '@/infra/dependency-injection/Registry'
-import { GetVideoFiltersQueryMongo } from '@/infra/mongodb/queries/GetVideoFiltersMongo'
-import { VideoRepositoryMongo } from '@/infra/mongodb/repository/VideoRepositoryMongo'
-import { type Queue } from '@/infra/queue/Queue'
+import { GetVideoFiltersQueryMongo } from '@/infra/queries/GetVideoFiltersMongo'
+import { VideoRepositoryMongo } from '@/infra/repositories/VideoRepositoryMongo'
 import { RequestVideoSchema } from '@/infra/schemas/RequestVideoSchema'
-import { ZodAdapter } from '@/infra/validate/InputValidate'
+import { ZodAdapter } from '@/infra/validate/ZodAdapter'
 
 export class VideoModule {
   @inject('queue')

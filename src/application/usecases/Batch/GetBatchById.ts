@@ -1,7 +1,7 @@
-import { type BatchRepository } from '@/domain/repository/BatchRepository'
+import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { BatchNotFoundError } from '@/infra/error/ErrorCatalog'
-import { type GetBatchByIdInput, type GetBatchByIdOutput } from './dto/GetBatchById.dto'
+import { BatchNotFoundError } from '@/infra/errors/ErrorCatalog'
+import { type GetBatchByIdInput, type GetBatchByIdOutput } from './dtos/GetBatchById.dto'
 
 export class GetBatchById {
   @inject('batchRepository')

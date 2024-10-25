@@ -1,5 +1,5 @@
-import { type VideoCreate, type VideoRestore } from '@/domain/entities/dto/Video.dto'
-import { AspectRatio } from '@/domain/vo/AspectRatio'
+import { type VideoCreate, type VideoRestore } from '@/domain/entities/dtos/Video.dto'
+import { AspectRatio } from '@/domain/vos/AspectRatio'
 
 export class Video {
   id: string

@@ -1,10 +1,10 @@
-import { type SignInInput, type SignInOutput } from '@/application/usecases/User/dto/SignIn.dto'
+import { type SignInInput, type SignInOutput } from '@/application/usecases/User/dtos/SignIn.dto'
 import { type PasswordAuthentication } from '@/domain/auth/PasswordAuthentication'
 import { User } from '@/domain/entities/User'
-import { type UserRepository } from '@/domain/repository/UserRepository'
+import { type UserRepository } from '@/domain/repositories/UserRepository'
 import { type TokenAuthentication } from '@/infra/auth/JWTAdapter'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { DifferentPasswordAndConfirmation, UserAlreadyExist } from '@/infra/error/ErrorCatalog'
+import { DifferentPasswordAndConfirmation, UserAlreadyExist } from '@/infra/errors/ErrorCatalog'
 
 export class SignIn {
   @inject('userRepository')

@@ -1,10 +1,10 @@
-import { type GetImageByIdInput, type GetImageByIdOutput } from '@/application/usecases/Image/dto/GetImageById.dto'
+import { type GetImageByIdInput, type GetImageByIdOutput } from '@/application/usecases/Image/dtos/GetImageById.dto'
 import { type Batch } from '@/domain/entities/Batch'
-import { type BatchRepository } from '@/domain/repository/BatchRepository'
-import { type ImageRepository } from '@/domain/repository/ImageRepository'
-import { type UserRepository } from '@/domain/repository/UserRepository'
+import { type BatchRepository } from '@/domain/repositories/BatchRepository'
+import { type ImageRepository } from '@/domain/repositories/ImageRepository'
+import { type UserRepository } from '@/domain/repositories/UserRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { ImageNotFoundError, UserAuthenticationError } from '@/infra/error/ErrorCatalog'
+import { ImageNotFoundError, UserAuthenticationError } from '@/infra/errors/ErrorCatalog'
 
 export class GetImageById {
   @inject('imageRepository')

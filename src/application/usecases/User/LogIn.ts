@@ -1,9 +1,9 @@
-import { type LogInInput, type LogInOutput } from '@/application/usecases/User/dto/LogIn.dto'
+import { type LogInInput, type LogInOutput } from '@/application/usecases/User/dtos/LogIn.dto'
 import { type PasswordAuthentication } from '@/domain/auth/PasswordAuthentication'
-import { type UserRepository } from '@/domain/repository/UserRepository'
+import { type UserRepository } from '@/domain/repositories/UserRepository'
 import { type TokenAuthentication } from '@/infra/auth/JWTAdapter'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { UserAuthenticationError } from '@/infra/error/ErrorCatalog'
+import { UserAuthenticationError } from '@/infra/errors/ErrorCatalog'
 
 export class LogIn {
   @inject('userRepository')

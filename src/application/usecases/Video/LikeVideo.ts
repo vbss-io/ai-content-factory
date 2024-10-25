@@ -1,8 +1,8 @@
-import { type LikeVideoInput } from '@/application/usecases/Video/dto/LikeVideo.dto'
-import { type UserRepository } from '@/domain/repository/UserRepository'
-import { type VideoRepository } from '@/domain/repository/VideoRepository'
+import { type LikeVideoInput } from '@/application/usecases/Video/dtos/LikeVideo.dto'
+import { type UserRepository } from '@/domain/repositories/UserRepository'
+import { type VideoRepository } from '@/domain/repositories/VideoRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { UserAuthenticationError, VideoNotFoundError } from '@/infra/error/ErrorCatalog'
+import { UserAuthenticationError, VideoNotFoundError } from '@/infra/errors/ErrorCatalog'
 
 export class LikeVideo {
   @inject('userRepository')

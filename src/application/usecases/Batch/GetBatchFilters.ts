@@ -1,4 +1,4 @@
-import { type GetBatchFiltersOutput } from '@/application/usecases/Batch/dto/GetBatchFilters.dto'
+import { type GetBatchFiltersOutput } from '@/application/usecases/Batch/dtos/GetBatchFilters.dto'
 import { type GetBatchFiltersQuery } from '@/domain/queries/GetBatchFiltersQuery'
 import { inject } from '@/infra/dependency-injection/Registry'
 

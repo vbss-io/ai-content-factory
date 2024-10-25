@@ -1,11 +1,11 @@
-import { type RequestVideoOutput } from '@/application/usecases/Video/dto/RequestVideo.dto'
+import { type RequestVideoOutput } from '@/application/usecases/Video/dtos/RequestVideo.dto'
 import { Batch } from '@/domain/entities/Batch'
 import { type DomainEvent } from '@/domain/events/DomainEvent'
-import { type BatchRepository } from '@/domain/repository/BatchRepository'
-import { type ImageRepository } from '@/domain/repository/ImageRepository'
+import { type Queue } from '@/domain/queue/Queue'
+import { type BatchRepository } from '@/domain/repositories/BatchRepository'
+import { type ImageRepository } from '@/domain/repositories/ImageRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { ImageNotFoundError } from '@/infra/error/ErrorCatalog'
-import { type Queue } from '@/infra/queue/Queue'
+import { ImageNotFoundError } from '@/infra/errors/ErrorCatalog'
 import { type RequestVideoInput } from '@/infra/schemas/RequestVideoSchema'
 
 export class RequestVideo {
