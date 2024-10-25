@@ -9,9 +9,12 @@ export interface BatchDocument extends Document {
   steps: number
   modelName: string
   images: string[]
+  videos: string[]
   origin: string
   size: number
   errorMessage: string
+  type: string
+  taskId: string
   createdAt: Date
   updatedAt: Date
 }
@@ -25,10 +28,13 @@ const BatchSchema: Schema = new Schema(
     scheduler: { type: String, required: true },
     steps: { type: Number, required: true },
     modelName: { type: String },
-    images: { type: [String], required: true },
+    images: { type: [String], required: true, default: [] },
+    videos: { type: [String], required: true, default: [] },
     origin: { type: String },
     size: { type: Number, required: true },
-    errorMessage: { type: String }
+    errorMessage: { type: String },
+    type: { type: String, default: 'image' },
+    taskId: { type: String }
   },
   { timestamps: true, versionKey: false }
 )
