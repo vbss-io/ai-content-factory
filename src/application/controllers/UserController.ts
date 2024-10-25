@@ -1,11 +1,11 @@
-import { type HttpServer } from '@/@api/domain/http/HttpServer'
-import { HttpStatusCodes } from '@/@api/domain/http/HttpStatusCodes'
-import { type InputValidate } from '@/@api/domain/validate/InputValidate'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type LogIn } from '@/application/usecases/User/LogIn'
 import { type SignIn } from '@/application/usecases/User/SignIn'
 import { type LogInInput } from '@/infra/schemas/LogInSchema'
 import { type SignInInput } from '@/infra/schemas/SignInSchema'
+import { type HttpServer } from '@api/domain/http/HttpServer'
+import { HttpStatusCodes } from '@api/domain/http/HttpStatusCodes'
+import { type InputValidate } from '@api/domain/validate/InputValidate'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class UserController {
   @inject('httpServer')

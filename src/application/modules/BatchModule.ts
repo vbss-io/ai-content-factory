@@ -1,5 +1,3 @@
-import { Registry } from '@/@api/infra/dependency-injection/Registry'
-import { ZodAdapter } from '@/@api/infra/validate/ZodAdapter'
 import { BatchController } from '@/application/controllers/BatchController'
 import { DeleteBatchById } from '@/application/usecases/Batch/DeleteBatchById'
 import { GetBatchById } from '@/application/usecases/Batch/GetBatchById'
@@ -9,6 +7,8 @@ import { GetBatchFiltersQueryMongo } from '@/infra/queries/GetBatchFiltersMongo'
 import { BatchRepositoryMongo } from '@/infra/repositories/BatchRepositoryMongo'
 import { ByIdSchema } from '@/infra/schemas/ByIdSchema'
 import { GetAllSchema } from '@/infra/schemas/GetAllSchema'
+import { Registry } from '@api/infra/dependency-injection/Registry'
+import { ZodAdapter } from '@api/infra/validate/ZodAdapter'
 
 export class BatchModule {
   constructor () {

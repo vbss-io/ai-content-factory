@@ -1,5 +1,5 @@
-import { NotImplemented } from '@/@api/infra/errors/ErrorCatalog'
 import { type ImageStorage } from '@/domain/storage/ImageStorage'
+import { NotImplemented } from '@api/infra/errors/ErrorCatalog'
 import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'

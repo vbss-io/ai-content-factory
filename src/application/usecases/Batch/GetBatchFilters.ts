@@ -1,6 +1,6 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type GetBatchFiltersOutput } from '@/application/usecases/Batch/dtos/GetBatchFilters.dto'
 import { type GetBatchFiltersQuery } from '@/domain/queries/GetBatchFiltersQuery'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class GetBatchFilters {
   @inject('getBatchFiltersQuery')

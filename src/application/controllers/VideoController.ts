@@ -1,8 +1,3 @@
-import { type HttpServer } from '@/@api/domain/http/HttpServer'
-import { HttpStatusCodes } from '@/@api/domain/http/HttpStatusCodes'
-import { type Queue } from '@/@api/domain/queue/Queue'
-import { type InputValidate } from '@/@api/domain/validate/InputValidate'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type DeleteVideoById } from '@/application/usecases/Video/DeleteVideoByIdInput'
 import { type GetVideoById } from '@/application/usecases/Video/GetVideoById'
 import { type GetVideoFilters } from '@/application/usecases/Video/GetVideoFilters'
@@ -15,6 +10,11 @@ import { type RequestFacade } from '@/infra/facades/RequestFacade'
 import { type ByIdInput } from '@/infra/schemas/ByIdSchema'
 import { type GetAllInput } from '@/infra/schemas/GetAllSchema'
 import { type RequestVideoInput } from '@/infra/schemas/RequestVideoSchema'
+import { type HttpServer } from '@api/domain/http/HttpServer'
+import { HttpStatusCodes } from '@api/domain/http/HttpStatusCodes'
+import { type Queue } from '@api/domain/queue/Queue'
+import { type InputValidate } from '@api/domain/validate/InputValidate'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class VideoController {
   @inject('httpServer')

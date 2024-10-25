@@ -1,10 +1,10 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
-import { ImageNotFoundError, UserAuthenticationError } from '@/@api/infra/errors/ErrorCatalog'
 import { type GetImageByIdInput, type GetImageByIdOutput } from '@/application/usecases/Image/dtos/GetImageById.dto'
 import { type Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type ImageRepository } from '@/domain/repositories/ImageRepository'
 import { type UserRepository } from '@/domain/repositories/UserRepository'
+import { inject } from '@api/infra/dependency-injection/Registry'
+import { ImageNotFoundError, UserAuthenticationError } from '@api/infra/errors/ErrorCatalog'
 
 export class GetImageById {
   @inject('imageRepository')

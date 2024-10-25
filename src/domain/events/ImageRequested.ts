@@ -1,4 +1,4 @@
-import type { DomainEvent } from '@/@api/domain/events/DomainEvent'
+import type { DomainEvent } from '@api/domain/events/DomainEvent'
 
 export class ImageRequested implements DomainEvent {
   eventName = 'imageRequested'

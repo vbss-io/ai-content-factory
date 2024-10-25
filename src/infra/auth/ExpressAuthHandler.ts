@@ -1,8 +1,8 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
-import { AuthError, MissingAuthorizationToken, NotAllowedError } from '@/@api/infra/errors/ErrorCatalog'
 import { type AuthHandler } from '@/domain/auth/AuthHandler'
 import { type TokenAuthentication } from '@/infra/auth/JWTAdapter'
 import { type RequestFacade } from '@/infra/facades/RequestFacade'
+import { inject } from '@api/infra/dependency-injection/Registry'
+import { AuthError, MissingAuthorizationToken, NotAllowedError } from '@api/infra/errors/ErrorCatalog'
 import type { NextFunction, Request, Response } from 'express'
 
 export class ExpressAuthHandler implements AuthHandler {

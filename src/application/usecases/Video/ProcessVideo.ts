@@ -1,11 +1,11 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
-import { BatchNotFoundError, ProcessVideoError } from '@/@api/infra/errors/ErrorCatalog'
 import { type ProcessVideoInput } from '@/application/usecases/Video/dtos/ProcessVideo.dto'
 import { Video } from '@/domain/entities/Video'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type VideoRepository } from '@/domain/repositories/VideoRepository'
 import { type VideoStorage } from '@/domain/storage/VideoStorage'
 import { ImagineVideoGatewayFactory } from '@/infra/gateways/ImagineVideoGatewayFactory'
+import { inject } from '@api/infra/dependency-injection/Registry'
+import { BatchNotFoundError, ProcessVideoError } from '@api/infra/errors/ErrorCatalog'
 
 export class ProcessVideo {
   @inject('batchRepository')

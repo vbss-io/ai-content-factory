@@ -1,5 +1,5 @@
-import { type HttpClientGetInput, type HttpClientPostInput } from '@/@api/domain/http/dtos/HttpClient.dto'
-import { type HttpClient } from '@/@api/domain/http/HttpClient'
+import { type HttpClientGetInput, type HttpClientPostInput } from '@api/domain/http/dtos/HttpClient.dto'
+import { type HttpClient } from '@api/domain/http/HttpClient'
 import axios from 'axios'
 
 axios.defaults.validateStatus = function () {

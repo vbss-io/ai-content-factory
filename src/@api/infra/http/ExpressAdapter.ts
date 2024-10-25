@@ -1,9 +1,9 @@
-import { type Cron } from '@/@api/domain/cron/Cron'
-import { type HttpServer } from '@/@api/domain/http/HttpServer'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
-import { NotFoundError } from '@/@api/infra/errors/ErrorCatalog'
 import { type AuthHandler } from '@/domain/auth/AuthHandler'
+import { type Cron } from '@api/domain/cron/Cron'
 import { type ErrorHandler } from '@api/domain/errors/ErrorHandler'
+import { type HttpServer } from '@api/domain/http/HttpServer'
+import { inject } from '@api/infra/dependency-injection/Registry'
+import { NotFoundError } from '@api/infra/errors/ErrorCatalog'
 import cors from 'cors'
 import express, { type Request, type Response } from 'express'
 

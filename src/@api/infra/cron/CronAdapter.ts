@@ -1,5 +1,5 @@
-import { type Cron } from '@/@api/domain/cron/Cron'
 import { AutomaticRequestImage } from '@/application/usecases/Image/AutomaticRequestImage'
+import { type Cron } from '@api/domain/cron/Cron'
 import { CronJob } from 'cron'
 
 export class CronAdapter implements Cron {

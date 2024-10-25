@@ -1,6 +1,6 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
-import { BatchNotFoundError } from '@/@api/infra/errors/ErrorCatalog'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
+import { inject } from '@api/infra/dependency-injection/Registry'
+import { BatchNotFoundError } from '@api/infra/errors/ErrorCatalog'
 import { type GetBatchByIdInput, type GetBatchByIdOutput } from './dtos/GetBatchById.dto'
 
 export class GetBatchById {

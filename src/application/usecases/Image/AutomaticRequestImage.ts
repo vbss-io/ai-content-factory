@@ -1,10 +1,10 @@
-import { type DomainEvent } from '@/@api/domain/events/DomainEvent'
-import { type Queue } from '@/@api/domain/queue/Queue'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { Batch } from '@/domain/entities/Batch'
 import { type PromptGateway } from '@/domain/gateways/PromptGateway'
 import { imagePrompt } from '@/domain/prompts/imagePrompt'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
+import { type DomainEvent } from '@api/domain/events/DomainEvent'
+import { type Queue } from '@api/domain/queue/Queue'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class AutomaticRequestImage {
   @inject('promptGateway')

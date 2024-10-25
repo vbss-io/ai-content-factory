@@ -1,6 +1,3 @@
-import { type Queue } from '@/@api/domain/queue/Queue'
-import { inject, Registry } from '@/@api/infra/dependency-injection/Registry'
-import { ZodAdapter } from '@/@api/infra/validate/ZodAdapter'
 import { ImageController } from '@/application/controllers/ImageController'
 import { DeleteImageById } from '@/application/usecases/Image/DeleteImageById'
 import { GetImageById } from '@/application/usecases/Image/GetImageById'
@@ -15,6 +12,9 @@ import { ImageRepositoryMongo } from '@/infra/repositories/ImageRepositoryMongo'
 import { ByIdSchema } from '@/infra/schemas/ByIdSchema'
 import { GetAllSchema } from '@/infra/schemas/GetAllSchema'
 import { RequestImageSchema } from '@/infra/schemas/RequestImageSchema'
+import { type Queue } from '@api/domain/queue/Queue'
+import { inject, Registry } from '@api/infra/dependency-injection/Registry'
+import { ZodAdapter } from '@api/infra/validate/ZodAdapter'
 
 export class ImageModule {
   @inject('queue')

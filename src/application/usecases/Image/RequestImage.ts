@@ -1,10 +1,10 @@
-import { type DomainEvent } from '@/@api/domain/events/DomainEvent'
-import { type Queue } from '@/@api/domain/queue/Queue'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type RequestImageOutput } from '@/application/usecases/Image/dtos/RequestImage.dto'
 import { Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type RequestImageInput } from '@/infra/schemas/RequestImageSchema'
+import { type DomainEvent } from '@api/domain/events/DomainEvent'
+import { type Queue } from '@api/domain/queue/Queue'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class RequestImage {
   @inject('batchRepository')

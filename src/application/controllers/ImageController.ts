@@ -1,8 +1,3 @@
-import { type HttpServer } from '@/@api/domain/http/HttpServer'
-import { HttpStatusCodes } from '@/@api/domain/http/HttpStatusCodes'
-import { type Queue } from '@/@api/domain/queue/Queue'
-import { type InputValidate } from '@/@api/domain/validate/InputValidate'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type DeleteImageById } from '@/application/usecases/Image/DeleteImageById'
 import { type GetImageById } from '@/application/usecases/Image/GetImageById'
 import { type GetImageFilters } from '@/application/usecases/Image/GetImageFilters'
@@ -16,6 +11,11 @@ import { type RequestFacade } from '@/infra/facades/RequestFacade'
 import { type ByIdInput } from '@/infra/schemas/ByIdSchema'
 import { type GetAllInput } from '@/infra/schemas/GetAllSchema'
 import { type RequestImageInput } from '@/infra/schemas/RequestImageSchema'
+import { type HttpServer } from '@api/domain/http/HttpServer'
+import { HttpStatusCodes } from '@api/domain/http/HttpStatusCodes'
+import { type Queue } from '@api/domain/queue/Queue'
+import { type InputValidate } from '@api/domain/validate/InputValidate'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class ImageController {
   @inject('httpServer')

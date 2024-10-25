@@ -1,9 +1,9 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
-import { ImageNotFoundError } from '@/@api/infra/errors/ErrorCatalog'
 import { type GetRandomLandscapeImageOutput } from '@/application/usecases/Image/dtos/GetRandomLandscapeImage.dto'
 import { type Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type ImageRepository } from '@/domain/repositories/ImageRepository'
+import { inject } from '@api/infra/dependency-injection/Registry'
+import { ImageNotFoundError } from '@api/infra/errors/ErrorCatalog'
 
 export class GetRandomLandscapeImage {
   @inject('imageRepository')

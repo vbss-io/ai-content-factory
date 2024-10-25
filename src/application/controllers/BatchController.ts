@@ -1,13 +1,13 @@
-import { type HttpServer } from '@/@api/domain/http/HttpServer'
-import { HttpStatusCodes } from '@/@api/domain/http/HttpStatusCodes'
-import { type InputValidate } from '@/@api/domain/validate/InputValidate'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type DeleteBatchById } from '@/application/usecases/Batch/DeleteBatchById'
 import { type GetBatchById } from '@/application/usecases/Batch/GetBatchById'
 import { type GetBatches } from '@/application/usecases/Batch/GetBatches'
 import { type GetBatchFilters } from '@/application/usecases/Batch/GetBatchFilters'
 import { type ByIdInput } from '@/infra/schemas/ByIdSchema'
 import { type GetAllInput } from '@/infra/schemas/GetAllSchema'
+import { type HttpServer } from '@api/domain/http/HttpServer'
+import { HttpStatusCodes } from '@api/domain/http/HttpStatusCodes'
+import { type InputValidate } from '@api/domain/validate/InputValidate'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class BatchController {
   @inject('httpServer')

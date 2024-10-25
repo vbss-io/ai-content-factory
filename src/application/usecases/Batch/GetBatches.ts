@@ -1,7 +1,7 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type GetBatchesInput, type GetBatchesOutput } from '@/application/usecases/Batch/dtos/GetBatches.dto'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type ImageRepository } from '@/domain/repositories/ImageRepository'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class GetBatches {
   @inject('batchRepository')

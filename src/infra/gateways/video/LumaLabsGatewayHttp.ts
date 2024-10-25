@@ -1,8 +1,8 @@
-import { type HttpClient } from '@/@api/domain/http/HttpClient'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type ImagineVideoInput, type ImagineVideoOutput } from '@/domain/gateways/dtos/ImagineVideoGateway.dto'
 import { type ImagineVideoGateway } from '@/domain/gateways/ImagineVideoGateway'
 import { AspectRatio } from '@/domain/vos/AspectRatio'
+import { type HttpClient } from '@api/domain/http/HttpClient'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class LumaLabsGatewayHttp implements ImagineVideoGateway {
   protected DELAY = 120000

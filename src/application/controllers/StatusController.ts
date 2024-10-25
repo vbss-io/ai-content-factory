@@ -1,7 +1,7 @@
-import { type HttpServer } from '@/@api/domain/http/HttpServer'
-import { HttpStatusCodes } from '@/@api/domain/http/HttpStatusCodes'
-import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type CheckStatus } from '@/application/usecases/Status/CheckStatus'
+import { type HttpServer } from '@api/domain/http/HttpServer'
+import { HttpStatusCodes } from '@api/domain/http/HttpStatusCodes'
+import { inject } from '@api/infra/dependency-injection/Registry'
 
 export class StatusController {
   @inject('httpServer')

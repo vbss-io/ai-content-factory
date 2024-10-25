@@ -1,8 +1,8 @@
-import { BatchIdError, DalleDimensionsError } from '@/@api/infra/errors/ErrorCatalog'
-import { Observable } from '@/@api/infra/events/Observer'
 import { type BatchConfigurationInput, type BatchConfigurationOutput, type BatchCreate, type BatchProcessUpdate, type BatchRestore } from '@/domain/entities/dtos/Batch.dto'
 import { ImageRequested, type ImageRequestedData } from '@/domain/events/ImageRequested'
 import { VideoRequested, type VideoRequestedData } from '@/domain/events/VideoRequested'
+import { BatchIdError, DalleDimensionsError } from '@api/infra/errors/ErrorCatalog'
+import { Observable } from '@api/infra/events/Observer'
 
 export class Batch extends Observable {
   id: string

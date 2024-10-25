@@ -1,4 +1,4 @@
-import { type HttpClientGetInput, type HttpClientPostInput } from '@/@api/domain/http/dtos/HttpClient.dto'
+import { type HttpClientGetInput, type HttpClientPostInput } from '@api/domain/http/dtos/HttpClient.dto'
 
 export interface HttpClient {
   get: ({ url, params, headers, responseType }: HttpClientGetInput) => Promise<any>

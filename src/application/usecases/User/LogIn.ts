@@ -1,9 +1,9 @@
-import { inject } from '@/@api/infra/dependency-injection/Registry'
-import { UserAuthenticationError } from '@/@api/infra/errors/ErrorCatalog'
 import { type LogInInput, type LogInOutput } from '@/application/usecases/User/dtos/LogIn.dto'
 import { type PasswordAuthentication } from '@/domain/auth/PasswordAuthentication'
 import { type UserRepository } from '@/domain/repositories/UserRepository'
 import { type TokenAuthentication } from '@/infra/auth/JWTAdapter'
+import { inject } from '@api/infra/dependency-injection/Registry'
+import { UserAuthenticationError } from '@api/infra/errors/ErrorCatalog'
 
 export class LogIn {
   @inject('userRepository')
