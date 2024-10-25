@@ -28,13 +28,14 @@ export class AutomaticRequestImage {
       const batch = Batch.create({
         prompt: response.prompt,
         images: [],
+        videos: [],
         ...batchConfiguration
       })
       const repositoryBatch = await this.batchRepository.create(batch)
       repositoryBatch.register('imageRequested', async (domainEvent: DomainEvent) => {
         await this.queue.publish(domainEvent.eventName, domainEvent.data)
       })
-      await repositoryBatch.request({ gateway, isAutomatic: true, dimensions: { width: response.width, height: response.height } })
+      await repositoryBatch.requestImage({ gateway, isAutomatic: true, dimensions: { width: response.width, height: response.height } })
     }
   }
 }
