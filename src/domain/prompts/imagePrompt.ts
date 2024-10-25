@@ -1,4 +1,4 @@
-export const prompt = `
+export const imagePrompt = `
   Act as a prompt generator for Midjourney and DALL·E artificial intelligence programs.
   Your job is to provide highly detailed and creative descriptions that inspire unique and interesting landscape images, specifically excluding human figures.
   The descriptions should evoke beautiful, tranquil, or fantastical scenes, with a focus on natural environments, surreal landscapes, and serene settings.

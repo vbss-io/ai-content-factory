@@ -1,7 +1,7 @@
 import { Batch } from '@/domain/entities/Batch'
 import { type DomainEvent } from '@/domain/events/DomainEvent'
 import { type PromptGateway } from '@/domain/gateways/PromptGateway'
-import { prompt } from '@/domain/prompt/prompts'
+import { imagePrompt } from '@/domain/prompts/imagePrompt'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { type Queue } from '@/infra/queue/Queue'
@@ -20,7 +20,7 @@ export class AutomaticRequestImage {
     const gateways = ['goApiMidjourney', 'openAiDalle3']
     // const gateways = ['automatic1111']
     for (const gateway of gateways) {
-      const promptToUse = prompt.replace('replace_gateway', gateway)
+      const promptToUse = imagePrompt.replace('replace_gateway', gateway)
       const response = await this.promptGateway.generatePrompt(promptToUse)
       let config = { size: 1, sampler: 'none', scheduler: 'none', steps: 0 }
       if (gateway === 'automatic1111') config = { size: 1, sampler: 'DPM++ 2M', scheduler: 'Karras', steps: 20 }
