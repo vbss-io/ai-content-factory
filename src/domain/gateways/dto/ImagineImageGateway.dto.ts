@@ -1,4 +1,4 @@
-export interface ImagineInput {
+export interface ImagineImageInput {
   prompt: string
   batch_size: number
   steps: number
@@ -11,7 +11,7 @@ export interface ImagineInput {
   isAutomaticCall?: boolean
 }
 
-export interface ImagineOutput {
+export interface ImagineImageOutput {
   images: string[]
   prompt: string
   negativePrompt: string
