@@ -7,6 +7,7 @@ export interface ImageDocument extends Document {
   seed: number
   path: string
   batchId: string
+  likes: number
   createdAt: Date
   updatedAt: Date
 }
@@ -18,7 +19,8 @@ const ImageSchema: Schema = new Schema(
     aspectRatio: { type: String, required: true },
     seed: { type: String, required: true },
     path: { type: String, required: true },
-    batchId: { type: Schema.ObjectId, ref: 'Batch' }
+    batchId: { type: Schema.ObjectId, ref: 'Batch' },
+    likes: { type: Number, required: true, default: 0 }
   },
   { timestamps: true, versionKey: false }
 )
