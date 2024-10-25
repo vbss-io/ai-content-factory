@@ -108,3 +108,21 @@ export class PromptGenerationError extends CustomError {
     super(HttpStatusCodes.BadRequest, 'Error to generate prompt')
   }
 }
+
+export class UserNotSet extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'Cannot access user')
+  }
+}
+
+export class ProcessVideoError extends CustomError {
+  constructor (message: string) {
+    super(HttpStatusCodes.BadRequest, message)
+  }
+}
+
+export class VideoNotFoundError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.NotFound, 'Video Not found')
+  }
+}
