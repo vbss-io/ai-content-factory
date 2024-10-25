@@ -1,4 +1,4 @@
-import { type ImagineInput, type ImagineOutput } from '@/domain/gateways/dto/ImagineImageGateway.dto'
+import { type ImagineImageInput, type ImagineImageOutput } from '@/domain/gateways/dto/ImagineImageGateway.dto'
 import { type ImagineImageGateway } from '@/domain/gateways/ImagineImageGateway'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { type HttpClient } from '@/infra/http/HttpClient'
@@ -12,7 +12,7 @@ export class OpenAIDalle3GatewayHttp implements ImagineImageGateway {
   @inject('httpClient')
   private readonly httpClient!: HttpClient
 
-  async imagine (input: ImagineInput): Promise<ImagineOutput> {
+  async imagine (input: ImagineImageInput): Promise<ImagineImageOutput> {
     const dimensions = `${input.width}x${input.height}`
     const request = await this.httpClient.post({
       url: `${this.url}/v1/images/generations`,

@@ -1,6 +1,6 @@
-import { AspectRatio } from '@/domain/entities/vo/AspectRatio'
-import { type ImagineInput, type ImagineOutput } from '@/domain/gateways/dto/ImagineImageGateway.dto'
+import { type ImagineImageInput, type ImagineImageOutput } from '@/domain/gateways/dto/ImagineImageGateway.dto'
 import { type ImagineImageGateway } from '@/domain/gateways/ImagineImageGateway'
+import { AspectRatio } from '@/domain/vo/AspectRatio'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { type HttpClient } from '@/infra/http/HttpClient'
 
@@ -15,7 +15,7 @@ export class GoAPIMidjourneyGatewayHttp implements ImagineImageGateway {
   @inject('httpClient')
   private readonly httpClient!: HttpClient
 
-  async imagine (input: ImagineInput): Promise<ImagineOutput> {
+  async imagine (input: ImagineImageInput): Promise<ImagineImageOutput> {
     const aspectRatio = new AspectRatio(input.width, input.height)
     const request = await this.httpClient.post({
       url: `${this.url}/mj/v2/imagine`,
@@ -139,7 +139,7 @@ export class GoAPIMidjourneyGatewayHttp implements ImagineImageGateway {
       steps: 0,
       model: 'Midjourney',
       origin: 'GoApi.ai',
-      taskId: 'any'
+      taskId: request.task_id
     }
   }
 
