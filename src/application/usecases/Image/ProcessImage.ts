@@ -30,6 +30,7 @@ export class ProcessImage {
       height: input.dimensions.height,
       sampler_index: batch.sampler
     })
+    batch.setTaskId(output?.taskId ?? 'none')
     if (output.errorMessage) {
       batch.error(output.errorMessage)
       await this.batchRepository.update(batch)

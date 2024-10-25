@@ -19,13 +19,15 @@ export class RequestImage {
     const batch = Batch.create({
       prompt: input.prompt,
       images: [],
+      videos: [],
+      type: 'image',
       ...batchConfiguration
     })
     const repositoryBatch = await this.batchRepository.create(batch)
     repositoryBatch.register('imageRequested', async (domainEvent: DomainEvent) => {
       await this.queue.publish(domainEvent.eventName, domainEvent.data)
     })
-    await repositoryBatch.request({ gateway: input.gateway, dimensions: { width: input.width, height: input.height } })
+    await repositoryBatch.requestImage({ gateway: input.gateway, dimensions: { width: input.width, height: input.height } })
     return {
       batchId: repositoryBatch.id,
       batchStatus: batch.status
