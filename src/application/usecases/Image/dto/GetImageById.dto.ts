@@ -2,9 +2,10 @@ import { type Image } from '@/domain/entities/Image'
 
 export interface GetImageByIdInput {
   id: string
+  username?: string
 }
 
-export type GetImageByIdOutput = Image & {
+export type GetImageByIdOutput = Omit<Image, 'increaseLikes' | 'decreaseLikes'> & {
   prompt: string
   negativePrompt: string
   sampler: string
@@ -12,4 +13,5 @@ export type GetImageByIdOutput = Image & {
   steps: number
   origin: string
   modelName: string
+  userLiked: boolean
 }
