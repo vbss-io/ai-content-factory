@@ -6,6 +6,8 @@ export interface UserCreate {
 
 export type UserRestore = UserCreate & {
   id: string
+  imageLikes: string[]
+  videoLikes: string[]
   createdAt: Date
   updatedAt: Date
 }
