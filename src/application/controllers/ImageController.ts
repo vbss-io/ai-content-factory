@@ -3,10 +3,12 @@ import { type GetImageById } from '@/application/usecases/Image/GetImageById'
 import { type GetImageFilters } from '@/application/usecases/Image/GetImageFilters'
 import { type GetImages } from '@/application/usecases/Image/GetImages'
 import { type GetRandomLandscapeImage } from '@/application/usecases/Image/GetRandomLandscapeImage'
+import { type LikeImage } from '@/application/usecases/Image/LikeImage'
 import { type ProcessImage } from '@/application/usecases/Image/ProcessImage'
 import { type RequestImage } from '@/application/usecases/Image/RequestImage'
 import { type ImageRequestedData } from '@/domain/events/ImageRequested'
 import { inject } from '@/infra/dependency-injection/Registry'
+import { type RequestFacade } from '@/infra/facade/RequestFacade'
 import type { HttpServer } from '@/infra/http/HttpServer'
 import { HttpStatusCodes } from '@/infra/http/HttpStatusCodes'
 import { type Queue } from '@/infra/queue/Queue'
@@ -18,6 +20,9 @@ import { type InputValidate } from '@/infra/validate/InputValidate'
 export class ImageController {
   @inject('httpServer')
   private readonly httpServer!: HttpServer
+
+  @inject('requestFacade')
+  private readonly requestFacade!: RequestFacade
 
   @inject('queue')
   private readonly queue!: Queue
@@ -52,6 +57,9 @@ export class ImageController {
   @inject('getImageFilters')
   private readonly getImageFilters!: GetImageFilters
 
+  @inject('likeImage')
+  private readonly likeImage!: LikeImage
+
   constructor () {
     this.httpServer.register('post', '/image', async (params: RequestImageInput) => {
       const inputParsed = this.requestImageValidate.validate(params)
@@ -59,8 +67,9 @@ export class ImageController {
     }, HttpStatusCodes.Created)
 
     this.httpServer.register('get', '/image', async (params: ByIdInput) => {
+      const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      return await this.getImageById.execute(inputParsed)
+      return await this.getImageById.execute({ ...inputParsed, username: user?.username })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('delete', '/image', async (params: ByIdInput) => {
@@ -80,6 +89,12 @@ export class ImageController {
 
     this.httpServer.register('get', '/image/filters', async () => {
       return await this.getImageFilters.execute()
+    }, HttpStatusCodes.OK)
+
+    this.httpServer.register('patch', '/image/like', async (params: ByIdInput) => {
+      const user = this.requestFacade.getUser()
+      const inputParsed = this.byIdValidate.validate(params)
+      await this.likeImage.execute({ ...inputParsed, username: user?.username as string })
     }, HttpStatusCodes.OK)
 
     void this.queue.consume('imageRequested.processImage', async (input: ImageRequestedData) => {
