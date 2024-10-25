@@ -13,6 +13,7 @@ export class BatchRepositoryMongo implements BatchRepository {
       steps: batch.steps,
       modelName: batch.modelName,
       images: batch.images,
+      videos: batch.videos,
       origin: batch.origin,
       size: batch.size
     })
@@ -53,7 +54,7 @@ export class BatchRepositoryMongo implements BatchRepository {
     if (status) Object.assign(findOptions, { status })
     if (origin) Object.assign(findOptions, { origin })
     if (modelName) Object.assign(findOptions, { modelName })
-    const batchDocs = await BatchModel.find(findOptions).skip(offset).limit(pageSize)
+    const batchDocs = await BatchModel.find(findOptions).sort({ _id: -1 }).skip(offset).limit(pageSize)
     return batchDocs.map((batchDoc) => {
       return this.toDomain(batchDoc)
     })
@@ -71,8 +72,11 @@ export class BatchRepositoryMongo implements BatchRepository {
       steps: batchDoc.steps,
       modelName: batchDoc.modelName,
       images: batchDoc.images,
+      videos: batchDoc.videos,
       origin: batchDoc.origin,
       size: batchDoc.size,
+      type: batchDoc.type,
+      taskId: batchDoc.taskId,
       errorMessage: batchDoc.errorMessage,
       createdAt: batchDoc.createdAt,
       updatedAt: batchDoc.updatedAt
