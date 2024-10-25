@@ -9,6 +9,7 @@ export interface ImageCreate {
 export type ImageRestore = ImageCreate & {
   id: string
   aspectRatio: string
+  likes: number
   createdAt: Date
   updatedAt: Date
 }

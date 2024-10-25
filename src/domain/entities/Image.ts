@@ -1,8 +1,9 @@
 import { type ImageCreate, type ImageRestore } from '@/domain/entities/dto/Image.dto'
-import { AspectRatio } from './vo/AspectRatio'
+import { AspectRatio } from '@/domain/vo/AspectRatio'
 
 export class Image {
   id: string
+  likes: number
 
   private constructor (
     id: string,
@@ -12,10 +13,12 @@ export class Image {
     readonly seed: number,
     readonly path: string,
     readonly batchId: string,
+    likes: number,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
     this.id = id
+    this.likes = likes
   }
 
   static create (input: ImageCreate): Image {
@@ -28,7 +31,8 @@ export class Image {
       aspectRatio.getValue(),
       input.seed,
       input.path,
-      input.batchId
+      input.batchId,
+      0
     )
   }
 
@@ -41,8 +45,18 @@ export class Image {
       input.seed,
       input.path,
       input.batchId,
+      input.likes,
       input.createdAt,
       input.updatedAt
     )
+  }
+
+  increaseLikes (): void {
+    this.likes = this.likes + 1
+  }
+
+  decreaseLikes (): void {
+    if (this.likes === 0) return
+    this.likes = this.likes - 1
   }
 }
