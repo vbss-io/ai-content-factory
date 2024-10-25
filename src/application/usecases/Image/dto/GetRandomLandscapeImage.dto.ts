@@ -1,6 +1,6 @@
 import { type Image } from '@/domain/entities/Image'
 
-export type GetRandomLandscapeImageOutput = Image & {
+export type GetRandomLandscapeImageOutput = Omit<Image, 'increaseLikes' | 'decreaseLikes'> & {
   prompt: string
   negativePrompt: string
   sampler: string
