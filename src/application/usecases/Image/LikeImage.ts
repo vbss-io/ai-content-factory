@@ -1,8 +1,8 @@
+import { inject } from '@/@api/infra/dependency-injection/Registry'
+import { ImageNotFoundError, UserAuthenticationError } from '@/@api/infra/errors/ErrorCatalog'
 import { type LikeImageInput } from '@/application/usecases/Image/dtos/LikeImage.dto'
 import { type ImageRepository } from '@/domain/repositories/ImageRepository'
 import { type UserRepository } from '@/domain/repositories/UserRepository'
-import { inject } from '@/infra/dependency-injection/Registry'
-import { ImageNotFoundError, UserAuthenticationError } from '@/infra/errors/ErrorCatalog'
 
 export class LikeImage {
   @inject('userRepository')

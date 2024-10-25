@@ -1,10 +1,10 @@
+import { inject } from '@/@api/infra/dependency-injection/Registry'
+import { ImageNotFoundError } from '@/@api/infra/errors/ErrorCatalog'
 import { type DeleteImageByIdInput } from '@/application/usecases/Image/dtos/DeleteImageById.dto'
 import { type Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type ImageRepository } from '@/domain/repositories/ImageRepository'
 import { type ImageStorage } from '@/domain/storage/ImageStorage'
-import { inject } from '@/infra/dependency-injection/Registry'
-import { ImageNotFoundError } from '@/infra/errors/ErrorCatalog'
 
 export class DeleteImageById {
   @inject('imageRepository')

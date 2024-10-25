@@ -1,4 +1,4 @@
-import { type Queue } from '@/domain/queue/Queue'
+import { type Queue } from '@/@api/domain/queue/Queue'
 
 export class InMemoryQueueAdapter implements Queue {
   private readonly queues: Map<string, any[]>

@@ -6,6 +6,9 @@
       "@/*": [
         "./src/*"
       ],
+      "@api/*": [
+        "./src/@api/*"
+      ]
     },
     "outDir": "./build",
     "resolveJsonModule": true,

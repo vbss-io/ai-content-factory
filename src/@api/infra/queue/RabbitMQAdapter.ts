@@ -1,5 +1,5 @@
-import { type Queue } from '@/domain/queue/Queue'
-import { QueueConnectionError } from '@/infra/errors/ErrorCatalog'
+import { type Queue } from '@/@api/domain/queue/Queue'
+import { QueueConnectionError } from '@/@api/infra/errors/ErrorCatalog'
 import amqp from 'amqplib'
 
 export class RabbitMQAdapter implements Queue {

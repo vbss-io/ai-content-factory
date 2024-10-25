@@ -1,10 +1,10 @@
+import { inject } from '@/@api/infra/dependency-injection/Registry'
+import { BatchNotFoundError, ProcessImageError } from '@/@api/infra/errors/ErrorCatalog'
 import { type ProcessImageInput } from '@/application/usecases/Image/dtos/ProcessImage.dto'
 import { Image } from '@/domain/entities/Image'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type ImageRepository } from '@/domain/repositories/ImageRepository'
 import { type ImageStorage } from '@/domain/storage/ImageStorage'
-import { inject } from '@/infra/dependency-injection/Registry'
-import { BatchNotFoundError, ProcessImageError } from '@/infra/errors/ErrorCatalog'
 import { ImagineImageGatewayFactory } from '@/infra/gateways/ImagineImageGatewayFactory'
 
 export class ProcessImage {

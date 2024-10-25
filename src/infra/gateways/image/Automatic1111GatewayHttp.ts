@@ -1,7 +1,7 @@
+import { type HttpClient } from '@/@api/domain/http/HttpClient'
+import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type ImagineImageInput, type ImagineImageOutput } from '@/domain/gateways/dtos/ImagineImageGateway.dto'
 import { type ImagineImageGateway } from '@/domain/gateways/ImagineImageGateway'
-import { type HttpClient } from '@/domain/http/HttpClient'
-import { inject } from '@/infra/dependency-injection/Registry'
 
 export class Automatic1111GatewayHttp implements ImagineImageGateway {
   protected url = process.env.STABLE_DIFFUSION_URL

@@ -1,11 +1,11 @@
+import { type DomainEvent } from '@/@api/domain/events/DomainEvent'
+import { type Queue } from '@/@api/domain/queue/Queue'
+import { inject } from '@/@api/infra/dependency-injection/Registry'
+import { ImageNotFoundError } from '@/@api/infra/errors/ErrorCatalog'
 import { type RequestVideoOutput } from '@/application/usecases/Video/dtos/RequestVideo.dto'
 import { Batch } from '@/domain/entities/Batch'
-import { type DomainEvent } from '@/domain/events/DomainEvent'
-import { type Queue } from '@/domain/queue/Queue'
 import { type BatchRepository } from '@/domain/repositories/BatchRepository'
 import { type ImageRepository } from '@/domain/repositories/ImageRepository'
-import { inject } from '@/infra/dependency-injection/Registry'
-import { ImageNotFoundError } from '@/infra/errors/ErrorCatalog'
 import { type RequestVideoInput } from '@/infra/schemas/RequestVideoSchema'
 
 export class RequestVideo {

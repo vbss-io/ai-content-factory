@@ -1,3 +1,6 @@
+import { type Queue } from '@/@api/domain/queue/Queue'
+import { inject, Registry } from '@/@api/infra/dependency-injection/Registry'
+import { ZodAdapter } from '@/@api/infra/validate/ZodAdapter'
 import { ImageController } from '@/application/controllers/ImageController'
 import { DeleteImageById } from '@/application/usecases/Image/DeleteImageById'
 import { GetImageById } from '@/application/usecases/Image/GetImageById'
@@ -7,14 +10,11 @@ import { GetRandomLandscapeImage } from '@/application/usecases/Image/GetRandomL
 import { LikeImage } from '@/application/usecases/Image/LikeImage'
 import { ProcessImage } from '@/application/usecases/Image/ProcessImage'
 import { RequestImage } from '@/application/usecases/Image/RequestImage'
-import { type Queue } from '@/domain/queue/Queue'
-import { inject, Registry } from '@/infra/dependency-injection/Registry'
 import { GetImageFiltersQueryMongo } from '@/infra/queries/GetImageFiltersMongo'
 import { ImageRepositoryMongo } from '@/infra/repositories/ImageRepositoryMongo'
 import { ByIdSchema } from '@/infra/schemas/ByIdSchema'
 import { GetAllSchema } from '@/infra/schemas/GetAllSchema'
 import { RequestImageSchema } from '@/infra/schemas/RequestImageSchema'
-import { ZodAdapter } from '@/infra/validate/ZodAdapter'
 
 export class ImageModule {
   @inject('queue')

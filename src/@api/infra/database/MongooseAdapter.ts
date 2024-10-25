@@ -1,5 +1,5 @@
-import { type DatabaseConnection } from '@/domain/database/DatabaseConnection'
-import { DatabaseConnectionError } from '@/infra/errors/ErrorCatalog'
+import { type DatabaseConnection } from '@/@api/domain/database/DatabaseConnection'
+import { DatabaseConnectionError } from '@/@api/infra/errors/ErrorCatalog'
 import mongoose from 'mongoose'
 
 export class MongooseAdapter implements DatabaseConnection {

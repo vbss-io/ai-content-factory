@@ -1,4 +1,4 @@
-import { type InputValidate } from '@/domain/validate/InputValidate'
+import { type InputValidate } from '@/@api/domain/validate/InputValidate'
 import { type ZodSchema } from 'zod'
 
 export class ZodAdapter<T> implements InputValidate<T> {

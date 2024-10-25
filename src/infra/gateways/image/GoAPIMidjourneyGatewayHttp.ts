@@ -1,8 +1,8 @@
+import { type HttpClient } from '@/@api/domain/http/HttpClient'
+import { inject } from '@/@api/infra/dependency-injection/Registry'
 import { type ImagineImageInput, type ImagineImageOutput } from '@/domain/gateways/dtos/ImagineImageGateway.dto'
 import { type ImagineImageGateway } from '@/domain/gateways/ImagineImageGateway'
-import { type HttpClient } from '@/domain/http/HttpClient'
 import { AspectRatio } from '@/domain/vos/AspectRatio'
-import { inject } from '@/infra/dependency-injection/Registry'
 
 export class GoAPIMidjourneyGatewayHttp implements ImagineImageGateway {
   protected DELAY = 120000

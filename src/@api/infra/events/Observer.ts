@@ -1,4 +1,4 @@
-import type { DomainEvent } from '@/domain/events/DomainEvent'
+import type { DomainEvent } from '@/@api/domain/events/DomainEvent'
 
 export class Observable {
   observers: Array<{ eventName: string, callback: any }>

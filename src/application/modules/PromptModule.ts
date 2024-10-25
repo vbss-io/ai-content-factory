@@ -1,4 +1,4 @@
-import { Registry } from '@/infra/dependency-injection/Registry'
+import { Registry } from '@/@api/infra/dependency-injection/Registry'
 import { GptGatewayHttp } from '@/infra/gateways/prompt/GptPromptGatewayHttp'
 
 export class PromptModule {

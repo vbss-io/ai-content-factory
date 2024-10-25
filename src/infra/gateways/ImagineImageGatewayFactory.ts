@@ -1,5 +1,5 @@
+import { GatewayNotImplemented } from '@/@api/infra/errors/ErrorCatalog'
 import { type ImagineImageGateway } from '@/domain/gateways/ImagineImageGateway'
-import { GatewayNotImplemented } from '@/infra/errors/ErrorCatalog'
 import { Automatic1111GatewayHttp } from '@/infra/gateways/image/Automatic1111GatewayHttp'
 import { GoAPIMidjourneyGatewayHttp } from '@/infra/gateways/image/GoAPIMidjourneyGatewayHttp'
 import { OpenAIDalle3GatewayHttp } from '@/infra/gateways/image/OpenApiDalle3GatewayHttp'

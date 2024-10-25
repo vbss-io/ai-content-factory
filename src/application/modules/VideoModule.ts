@@ -1,3 +1,6 @@
+import { type Queue } from '@/@api/domain/queue/Queue'
+import { inject, Registry } from '@/@api/infra/dependency-injection/Registry'
+import { ZodAdapter } from '@/@api/infra/validate/ZodAdapter'
 import { VideoController } from '@/application/controllers/VideoController'
 import { DeleteVideoById } from '@/application/usecases/Video/DeleteVideoByIdInput'
 import { GetVideoById } from '@/application/usecases/Video/GetVideoById'
@@ -6,12 +9,9 @@ import { GetVideos } from '@/application/usecases/Video/GetVideos'
 import { LikeVideo } from '@/application/usecases/Video/LikeVideo'
 import { ProcessVideo } from '@/application/usecases/Video/ProcessVideo'
 import { RequestVideo } from '@/application/usecases/Video/RequestVideo'
-import { type Queue } from '@/domain/queue/Queue'
-import { inject, Registry } from '@/infra/dependency-injection/Registry'
 import { GetVideoFiltersQueryMongo } from '@/infra/queries/GetVideoFiltersMongo'
 import { VideoRepositoryMongo } from '@/infra/repositories/VideoRepositoryMongo'
 import { RequestVideoSchema } from '@/infra/schemas/RequestVideoSchema'
-import { ZodAdapter } from '@/infra/validate/ZodAdapter'
 
 export class VideoModule {
   @inject('queue')

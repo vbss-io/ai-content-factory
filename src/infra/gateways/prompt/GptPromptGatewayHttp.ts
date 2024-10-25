@@ -1,8 +1,8 @@
+import { type HttpClient } from '@/@api/domain/http/HttpClient'
+import { inject } from '@/@api/infra/dependency-injection/Registry'
+import { PromptGenerationError } from '@/@api/infra/errors/ErrorCatalog'
 import { type PromptOutput } from '@/domain/gateways/dtos/PromptGateway.dto'
 import { type PromptGateway } from '@/domain/gateways/PromptGateway'
-import { type HttpClient } from '@/domain/http/HttpClient'
-import { inject } from '@/infra/dependency-injection/Registry'
-import { PromptGenerationError } from '@/infra/errors/ErrorCatalog'
 
 export class GptGatewayHttp implements PromptGateway {
   protected url = process.env.OPENAI_URL

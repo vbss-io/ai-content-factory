@@ -1,5 +1,5 @@
-import { type HttpClientGetInput, type HttpClientPostInput } from '@/domain/http/dtos/HttpClient.dto'
-import { type HttpClient } from '@/domain/http/HttpClient'
+import { type HttpClientGetInput, type HttpClientPostInput } from '@/@api/domain/http/dtos/HttpClient.dto'
+import { type HttpClient } from '@/@api/domain/http/HttpClient'
 import supertest from 'supertest'
 import { type App } from 'supertest/types'
 
