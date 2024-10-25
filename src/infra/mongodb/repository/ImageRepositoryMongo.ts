@@ -69,7 +69,7 @@ export class ImageRepositoryMongo implements ImageRepository {
     if (aspectRatio) aggregateOptions.push({ $match: { aspectRatio } })
     if (origin) aggregateOptions.push({ $match: { 'batch.origin': origin } })
     if (modelName) aggregateOptions.push({ $match: { 'batch.modelName': modelName } })
-    const imageDocs = await ImageModel.aggregate(aggregateOptions).skip(offset).limit(pageSize).exec()
+    const imageDocs = await ImageModel.aggregate(aggregateOptions).sort({ likes: -1, _id: -1 }).skip(offset).limit(pageSize)
     return imageDocs.map((imageDoc) => {
       return this.toDomain(imageDoc as ImageDocument)
     })
@@ -94,8 +94,9 @@ export class ImageRepositoryMongo implements ImageRepository {
       seed: imageDoc.seed,
       path: imageDoc.path,
       batchId: String(imageDoc.batchId),
-      createdAt: imageDoc.createdAt,
-      updatedAt: imageDoc.updatedAt
+      likes: imageDoc?.likes ?? 0,
+      createdAt: new Date(imageDoc.createdAt),
+      updatedAt: new Date(imageDoc.updatedAt)
     })
   }
 }
