@@ -1,10 +1,10 @@
+import { type DeleteVideoByIdInput } from '@/application/usecases/Video/dto/DeleteVideoByIdInput.dto'
 import { type Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { type VideoRepository } from '@/domain/repository/VideoRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { VideoNotFoundError } from '@/infra/error/ErrorCatalog'
 import { type VideoStorage } from '@/infra/storage/VideoStorage'
-import { type DeleteVideoByIdInput } from './dto/DeleteVideoByIdInput.dto'
 
 export class DeleteVideoById {
   @inject('videoRepository')

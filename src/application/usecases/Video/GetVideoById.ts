@@ -1,10 +1,10 @@
+import { type GetVideoByIdInput, type GetVideoByIdOutput } from '@/application/usecases/Video/dto/GetVideoById.dto'
 import { type Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { type UserRepository } from '@/domain/repository/UserRepository'
 import { type VideoRepository } from '@/domain/repository/VideoRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { UserAuthenticationError, VideoNotFoundError } from '@/infra/error/ErrorCatalog'
-import { type GetVideoByIdInput, type GetVideoByIdOutput } from './dto/GetVideoById.dto'
 
 export class GetVideoById {
   @inject('videoRepository')

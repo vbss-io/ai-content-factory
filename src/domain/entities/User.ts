@@ -1,4 +1,4 @@
-import { type UserCreate, type UserRestore } from './dto/User.dto'
+import { type UserCreate, type UserRestore } from '@/domain/entities/dto/User.dto'
 
 export class User {
   id: string

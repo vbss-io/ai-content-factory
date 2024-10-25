@@ -1,6 +1,6 @@
 import 'dotenv/config'
 
-import { CheckStatus } from '@/application/usecases/CheckStatus'
+import { CheckStatus } from '@/application/usecases/Status/CheckStatus'
 
 const checkStatus = new CheckStatus()
 

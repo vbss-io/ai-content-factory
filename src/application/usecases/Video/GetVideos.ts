@@ -1,6 +1,6 @@
+import { type GetVideosInput, type GetVideosOutput } from '@/application/usecases/Video/dto/GetVideos.dto'
 import { type VideoRepository } from '@/domain/repository/VideoRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { type GetVideosInput, type GetVideosOutput } from './dto/GetVideos.dto'
 
 export class GetVideos {
   @inject('videoRepository')

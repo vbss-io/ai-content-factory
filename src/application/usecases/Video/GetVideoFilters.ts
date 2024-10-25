@@ -1,6 +1,6 @@
+import { type GetVideoFiltersOutput } from '@/application/usecases/Video/dto/GetVideoFilters.dto'
 import { type GetVideoFiltersQuery } from '@/domain/queries/GetVideoFiltersQuery'
 import { inject } from '@/infra/dependency-injection/Registry'
-import { type GetVideoFiltersOutput } from './dto/GetVideoFilters.dto'
 
 export class GetVideoFilters {
   @inject('getVideoFiltersQuery')

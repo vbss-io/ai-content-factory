@@ -1,8 +1,8 @@
+import { type TokenAuthentication } from '@/infra/auth/TokenAuthentication'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { AuthError, MissingAuthorizationToken } from '@/infra/error/ErrorCatalog'
 import { type RequestFacade } from '@/infra/facade/RequestFacade'
 import type { NextFunction, Request, Response } from 'express'
-import { type TokenAuthentication } from './TokenAuthentication'
 
 export interface AuthHandler {
   handle: (req: any, res: any, next: any) => Promise<any>

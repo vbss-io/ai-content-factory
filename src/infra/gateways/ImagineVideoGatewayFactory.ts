@@ -1,6 +1,6 @@
 import { type ImagineVideoGateway } from '@/domain/gateways/ImagineVideoGateway'
 import { GatewayNotImplemented } from '@/infra/error/ErrorCatalog'
-import { LumaLabsGatewayHttp } from './LumaLabsGatewayHttp'
+import { LumaLabsGatewayHttp } from '@/infra/gateways/LumaLabsGatewayHttp'
 
 export class ImagineVideoGatewayFactory {
   static create (gateway: string): ImagineVideoGateway {

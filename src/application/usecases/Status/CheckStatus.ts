@@ -1,4 +1,4 @@
-import { type CheckStatusOutput } from './dto/CheckStatus.dto'
+import { type CheckStatusOutput } from '@/application/usecases/Status/dto/CheckStatus.dto'
 
 export class CheckStatus {
   async execute (): Promise<CheckStatusOutput> {

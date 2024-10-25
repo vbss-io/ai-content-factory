@@ -1,9 +1,9 @@
+import { type GetRandomLandscapeImageOutput } from '@/application/usecases/Image/dto/GetRandomLandscapeImage.dto'
 import { type Batch } from '@/domain/entities/Batch'
 import { type BatchRepository } from '@/domain/repository/BatchRepository'
 import { type ImageRepository } from '@/domain/repository/ImageRepository'
 import { inject } from '@/infra/dependency-injection/Registry'
 import { ImageNotFoundError } from '@/infra/error/ErrorCatalog'
-import { type GetRandomLandscapeImageOutput } from './dto/GetRandomLandscapeImage.dto'
 
 export class GetRandomLandscapeImage {
   @inject('imageRepository')
