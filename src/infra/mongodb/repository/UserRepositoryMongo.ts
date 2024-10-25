@@ -34,6 +34,8 @@ export class UserRepositoryMongo implements UserRepository {
       id: id.toString(),
       username: userDoc.username,
       hash: userDoc.hash,
+      imageLikes: userDoc.imageLikes,
+      videoLikes: userDoc.videoLikes,
       role: userDoc.role,
       createdAt: userDoc.createdAt,
       updatedAt: userDoc.updatedAt
