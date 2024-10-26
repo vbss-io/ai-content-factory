@@ -1,5 +1,7 @@
 import { type Queue } from '@api/domain/queue/Queue'
 
+const isTestEnvironment = process.env.NODE_ENV === 'test'
+
 export class InMemoryQueueAdapter implements Queue {
   private readonly queues: Map<string, any[]>
 
@@ -7,9 +9,7 @@ export class InMemoryQueueAdapter implements Queue {
     this.queues = new Map()
   }
 
-  async connect (): Promise<void> {
-    console.log('Connected to in-memory queue')
-  }
+  async connect (): Promise<void> {}
 
   async register (queueName: string): Promise<void> {
     if (!this.queues.has(queueName)) {
@@ -48,7 +48,7 @@ export class InMemoryQueueAdapter implements Queue {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    setInterval(async () => {
+    !isTestEnvironment && setInterval(async () => {
       await processQueue()
     }, 1000)
   }

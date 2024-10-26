@@ -1,5 +1,4 @@
-import { type AuthHandler } from '@/domain/auth/AuthHandler'
-import { type Cron } from '@api/domain/cron/Cron'
+import { type AuthHandler } from '@/auth/domain/auth/AuthHandler'
 import { type ErrorHandler } from '@api/domain/errors/ErrorHandler'
 import { type HttpServer } from '@api/domain/http/HttpServer'
 import { inject } from '@api/infra/dependency-injection/Registry'
@@ -13,9 +12,6 @@ export class ExpressAdapter implements HttpServer {
 
   @inject('authHandler')
   private readonly authHandler!: AuthHandler
-
-  @inject('cron')
-  private readonly cron!: Cron
 
   app: any
 
@@ -36,12 +32,9 @@ export class ExpressAdapter implements HttpServer {
     })
   }
 
-  async start (port?: number): Promise<any> {
-    this.app.use('/*', () => {
-      throw new NotFoundError()
-    })
+  start (port?: number): any {
+    this.app.use('/*', () => { throw new NotFoundError() })
     this.app.use(this.errorHandler.handle)
-    await this.cron.start()
     return this.app.listen(port)
   }
 }

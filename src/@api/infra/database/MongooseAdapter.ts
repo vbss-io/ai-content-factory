@@ -1,5 +1,5 @@
 import { type DatabaseConnection } from '@api/domain/database/DatabaseConnection'
-import { DatabaseConnectionError } from '@api/infra/errors/ErrorCatalog'
+import { DatabaseConnectionCloseError, DatabaseConnectionError } from '@api/infra/errors/ErrorCatalog'
 import mongoose from 'mongoose'
 
 export class MongooseAdapter implements DatabaseConnection {
@@ -14,6 +14,14 @@ export class MongooseAdapter implements DatabaseConnection {
       await mongoose.connect(this.connection)
     } catch {
       throw new DatabaseConnectionError()
+    }
+  }
+
+  async close (): Promise<void> {
+    try {
+      await mongoose.connection.close()
+    } catch {
+      throw new DatabaseConnectionCloseError()
     }
   }
 }
