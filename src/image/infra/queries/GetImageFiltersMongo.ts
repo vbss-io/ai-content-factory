@@ -5,11 +5,11 @@ import { ImageModel } from '@/image/infra/mongoose/ImageModel'
 
 export class GetImageFiltersQueryMongo implements GetImageFiltersQuery {
   async execute (): Promise<GetImageFiltersQueryOutput> {
-    const sampler = await BatchModel.find({}, { _id: 0, sampler: 1 }).distinct('sampler')
-    const scheduler = await BatchModel.find({}, { _id: 0, scheduler: 1 }).distinct('scheduler')
     const aspectRatio = await ImageModel.find({}, { _id: 0, aspectRatio: 1 }).distinct('aspectRatio')
-    const origin = await BatchModel.find({}, { _id: 0, origin: 1 }).distinct('origin')
-    const modelName = await BatchModel.find({}, { _id: 0, modelName: 1 }).distinct('modelName')
+    const sampler = await BatchModel.find({ images: { $exists: true, $ne: [] } }, { _id: 0, sampler: 1 }).distinct('sampler')
+    const scheduler = await BatchModel.find({ images: { $exists: true, $ne: [] } }, { _id: 0, scheduler: 1 }).distinct('scheduler')
+    const origin = await BatchModel.find({ images: { $exists: true, $ne: [] } }, { _id: 0, origin: 1 }).distinct('origin')
+    const modelName = await BatchModel.find({ images: { $exists: true, $ne: [] } }, { _id: 0, modelName: 1 }).distinct('modelName')
     return {
       sampler,
       scheduler,
