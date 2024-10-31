@@ -36,6 +36,9 @@ export class GetImageById {
       steps: batch.steps,
       origin: batch.origin,
       modelName: batch.modelName,
+      authorName: batch.authorName,
+      automatic: batch.automatic,
+      owner: username ? batch.authorName === username : false,
       userLiked
     }
   }

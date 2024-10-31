@@ -1,7 +1,6 @@
 import { Batch } from '@/batch/domain/entities/Batch'
 import { type BatchRepository } from '@/batch/domain/repositories/BatchRepository'
-import { type RequestImageOutput } from '@/image/application/usecases/dtos/RequestImage.dto'
-import { type RequestImageInput } from '@/image/infra/schemas/RequestImageSchema'
+import { type RequestImageInput, type RequestImageOutput } from '@/image/application/usecases/dtos/RequestImage.dto'
 import { type DomainEvent } from '@api/domain/events/DomainEvent'
 import { type Queue } from '@api/domain/queue/Queue'
 import { inject } from '@api/infra/dependency-injection/Registry'
@@ -18,9 +17,9 @@ export class RequestImage {
     const batchConfiguration = Batch.getConfigurations(input.gateway, inputConfiguration)
     const batch = Batch.create({
       prompt: input.prompt,
-      images: [],
-      videos: [],
-      type: 'image',
+      author: input.author,
+      authorName: input.authorName,
+      automatic: false,
       ...batchConfiguration
     })
     const repositoryBatch = await this.batchRepository.create(batch)

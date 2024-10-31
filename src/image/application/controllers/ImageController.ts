@@ -62,8 +62,9 @@ export class ImageController {
 
   constructor () {
     this.httpServer.register('post', '/image', async (params: RequestImageInput) => {
+      const user = this.requestFacade.getUser()
       const inputParsed = this.requestImageValidate.validate(params)
-      return await this.requestImage.execute(inputParsed)
+      return await this.requestImage.execute({ ...inputParsed, author: user?.id as string, authorName: user?.username as string })
     }, HttpStatusCodes.Created)
 
     this.httpServer.register('get', '/image', async (params: ByIdInput) => {

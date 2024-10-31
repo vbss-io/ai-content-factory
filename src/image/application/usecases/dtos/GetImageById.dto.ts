@@ -13,5 +13,8 @@ export type GetImageByIdOutput = Omit<Image, 'increaseLikes' | 'decreaseLikes'> 
   steps: number
   origin: string
   modelName: string
+  authorName: string
+  automatic: boolean
+  owner: boolean
   userLiked: boolean
 }
