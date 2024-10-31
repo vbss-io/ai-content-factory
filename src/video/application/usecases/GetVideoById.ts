@@ -33,6 +33,9 @@ export class GetVideoById {
       negativePrompt: batch.negativePrompt,
       origin: batch.origin,
       modelName: batch.modelName,
+      authorName: batch.authorName,
+      automatic: batch.automatic,
+      owner: batch.authorName === username,
       userLiked
     }
   }

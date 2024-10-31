@@ -58,8 +58,9 @@ export class VideoController {
 
   constructor () {
     this.httpServer.register('post', '/video', async (params: RequestVideoInput) => {
+      const user = this.requestFacade.getUser()
       const inputParsed = this.requestVideoValidate.validate(params)
-      return await this.requestVideo.execute(inputParsed)
+      return await this.requestVideo.execute({ ...inputParsed, author: user?.id as string, authorName: user?.username as string })
     }, HttpStatusCodes.Created)
 
     this.httpServer.register('get', '/video', async (params: ByIdInput) => {

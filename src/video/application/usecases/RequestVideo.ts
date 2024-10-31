@@ -2,8 +2,7 @@ import { Batch } from '@/batch/domain/entities/Batch'
 import { type BatchRepository } from '@/batch/domain/repositories/BatchRepository'
 import { type ImageRepository } from '@/image/domain/repositories/ImageRepository'
 import { ImageNotFoundError } from '@/image/infra/errors/ImageErrorCatalog'
-import { type RequestVideoOutput } from '@/video/application/usecases/dtos/RequestVideo.dto'
-import { type RequestVideoInput } from '@/video/infra/schemas/RequestVideoSchema'
+import { type RequestVideoInput, type RequestVideoOutput } from '@/video/application/usecases/dtos/RequestVideo.dto'
 import { type DomainEvent } from '@api/domain/events/DomainEvent'
 import { type Queue } from '@api/domain/queue/Queue'
 import { inject } from '@api/infra/dependency-injection/Registry'
@@ -28,9 +27,9 @@ export class RequestVideo {
     const batchConfiguration = Batch.getConfigurations(input.gateway)
     const batch = Batch.create({
       prompt: input.prompt,
-      images: [],
-      videos: [],
-      type: 'video',
+      author: input.author,
+      authorName: input.authorName,
+      automatic: false,
       ...batchConfiguration
     })
     const repositoryBatch = await this.batchRepository.create(batch)

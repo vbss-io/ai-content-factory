@@ -11,4 +11,7 @@ export type GetVideoByIdOutput = Omit<Video, 'increaseLikes' | 'decreaseLikes'> 
   origin: string
   modelName: string
   userLiked: boolean
+  authorName: string
+  automatic: boolean
+  owner: boolean
 }
