@@ -1,6 +1,7 @@
 import { Batch } from '@/batch/domain/entities/Batch'
 import { type BatchRepository } from '@/batch/domain/repositories/BatchRepository'
 import { type BatchDocument, BatchModel } from '@/batch/infra/mongoose/BatchModel'
+import { Types } from 'mongoose'
 
 export class BatchRepositoryMongo implements BatchRepository {
   async create (batch: Batch): Promise<Batch> {
@@ -15,7 +16,10 @@ export class BatchRepositoryMongo implements BatchRepository {
       images: batch.images,
       videos: batch.videos,
       origin: batch.origin,
-      size: batch.size
+      size: batch.size,
+      author: new Types.ObjectId(batch.author),
+      authorName: batch.authorName,
+      automatic: batch.automatic
     })
     const savedDoc = await userDoc.save()
     return this.toDomain(savedDoc)
@@ -78,6 +82,9 @@ export class BatchRepositoryMongo implements BatchRepository {
       type: batchDoc.type,
       taskId: batchDoc.taskId,
       errorMessage: batchDoc.errorMessage,
+      author: String(batchDoc.author),
+      authorName: batchDoc.authorName,
+      automatic: batchDoc.automatic,
       createdAt: batchDoc.createdAt,
       updatedAt: batchDoc.updatedAt
     })
