@@ -12,3 +12,15 @@ export class BatchNotFoundError extends CustomError {
     super(HttpStatusCodes.NotFound, 'Batch Not found')
   }
 }
+
+export class FailedToParseSizesError extends CustomError {
+  constructor (message: string) {
+    super(HttpStatusCodes.NotFound, `Failed to parse JSON stringified sizes: ${message}`)
+  }
+}
+
+export class FailedToConvertBatchFile extends CustomError {
+  constructor (message: string) {
+    super(HttpStatusCodes.NotFound, `Failed to convert Batch: ${message}`)
+  }
+}
