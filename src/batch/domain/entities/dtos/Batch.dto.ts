@@ -4,10 +4,10 @@ export interface BatchCreate {
   sampler: string
   scheduler: string
   steps: number
-  images: string[]
-  videos: string[]
   size: number
-  type?: string
+  author: string
+  authorName: string
+  automatic: boolean
 }
 
 export type BatchRestore = BatchCreate & {
@@ -19,6 +19,8 @@ export type BatchRestore = BatchCreate & {
   errorMessage: string
   type: string
   taskId: string
+  images: string[]
+  videos: string[]
   createdAt: Date
   updatedAt: Date
 }

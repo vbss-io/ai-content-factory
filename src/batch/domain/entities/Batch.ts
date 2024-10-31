@@ -29,8 +29,10 @@ export class Batch extends Observable {
     modelName: string,
     readonly negativePrompt: string,
     errorMessage: string,
-    readonly type: string,
     taskId: string,
+    readonly author: string,
+    readonly authorName: string,
+    readonly automatic: boolean,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -47,7 +49,6 @@ export class Batch extends Observable {
 
   static create (input: BatchCreate): Batch {
     const status = 'queued'
-    const type = input.type ?? 'image'
     return new Batch(
       '',
       status,
@@ -55,15 +56,17 @@ export class Batch extends Observable {
       input.sampler,
       input.scheduler,
       input.steps,
-      input.images,
-      input.videos,
+      [],
+      [],
       input.size,
       '',
       '',
       input.negativePrompt ?? '',
       '',
-      type,
-      ''
+      '',
+      input.author,
+      input.authorName,
+      input.automatic
     )
   }
 
@@ -82,8 +85,10 @@ export class Batch extends Observable {
       input.modelName,
       input.negativePrompt,
       input.errorMessage,
-      input.type,
       input.taskId,
+      input.author,
+      input.authorName,
+      input.automatic,
       input.createdAt,
       input.updatedAt
     )
