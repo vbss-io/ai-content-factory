@@ -39,7 +39,7 @@ export class VideoRepositoryMongo implements VideoRepository {
     })
   }
 
-  async getVideos (page: number, searchMask?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Video[]> {
+  async getVideos (page: number, userId?: string, searchMask?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Video[]> {
     const pageSize = 25
     const offset = (page - 1) * pageSize
     const aggregateOptions: PipelineStage[] = [
@@ -52,6 +52,11 @@ export class VideoRepositoryMongo implements VideoRepository {
         }
       }
     ]
+    if (userId) {
+      aggregateOptions.push({
+        $match: { 'batch.author': userId }
+      })
+    }
     if (searchMask) {
       const regex = new RegExp(`${searchMask}`, 'i')
       aggregateOptions.push({
