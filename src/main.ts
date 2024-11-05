@@ -1,8 +1,7 @@
 import 'dotenv/config'
 import 'express-async-errors'
 
-import { AutomaticImageModule } from '@/@automatic/application/AutomaticImageModule'
-import { AutomaticVideoModule } from '@/@automatic/application/AutomaticVideoModule'
+import { CronJobModule } from '@/@cron/application/CronJobModule'
 import { AuthModule } from '@/auth/application/AuthModule'
 import { ExpressAuthHandler } from '@/auth/infra/auth/ExpressAuthHandler'
 import { BatchModule } from '@/batch/application/BatchModule'
@@ -39,9 +38,8 @@ function main (): any {
   new BatchModule()
   new PromptModule()
   new ImageModule()
-  new AutomaticImageModule()
   new VideoModule()
-  new AutomaticVideoModule()
+  new CronJobModule()
   httpServer.start(Number(process.env.PORT))
 }
 main()
