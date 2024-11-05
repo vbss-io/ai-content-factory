@@ -54,20 +54,22 @@ export class BatchController {
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/batch', async (params: ByIdInput) => {
+      const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      return await this.getBatchById.execute(inputParsed)
+      return await this.getBatchById.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('delete', '/batch', async (params: ByIdInput) => {
+      const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      await this.deleteBatchById.execute(inputParsed)
+      await this.deleteBatchById.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/batches', async (params: GetAllInput) => {
       const user = this.requestFacade.getUser()
       const page = Number(params?.page ?? 1)
       const inputParsed = this.getAllValidate.validate({ ...params, page })
-      return await this.getBatches.execute({ ...inputParsed, username: user?.username as string })
+      return await this.getBatches.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/batch/filters', async () => {
