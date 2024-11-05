@@ -17,12 +17,12 @@ export class GetImageById {
   @inject('userRepository')
   private readonly userRepository!: UserRepository
 
-  async execute ({ id, username }: GetImageByIdInput): Promise<GetImageByIdOutput> {
+  async execute ({ id, userId }: GetImageByIdInput): Promise<GetImageByIdOutput> {
     const image = await this.imageRepository.getImageById(id)
     if (!image) throw new ImageNotFoundError()
     let userLiked = false
-    if (username) {
-      const user = await this.userRepository.getUserByUsername(username)
+    if (userId) {
+      const user = await this.userRepository.getUserByUserId(userId)
       if (!user) throw new UserAuthenticationError()
       userLiked = user.imageLikes.includes(id)
     }
@@ -38,7 +38,7 @@ export class GetImageById {
       modelName: batch.modelName,
       authorName: batch.authorName,
       automatic: batch.automatic,
-      owner: username ? batch.authorName === username : false,
+      owner: batch.author === userId,
       userLiked
     }
   }

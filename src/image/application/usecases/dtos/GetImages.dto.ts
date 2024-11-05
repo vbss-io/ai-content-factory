@@ -1,6 +1,7 @@
 import { type Image } from '@/image/domain/entities/Image'
 
 export interface GetImagesInput {
+  userId: string
   search_mask?: string
   sampler?: string
   scheduler?: string

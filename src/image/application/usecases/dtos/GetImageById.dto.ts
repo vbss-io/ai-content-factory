@@ -2,7 +2,7 @@ import { type Image } from '@/image/domain/entities/Image'
 
 export interface GetImageByIdInput {
   id: string
-  username?: string
+  userId?: string
 }
 
 export type GetImageByIdOutput = Omit<Image, 'increaseLikes' | 'decreaseLikes'> & {

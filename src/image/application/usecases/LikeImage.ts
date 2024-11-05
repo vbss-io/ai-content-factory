@@ -12,8 +12,8 @@ export class LikeImage {
   @inject('imageRepository')
   private readonly imageRepository!: ImageRepository
 
-  async execute ({ id, username }: LikeImageInput): Promise<void> {
-    const user = await this.userRepository.getUserByUsername(username)
+  async execute ({ id, userId }: LikeImageInput): Promise<void> {
+    const user = await this.userRepository.getUserByUserId(userId)
     if (!user) throw new UserAuthenticationError()
     const image = await this.imageRepository.getImageById(id)
     if (!image) throw new ImageNotFoundError()

@@ -16,16 +16,13 @@ export class DeleteImageById {
   @inject('imageStorage')
   private readonly imageStorage!: ImageStorage
 
-  async execute ({ id }: DeleteImageByIdInput): Promise<void> {
+  async execute ({ id, userId }: DeleteImageByIdInput): Promise<void> {
     const image = await this.imageRepository.getImageById(id)
     if (!image) throw new ImageNotFoundError()
     const batch = await this.batchRepository.getBatchById(image.batchId) as Batch
+    if (batch.author !== userId) throw new Error('Not allowed to delete Image')
     batch?.removeImage(id)
-    if (!batch?.images.length) {
-      await this.batchRepository.deleteById(batch?.id)
-    } else {
-      await this.batchRepository.update(batch)
-    }
+    await this.batchRepository.update(batch)
     await this.imageRepository.deleteById(id)
     await this.imageStorage.deleteImage(image.path)
   }
