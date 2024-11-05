@@ -28,6 +28,12 @@ export class UserRepositoryMongo implements UserRepository {
     return this.toDomain(userDoc)
   }
 
+  async getUserByUserId (userId: string): Promise<User | undefined> {
+    const userDoc = await UserModel.findById(userId)
+    if (!userDoc) return
+    return this.toDomain(userDoc)
+  }
+
   private toDomain (userDoc: UserDocument): User {
     const id = userDoc._id as any
     return User.restore({
