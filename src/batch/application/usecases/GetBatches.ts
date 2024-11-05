@@ -14,17 +14,16 @@ export class GetBatches {
   @inject('videoRepository')
   private readonly videoRepository!: VideoRepository
 
-  async execute ({ username, search_mask, sampler, scheduler, status, origin, modelName, page }: GetBatchesInput): Promise<GetBatchesOutput> {
+  async execute ({ userId, search_mask, sampler, scheduler, status, origin, modelName, page }: GetBatchesInput): Promise<GetBatchesOutput> {
     const output: GetBatchesOutput = []
-    const batches = await this.batchRepository.getBatches(page, search_mask, sampler, scheduler, status, origin, modelName)
+    const batches = await this.batchRepository.getBatches(page, userId, search_mask, sampler, scheduler, status, origin, modelName)
     for (const batch of batches) {
       const imagesPaths = await this.imagesPaths(batch.images)
       const videosPaths = await this.videosPaths(batch.videos)
       output.push({
         ...batch,
         images: imagesPaths,
-        videos: videosPaths,
-        owner: batch.authorName === username
+        videos: videosPaths
       })
     }
     return output

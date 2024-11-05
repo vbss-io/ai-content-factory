@@ -5,7 +5,7 @@ export interface GetBatchesInput {
   status?: string
   origin?: string
   modelName?: string
-  username: string
+  userId: string
   page: number
 }
 
@@ -27,7 +27,6 @@ export type GetBatchesOutput = Array<{
   size: number
   status: string
   steps: number
-  owner: boolean
   createdAt?: Date
   updatedAt?: Date
 }>

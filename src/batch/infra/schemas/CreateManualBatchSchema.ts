@@ -25,7 +25,6 @@ export const CreateManualBatchSchema = z.object({
   images: z.array(z.any()).optional().default([]),
   videos: z.array(z.any()).optional().default([])
 }).superRefine((val, ctx) => {
-  console.log('val', val)
   if (!val.images.length && !val.videos.length) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,

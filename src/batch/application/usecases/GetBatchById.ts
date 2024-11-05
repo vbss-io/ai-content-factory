@@ -7,9 +7,10 @@ export class GetBatchById {
   @inject('batchRepository')
   private readonly batchRepository!: BatchRepository
 
-  async execute ({ id }: GetBatchByIdInput): Promise<GetBatchByIdOutput> {
+  async execute ({ id, userId }: GetBatchByIdInput): Promise<GetBatchByIdOutput> {
     const batch = await this.batchRepository.getBatchById(id)
     if (!batch) throw new BatchNotFoundError()
+    if (batch.author !== userId) throw new Error('Not allowed to get Batch')
     return batch
   }
 }
