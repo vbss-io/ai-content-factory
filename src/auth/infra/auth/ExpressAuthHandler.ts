@@ -23,7 +23,7 @@ export class ExpressAuthHandler implements AuthHandler {
     if (!token) throw new MissingAuthorizationToken()
     try {
       const { id, username, role } = await this.tokenAuthentication.decode(token, process.env.SECRET_KEY as string)
-      if (!role || role !== 'administrator') throw new NotAllowedError()
+      if (!role) throw new NotAllowedError()
       this.requestFacade.setUser({ id, username, role })
     } catch (error: any) {
       throw new AuthError(error.message as string)
