@@ -8,6 +8,9 @@
       ],
       "@api/*": [
         "./src/@api/*"
+      ],
+      "@cron/*": [
+        "./src/@cron/*"
       ]
     },
     "outDir": "./build",
