@@ -70,18 +70,20 @@ export class ImageController {
     this.httpServer.register('get', '/image', async (params: ByIdInput) => {
       const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      return await this.getImageById.execute({ ...inputParsed, username: user?.username })
+      return await this.getImageById.execute({ ...inputParsed, userId: user?.id })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('delete', '/image', async (params: ByIdInput) => {
+      const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      await this.deleteImageById.execute(inputParsed)
+      await this.deleteImageById.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/images', async (params: GetAllInput) => {
+      const user = this.requestFacade.getUser()
       const page = Number(params?.page ?? 1)
       const inputParsed = this.getAllValidate.validate({ ...params, page })
-      return await this.getImages.execute(inputParsed)
+      return await this.getImages.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/image/banner', async () => {
@@ -95,7 +97,7 @@ export class ImageController {
     this.httpServer.register('patch', '/image/like', async (params: ByIdInput) => {
       const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      await this.likeImage.execute({ ...inputParsed, username: user?.username as string })
+      await this.likeImage.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     void this.queue.consume('imageRequested.processImage', async (input: ImageRequestedData) => {
