@@ -1,7 +1,6 @@
 import 'dotenv/config'
 import 'express-async-errors'
 
-import { AutomaticImageModule } from '@/@automatic/application/AutomaticImageModule'
 import { AuthModule } from '@/auth/application/AuthModule'
 import { ExpressAuthHandler } from '@/auth/infra/auth/ExpressAuthHandler'
 import { BatchModule } from '@/batch/application/BatchModule'
@@ -43,9 +42,9 @@ function main (): any {
   new BatchModule()
   new PromptModule()
   new ImageModule()
-  new AutomaticImageModule()
   if (!isTestEnvironment) httpServer.start(Number(process.env.PORT))
 }
 main()
 
 export { databaseConnection, httpServer }
+
