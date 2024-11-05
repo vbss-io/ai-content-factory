@@ -16,16 +16,13 @@ export class DeleteVideoById {
   @inject('videoStorage')
   private readonly videoStorage!: VideoStorage
 
-  async execute ({ id }: DeleteVideoByIdInput): Promise<void> {
+  async execute ({ id, userId }: DeleteVideoByIdInput): Promise<void> {
     const video = await this.videoRepository.getVideoById(id)
     if (!video) throw new VideoNotFoundError()
     const batch = await this.batchRepository.getBatchById(video.batchId) as Batch
+    if (batch.author !== userId) throw new Error('Not allowed to delete Video')
     batch?.removeVideo(id)
-    if (!batch?.videos.length) {
-      await this.batchRepository.deleteById(batch?.id)
-    } else {
-      await this.batchRepository.update(batch)
-    }
+    await this.batchRepository.update(batch)
     await this.videoRepository.deleteById(id)
     await this.videoStorage.deleteVideo(video.path)
   }

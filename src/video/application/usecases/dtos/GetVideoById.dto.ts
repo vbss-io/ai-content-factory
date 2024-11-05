@@ -2,7 +2,7 @@ import { type Video } from '@/video/domain/entities/Video'
 
 export interface GetVideoByIdInput {
   id: string
-  username?: string
+  userId?: string
 }
 
 export type GetVideoByIdOutput = Omit<Video, 'increaseLikes' | 'decreaseLikes'> & {

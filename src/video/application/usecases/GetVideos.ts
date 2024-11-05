@@ -7,6 +7,6 @@ export class GetVideos {
   private readonly videoRepository!: VideoRepository
 
   async execute ({ search_mask, aspectRatio, origin, modelName, page }: GetVideosInput): Promise<GetVideosOutput> {
-    return await this.videoRepository.getVideos(page, search_mask, aspectRatio, origin, modelName)
+    return await this.videoRepository.getVideos(page, undefined, search_mask, aspectRatio, origin, modelName)
   }
 }

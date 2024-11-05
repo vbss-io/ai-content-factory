@@ -17,12 +17,12 @@ export class GetVideoById {
   @inject('userRepository')
   private readonly userRepository!: UserRepository
 
-  async execute ({ id, username }: GetVideoByIdInput): Promise<GetVideoByIdOutput> {
+  async execute ({ id, userId }: GetVideoByIdInput): Promise<GetVideoByIdOutput> {
     const video = await this.videoRepository.getVideoById(id)
     if (!video) throw new VideoNotFoundError()
     let userLiked = false
-    if (username) {
-      const user = await this.userRepository.getUserByUsername(username)
+    if (userId) {
+      const user = await this.userRepository.getUserByUserId(userId)
       if (!user) throw new UserAuthenticationError()
       userLiked = user.videoLikes.includes(id)
     }
@@ -35,7 +35,7 @@ export class GetVideoById {
       modelName: batch.modelName,
       authorName: batch.authorName,
       automatic: batch.automatic,
-      owner: batch.authorName === username,
+      owner: batch.author === userId,
       userLiked
     }
   }

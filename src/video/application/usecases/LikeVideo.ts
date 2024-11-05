@@ -12,8 +12,8 @@ export class LikeVideo {
   @inject('videoRepository')
   private readonly videoRepository!: VideoRepository
 
-  async execute ({ id, username }: LikeVideoInput): Promise<void> {
-    const user = await this.userRepository.getUserByUsername(username)
+  async execute ({ id, userId }: LikeVideoInput): Promise<void> {
+    const user = await this.userRepository.getUserByUserId(userId)
     if (!user) throw new UserAuthenticationError()
     const video = await this.videoRepository.getVideoById(id)
     if (!video) throw new VideoNotFoundError()
