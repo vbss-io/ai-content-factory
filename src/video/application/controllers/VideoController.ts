@@ -66,12 +66,13 @@ export class VideoController {
     this.httpServer.register('get', '/video', async (params: ByIdInput) => {
       const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      return await this.getVideoById.execute({ ...inputParsed, username: user?.username })
+      return await this.getVideoById.execute({ ...inputParsed, userId: user?.id })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('delete', '/video', async (params: ByIdInput) => {
+      const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      await this.deleteVideoById.execute(inputParsed)
+      await this.deleteVideoById.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/videos', async (params: GetAllInput) => {
@@ -87,7 +88,7 @@ export class VideoController {
     this.httpServer.register('patch', '/video/like', async (params: ByIdInput) => {
       const user = this.requestFacade.getUser()
       const inputParsed = this.byIdValidate.validate(params)
-      await this.likeVideo.execute({ ...inputParsed, username: user?.username as string })
+      await this.likeVideo.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     void this.queue.consume('videoRequested.processVideo', async (input: VideoRequestedData) => {
