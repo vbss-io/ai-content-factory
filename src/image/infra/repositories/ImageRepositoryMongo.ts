@@ -40,7 +40,7 @@ export class ImageRepositoryMongo implements ImageRepository {
     })
   }
 
-  async getImages (page: number, searchMask?: string, sampler?: string, scheduler?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Image[]> {
+  async getImages (page: number, userId?: string, searchMask?: string, sampler?: string, scheduler?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Image[]> {
     const pageSize = 25
     const offset = (page - 1) * pageSize
     const aggregateOptions: PipelineStage[] = [
@@ -53,6 +53,11 @@ export class ImageRepositoryMongo implements ImageRepository {
         }
       }
     ]
+    if (userId) {
+      aggregateOptions.push({
+        $match: { 'batch.author': userId }
+      })
+    }
     if (searchMask) {
       const regex = new RegExp(`${searchMask}`, 'i')
       aggregateOptions.push({
