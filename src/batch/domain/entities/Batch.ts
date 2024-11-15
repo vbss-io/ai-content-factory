@@ -31,7 +31,6 @@ export class Batch extends Observable {
     errorMessage: string,
     taskId: string,
     readonly author: string,
-    readonly authorName: string,
     readonly automatic: boolean,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
@@ -65,7 +64,6 @@ export class Batch extends Observable {
       '',
       '',
       input.author,
-      input.authorName,
       input.automatic
     )
   }
@@ -87,7 +85,6 @@ export class Batch extends Observable {
       input.errorMessage,
       input.taskId,
       input.author,
-      input.authorName,
       input.automatic,
       input.createdAt,
       input.updatedAt

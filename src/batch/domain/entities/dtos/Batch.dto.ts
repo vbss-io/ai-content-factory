@@ -6,7 +6,6 @@ export interface BatchCreate {
   steps: number
   size: number
   author: string
-  authorName: string
   automatic: boolean
 }
 
