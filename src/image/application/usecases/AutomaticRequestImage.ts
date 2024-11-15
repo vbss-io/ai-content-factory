@@ -29,7 +29,6 @@ export class AutomaticRequestImage {
         prompt: response.prompt,
         automatic: true,
         author: '6706fd7b8b0360f2b82c3c18',
-        authorName: 'vbss-io',
         ...batchConfiguration
       })
       const repositoryBatch = await this.batchRepository.create(batch)
