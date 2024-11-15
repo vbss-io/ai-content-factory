@@ -5,6 +5,7 @@ export class User {
   hash: string
   imageLikes: string[]
   videoLikes: string[]
+  avatar?: string
 
   private constructor (
     id: string,
@@ -13,6 +14,7 @@ export class User {
     imageLikes: string[],
     videoLikes: string[],
     readonly role: string,
+    avatar?: string,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -20,6 +22,7 @@ export class User {
     this.hash = hash
     this.imageLikes = imageLikes
     this.videoLikes = videoLikes
+    this.avatar = avatar
   }
 
   static create (input: UserCreate): User {
@@ -29,7 +32,8 @@ export class User {
       input.hash,
       [],
       [],
-      input.role
+      input.role,
+      input.avatar
     )
   }
 
@@ -41,6 +45,7 @@ export class User {
       input.imageLikes,
       input.videoLikes,
       input.role,
+      input.avatar,
       input.createdAt,
       input.updatedAt
     )
@@ -60,5 +65,9 @@ export class User {
     const alreadyLike = this.videoLikes.includes(video)
     if (!alreadyLike) this.videoLikes.push(video)
     if (alreadyLike) this.videoLikes = this.videoLikes.filter((videoLike) => videoLike !== video)
+  }
+
+  updateAvatar (avatar: string): void {
+    this.avatar = avatar
   }
 }
