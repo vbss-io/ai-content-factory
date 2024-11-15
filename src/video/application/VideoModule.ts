@@ -13,6 +13,7 @@ import { AzureVideoStorageAdapter } from '@/video/infra/storage/AzureVideoStorag
 import { type Queue } from '@api/domain/queue/Queue'
 import { inject, Registry } from '@api/infra/dependency-injection/Registry'
 import { ZodAdapter } from '@api/infra/validate/ZodAdapter'
+import { GetUserVideos } from './usecases/GetUserVideos'
 
 export class VideoModule {
   @inject('queue')
@@ -32,6 +33,7 @@ export class VideoModule {
     const processVideo = new ProcessVideo()
     const getVideoById = new GetVideoById()
     const getVideos = new GetVideos()
+    const getUserVideos = new GetUserVideos()
     const deleteVideoById = new DeleteVideoById()
     const getVideoFilters = new GetVideoFilters()
     const likeVideo = new LikeVideo()
@@ -39,6 +41,7 @@ export class VideoModule {
     Registry.getInstance().provide('processVideo', processVideo)
     Registry.getInstance().provide('getVideoById', getVideoById)
     Registry.getInstance().provide('getVideos', getVideos)
+    Registry.getInstance().provide('getUserVideos', getUserVideos)
     Registry.getInstance().provide('deleteVideoById', deleteVideoById)
     Registry.getInstance().provide('getVideoFilters', getVideoFilters)
     Registry.getInstance().provide('likeVideo', likeVideo)

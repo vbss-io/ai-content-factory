@@ -1,5 +1,6 @@
 import { type RequestFacade } from '@/auth/infra/facades/RequestFacade'
 import { type DeleteVideoById } from '@/video/application/usecases/DeleteVideoByIdInput'
+import { type GetUserVideos } from '@/video/application/usecases/GetUserVideos'
 import { type GetVideoById } from '@/video/application/usecases/GetVideoById'
 import { type GetVideoFilters } from '@/video/application/usecases/GetVideoFilters'
 import { type GetVideos } from '@/video/application/usecases/GetVideos'
@@ -47,6 +48,9 @@ export class VideoController {
   @inject('getVideos')
   private readonly getVideos!: GetVideos
 
+  @inject('getUserVideos')
+  private readonly getUserVideos!: GetUserVideos
+
   @inject('processVideo')
   private readonly processVideo!: ProcessVideo
 
@@ -76,9 +80,17 @@ export class VideoController {
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/videos', async (params: GetAllInput) => {
+      const user = this.requestFacade.getUser()
       const page = Number(params?.page ?? 1)
       const inputParsed = this.getAllValidate.validate({ ...params, page })
-      return await this.getVideos.execute(inputParsed)
+      return await this.getVideos.execute({ ...inputParsed, userId: user?.id as string })
+    }, HttpStatusCodes.OK)
+
+    this.httpServer.register('get', '/videos/user', async (params: GetAllInput) => {
+      const user = this.requestFacade.getUser()
+      const page = Number(params?.page ?? 1)
+      const inputParsed = this.getAllValidate.validate({ ...params, page })
+      return await this.getUserVideos.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/video/filters', async () => {
