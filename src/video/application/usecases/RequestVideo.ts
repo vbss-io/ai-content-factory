@@ -28,7 +28,6 @@ export class RequestVideo {
     const batch = Batch.create({
       prompt: input.prompt,
       author: input.author,
-      authorName: input.authorName,
       automatic: false,
       ...batchConfiguration
     })
