@@ -7,4 +7,5 @@ export interface LogInOutput {
   token: string
   username: string
   role: string
+  avatar?: string
 }

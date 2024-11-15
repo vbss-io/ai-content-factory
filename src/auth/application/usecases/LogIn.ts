@@ -24,7 +24,8 @@ export class LogIn {
     return {
       token,
       username: user.username,
-      role: user.role
+      role: user.role,
+      avatar: user.avatar
     }
   }
 }
