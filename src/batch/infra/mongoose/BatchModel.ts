@@ -16,7 +16,6 @@ export interface BatchDocument extends Document {
   type: string
   taskId: string
   author: string
-  authorName: string
   automatic: boolean
   createdAt: Date
   updatedAt: Date
@@ -39,7 +38,6 @@ const BatchSchema: Schema = new Schema(
     type: { type: String, default: 'image' },
     taskId: { type: String },
     author: { type: Schema.ObjectId, required: true, ref: 'User' },
-    authorName: { type: String, required: true },
     automatic: { type: Boolean, required: true }
   },
   { timestamps: true, versionKey: false }

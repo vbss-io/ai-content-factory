@@ -18,7 +18,6 @@ export class BatchRepositoryMongo implements BatchRepository {
       origin: batch.origin,
       size: batch.size,
       author: new Types.ObjectId(batch.author),
-      authorName: batch.authorName,
       automatic: batch.automatic
     })
     const savedDoc = await userDoc.save()
@@ -83,7 +82,6 @@ export class BatchRepositoryMongo implements BatchRepository {
       taskId: batchDoc.taskId,
       errorMessage: batchDoc.errorMessage,
       author: String(batchDoc.author),
-      authorName: batchDoc.authorName,
       automatic: batchDoc.automatic,
       createdAt: batchDoc.createdAt,
       updatedAt: batchDoc.updatedAt
