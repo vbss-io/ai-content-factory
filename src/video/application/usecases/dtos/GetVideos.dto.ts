@@ -1,6 +1,7 @@
 import { type Video } from '@/video/domain/entities/Video'
 
 export interface GetVideosInput {
+  userId: string
   search_mask?: string
   aspectRatio?: string
   origin?: string
@@ -8,4 +9,4 @@ export interface GetVideosInput {
   page: number
 }
 
-export type GetVideosOutput = Video[]
+export type GetVideosOutput = Array<Omit<Video, 'increaseLikes' | 'decreaseLikes'> & { userLiked: boolean }>

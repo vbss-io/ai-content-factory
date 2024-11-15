@@ -1,6 +1,7 @@
 import { UserAuthenticationError } from '@/auth/infra/errors/AuthErrorCatalog'
 import { type Batch } from '@/batch/domain/entities/Batch'
 import { type BatchRepository } from '@/batch/domain/repositories/BatchRepository'
+import { type User } from '@/user/domain/entities/User'
 import { type UserRepository } from '@/user/domain/repositories/UserRepository'
 import { type GetVideoByIdInput, type GetVideoByIdOutput } from '@/video/application/usecases/dtos/GetVideoById.dto'
 import { type VideoRepository } from '@/video/domain/repositories/VideoRepository'
@@ -27,13 +28,15 @@ export class GetVideoById {
       userLiked = user.videoLikes.includes(id)
     }
     const batch = await this.batchRepository.getBatchById(video.batchId) as Batch
+    const author = await this.userRepository.getUserByUserId(batch.author) as User
     return {
       ...video,
       prompt: batch.prompt,
       negativePrompt: batch.negativePrompt,
       origin: batch.origin,
       modelName: batch.modelName,
-      authorName: batch.authorName,
+      authorName: author.username,
+      authorAvatar: author.avatar,
       automatic: batch.automatic,
       owner: batch.author === userId,
       userLiked
