@@ -39,7 +39,7 @@ export class VideoRepositoryMongo implements VideoRepository {
     })
   }
 
-  async getVideos (page: number, userId?: string, searchMask?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Video[]> {
+  async getVideos (page: number, searchMask?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Video[]> {
     const pageSize = 25
     const offset = (page - 1) * pageSize
     const aggregateOptions: PipelineStage[] = [
@@ -50,13 +50,28 @@ export class VideoRepositoryMongo implements VideoRepository {
           foreignField: '_id',
           as: 'batch'
         }
+      },
+      {
+        $unwind: {
+          path: '$batch',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'batch.author',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: {
+          path: '$user',
+          preserveNullAndEmptyArrays: true
+        }
       }
     ]
-    if (userId) {
-      aggregateOptions.push({
-        $match: { 'batch.author': userId }
-      })
-    }
     if (searchMask) {
       const regex = new RegExp(`${searchMask}`, 'i')
       aggregateOptions.push({
@@ -73,7 +88,49 @@ export class VideoRepositoryMongo implements VideoRepository {
     if (modelName) aggregateOptions.push({ $match: { 'batch.modelName': modelName } })
     const videoDocs = await VideoModel.aggregate(aggregateOptions).sort({ likes: -1, _id: -1 }).skip(offset).limit(pageSize)
     return videoDocs.map((videoDoc) => {
-      return this.toDomain(videoDoc as VideoDocument)
+      const doc = { ...videoDoc, authorName: videoDoc.user?.username, authorAvatar: videoDoc.user?.avatar }
+      return this.toDomain(doc as VideoDocument)
+    })
+  }
+
+  async getUserVideos (page: number, userId: string): Promise<Video[]> {
+    const pageSize = 25
+    const offset = (page - 1) * pageSize
+    const aggregateOptions: PipelineStage[] = [
+      {
+        $lookup: {
+          from: 'batches',
+          localField: 'batchId',
+          foreignField: '_id',
+          as: 'batch'
+        }
+      },
+      {
+        $unwind: {
+          path: '$batch',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'batch.author',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: {
+          path: '$user',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      { $match: { 'batch.author': new Types.ObjectId(userId) } }
+    ]
+    const videoDocs = await VideoModel.aggregate(aggregateOptions).sort({ likes: -1, _id: -1 }).skip(offset).limit(pageSize)
+    return videoDocs.map((videoDoc) => {
+      const doc = { ...videoDoc, authorName: videoDoc.user?.username, authorAvatar: videoDoc.user?.avatar }
+      return this.toDomain(doc as VideoDocument)
     })
   }
 
@@ -87,6 +144,8 @@ export class VideoRepositoryMongo implements VideoRepository {
       path: videoDoc.path,
       batchId: String(videoDoc.batchId),
       likes: videoDoc?.likes ?? 0,
+      authorName: videoDoc.authorName,
+      authorAvatar: videoDoc.authorAvatar,
       createdAt: new Date(videoDoc.createdAt),
       updatedAt: new Date(videoDoc.updatedAt)
     })

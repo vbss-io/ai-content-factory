@@ -7,6 +7,8 @@ export interface VideoDocument extends Document {
   path: string
   batchId: string
   likes: number
+  authorName: string
+  authorAvatar: string
   createdAt: Date
   updatedAt: Date
 }
