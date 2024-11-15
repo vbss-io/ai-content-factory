@@ -13,6 +13,8 @@ export class Video {
     readonly path: string,
     readonly batchId: string,
     likes: number,
+    readonly authorName?: string,
+    readonly authorAvatar?: string,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -43,6 +45,8 @@ export class Video {
       input.path,
       input.batchId,
       input.likes,
+      input.authorName,
+      input.authorAvatar,
       input.createdAt,
       input.updatedAt
     )
