@@ -40,7 +40,7 @@ export class ImageRepositoryMongo implements ImageRepository {
     })
   }
 
-  async getImages (page: number, userId?: string, searchMask?: string, sampler?: string, scheduler?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Image[]> {
+  async getImages (page: number, searchMask?: string, sampler?: string, scheduler?: string, aspectRatio?: string, origin?: string, modelName?: string): Promise<Image[]> {
     const pageSize = 25
     const offset = (page - 1) * pageSize
     const aggregateOptions: PipelineStage[] = [
@@ -51,13 +51,28 @@ export class ImageRepositoryMongo implements ImageRepository {
           foreignField: '_id',
           as: 'batch'
         }
+      },
+      {
+        $unwind: {
+          path: '$batch',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'batch.author',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: {
+          path: '$user',
+          preserveNullAndEmptyArrays: true
+        }
       }
     ]
-    if (userId) {
-      aggregateOptions.push({
-        $match: { 'batch.author': userId }
-      })
-    }
     if (searchMask) {
       const regex = new RegExp(`${searchMask}`, 'i')
       aggregateOptions.push({
@@ -76,7 +91,49 @@ export class ImageRepositoryMongo implements ImageRepository {
     if (modelName) aggregateOptions.push({ $match: { 'batch.modelName': modelName } })
     const imageDocs = await ImageModel.aggregate(aggregateOptions).sort({ likes: -1, _id: -1 }).skip(offset).limit(pageSize)
     return imageDocs.map((imageDoc) => {
-      return this.toDomain(imageDoc as ImageDocument)
+      const doc = { ...imageDoc, authorName: imageDoc.user?.username, authorAvatar: imageDoc.user?.avatar }
+      return this.toDomain(doc as ImageDocument)
+    })
+  }
+
+  async getUserImages (page: number, userId: string): Promise<Image[]> {
+    const pageSize = 25
+    const offset = (page - 1) * pageSize
+    const aggregateOptions: PipelineStage[] = [
+      {
+        $lookup: {
+          from: 'batches',
+          localField: 'batchId',
+          foreignField: '_id',
+          as: 'batch'
+        }
+      },
+      {
+        $unwind: {
+          path: '$batch',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'batch.author',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: {
+          path: '$user',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      { $match: { 'batch.author': new Types.ObjectId(userId) } }
+    ]
+    const imageDocs = await ImageModel.aggregate(aggregateOptions).sort({ likes: -1, _id: -1 }).skip(offset).limit(pageSize)
+    return imageDocs.map((imageDoc) => {
+      const doc = { ...imageDoc, authorName: imageDoc.user?.username, authorAvatar: imageDoc.user?.avatar }
+      return this.toDomain(doc as ImageDocument)
     })
   }
 
@@ -100,6 +157,8 @@ export class ImageRepositoryMongo implements ImageRepository {
       path: imageDoc.path,
       batchId: String(imageDoc.batchId),
       likes: imageDoc?.likes ?? 0,
+      authorName: imageDoc.authorName,
+      authorAvatar: imageDoc.authorAvatar,
       createdAt: new Date(imageDoc.createdAt),
       updatedAt: new Date(imageDoc.updatedAt)
     })
