@@ -37,7 +37,6 @@ export class CreateManualBatch {
       steps: 0,
       size: (input.images?.length ?? 0) + (input.videos?.length ?? 0),
       author: input.author,
-      authorName: input.authorName,
       automatic: false
     })
     batch.processUpdate({ origin: input.origin, modelName: input.model_name })
