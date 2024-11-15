@@ -11,4 +11,4 @@ export interface GetImagesInput {
   page: number
 }
 
-export type GetImagesOutput = Image[]
+export type GetImagesOutput = Array<Omit<Image, 'increaseLikes' | 'decreaseLikes'> & { userLiked: boolean }>

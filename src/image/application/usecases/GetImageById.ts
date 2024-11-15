@@ -4,6 +4,7 @@ import { type BatchRepository } from '@/batch/domain/repositories/BatchRepositor
 import { type GetImageByIdInput, type GetImageByIdOutput } from '@/image/application/usecases/dtos/GetImageById.dto'
 import { type ImageRepository } from '@/image/domain/repositories/ImageRepository'
 import { ImageNotFoundError } from '@/image/infra/errors/ImageErrorCatalog'
+import { type User } from '@/user/domain/entities/User'
 import { type UserRepository } from '@/user/domain/repositories/UserRepository'
 import { inject } from '@api/infra/dependency-injection/Registry'
 
@@ -27,6 +28,7 @@ export class GetImageById {
       userLiked = user.imageLikes.includes(id)
     }
     const batch = await this.batchRepository.getBatchById(image.batchId) as Batch
+    const author = await this.userRepository.getUserByUserId(batch.author) as User
     return {
       ...image,
       prompt: batch.prompt,
@@ -36,7 +38,8 @@ export class GetImageById {
       steps: batch.steps,
       origin: batch.origin,
       modelName: batch.modelName,
-      authorName: batch.authorName,
+      authorName: author.username,
+      authorAvatar: author.avatar,
       automatic: batch.automatic,
       owner: batch.author === userId,
       userLiked
