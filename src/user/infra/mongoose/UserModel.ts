@@ -6,6 +6,7 @@ export interface UserDocument extends Document {
   imageLikes: string[]
   videoLikes: string[]
   role: string
+  avatar?: string
   createdAt: Date
   updatedAt: Date
 }
@@ -16,7 +17,8 @@ const UserSchema: Schema = new Schema(
     hash: { type: String, required: true },
     imageLikes: { type: [String], required: true, default: [] },
     videoLikes: { type: [String], required: true, default: [] },
-    role: { type: String, required: true }
+    role: { type: String, required: true },
+    avatar: { type: String, required: false, default: null }
   },
   { timestamps: true, versionKey: false }
 )

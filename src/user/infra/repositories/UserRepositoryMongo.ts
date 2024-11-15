@@ -7,7 +7,8 @@ export class UserRepositoryMongo implements UserRepository {
     const userDoc = new UserModel({
       username: user.username,
       hash: user.hash,
-      role: user.role
+      role: user.role,
+      avatar: user.avatar
     })
     const savedDoc = await userDoc.save()
     return this.toDomain(savedDoc)
@@ -43,6 +44,7 @@ export class UserRepositoryMongo implements UserRepository {
       imageLikes: userDoc.imageLikes,
       videoLikes: userDoc.videoLikes,
       role: userDoc.role,
+      avatar: userDoc.avatar,
       createdAt: userDoc.createdAt,
       updatedAt: userDoc.updatedAt
     })
