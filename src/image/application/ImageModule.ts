@@ -16,6 +16,7 @@ import { inject, Registry } from '@api/infra/dependency-injection/Registry'
 import { ByIdSchema } from '@api/infra/schemas/ByIdSchema'
 import { GetAllSchema } from '@api/infra/schemas/GetAllSchema'
 import { ZodAdapter } from '@api/infra/validate/ZodAdapter'
+import { GetUserImages } from './usecases/GetUserImages'
 
 export class ImageModule {
   @inject('queue')
@@ -39,6 +40,7 @@ export class ImageModule {
     const getImageById = new GetImageById()
     const deleteImageById = new DeleteImageById()
     const getImages = new GetImages()
+    const getUserImages = new GetUserImages()
     const getRandomLandscapeImage = new GetRandomLandscapeImage()
     const processImage = new ProcessImage()
     const getImageFilters = new GetImageFilters()
@@ -47,6 +49,7 @@ export class ImageModule {
     Registry.getInstance().provide('getImageById', getImageById)
     Registry.getInstance().provide('deleteImageById', deleteImageById)
     Registry.getInstance().provide('getImages', getImages)
+    Registry.getInstance().provide('getUserImages', getUserImages)
     Registry.getInstance().provide('getRandomLandscapeImage', getRandomLandscapeImage)
     Registry.getInstance().provide('processImage', processImage)
     Registry.getInstance().provide('getImageFilters', getImageFilters)

@@ -4,6 +4,7 @@ import { type GetImageById } from '@/image/application/usecases/GetImageById'
 import { type GetImageFilters } from '@/image/application/usecases/GetImageFilters'
 import { type GetImages } from '@/image/application/usecases/GetImages'
 import { type GetRandomLandscapeImage } from '@/image/application/usecases/GetRandomLandscapeImage'
+import { type GetUserImages } from '@/image/application/usecases/GetUserImages'
 import { type LikeImage } from '@/image/application/usecases/LikeImage'
 import { type ProcessImage } from '@/image/application/usecases/ProcessImage'
 import { type RequestImage } from '@/image/application/usecases/RequestImage'
@@ -48,6 +49,9 @@ export class ImageController {
   @inject('getImages')
   private readonly getImages!: GetImages
 
+  @inject('getUserImages')
+  private readonly getUserImages!: GetUserImages
+
   @inject('getRandomLandscapeImage')
   private readonly getRandomLandscapeImage!: GetRandomLandscapeImage
 
@@ -84,6 +88,13 @@ export class ImageController {
       const page = Number(params?.page ?? 1)
       const inputParsed = this.getAllValidate.validate({ ...params, page })
       return await this.getImages.execute({ ...inputParsed, userId: user?.id as string })
+    }, HttpStatusCodes.OK)
+
+    this.httpServer.register('get', '/images/user', async (params: GetAllInput) => {
+      const user = this.requestFacade.getUser()
+      const page = Number(params?.page ?? 1)
+      const inputParsed = this.getAllValidate.validate({ ...params, page })
+      return await this.getUserImages.execute({ ...inputParsed, userId: user?.id as string })
     }, HttpStatusCodes.OK)
 
     this.httpServer.register('get', '/image/banner', async () => {
