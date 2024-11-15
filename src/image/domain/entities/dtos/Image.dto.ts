@@ -10,6 +10,8 @@ export type ImageRestore = ImageCreate & {
   id: string
   aspectRatio: string
   likes: number
+  authorName: string
+  authorAvatar: string
   createdAt: Date
   updatedAt: Date
 }

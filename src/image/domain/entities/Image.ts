@@ -14,6 +14,8 @@ export class Image {
     readonly path: string,
     readonly batchId: string,
     likes: number,
+    readonly authorName?: string,
+    readonly authorAvatar?: string,
     readonly createdAt?: Date,
     readonly updatedAt?: Date
   ) {
@@ -46,6 +48,8 @@ export class Image {
       input.path,
       input.batchId,
       input.likes,
+      input.authorName,
+      input.authorAvatar,
       input.createdAt,
       input.updatedAt
     )
