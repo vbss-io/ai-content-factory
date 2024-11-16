@@ -26,8 +26,7 @@ export class ProcessVideo {
     const imagineVideoGateway = ImagineVideoGatewayFactory.create(input.gateway)
     const output = await imagineVideoGateway.imagine({
       ...batch,
-      width: input.dimensions.width,
-      height: input.dimensions.height,
+      aspectRatio: input.aspectRatio,
       imageUrl: input.imageUrl
     })
     batch.setTaskId(output?.taskId ?? 'none')
@@ -40,8 +39,9 @@ export class ProcessVideo {
     const video = output.videos[0]
     const path = await this.videoStorage.uploadVideo(video)
     const currentVideo = Video.create({
-      width: input.dimensions.width,
-      height: input.dimensions.height,
+      width: output.width,
+      height: output.height,
+      aspectRatio: input.aspectRatio,
       batchId: batch.id,
       path
     })

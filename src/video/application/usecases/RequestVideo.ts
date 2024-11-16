@@ -7,6 +7,8 @@ import { type DomainEvent } from '@api/domain/events/DomainEvent'
 import { type Queue } from '@api/domain/queue/Queue'
 import { inject } from '@api/infra/dependency-injection/Registry'
 
+// Input should be '1:1', '16:9', '9:16', '4:3', '3:4', '21:9' or '9:21'",
+
 export class RequestVideo {
   @inject('batchRepository')
   private readonly batchRepository!: BatchRepository
@@ -24,7 +26,7 @@ export class RequestVideo {
       if (!image) throw new ImageNotFoundError()
       imageUrl = `${process.env.FILES_STORAGE}${image?.path}`
     }
-    const batchConfiguration = Batch.getConfigurations(input.gateway)
+    const batchConfiguration = Batch.configurationFactory({ gateway: input.gateway, aspectRatio: input.aspectRatio })
     const batch = Batch.create({
       prompt: input.prompt,
       author: input.author,
@@ -35,7 +37,7 @@ export class RequestVideo {
     repositoryBatch.register('videoRequested', async (domainEvent: DomainEvent) => {
       await this.queue.publish(domainEvent.eventName, domainEvent.data)
     })
-    await repositoryBatch.requestVideo({ gateway: input.gateway, dimensions: { width: input.width, height: input.height }, imageUrl })
+    await repositoryBatch.requestVideo({ gateway: input.gateway, aspectRatio: input.aspectRatio, imageUrl })
     return {
       batchId: repositoryBatch.id,
       batchStatus: batch.status
