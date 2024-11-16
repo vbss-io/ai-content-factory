@@ -24,7 +24,7 @@ export class AutomaticRequestImage {
       const response = await this.promptGateway.generatePrompt(promptToUse)
       let config = { size: 1, sampler: 'none', scheduler: 'none', steps: 0 }
       if (gateway === 'automatic1111') config = { size: 1, sampler: 'DPM++ 2M', scheduler: 'Karras', steps: 20 }
-      const batchConfiguration = Batch.getConfigurations(gateway, { ...response, ...config })
+      const batchConfiguration = Batch.configurationFactory({ ...response, ...config, gateway })
       const batch = Batch.create({
         prompt: response.prompt,
         automatic: true,
@@ -35,7 +35,7 @@ export class AutomaticRequestImage {
       repositoryBatch.register('imageRequested', async (domainEvent: DomainEvent) => {
         await this.queue.publish(domainEvent.eventName, domainEvent.data)
       })
-      await repositoryBatch.requestImage({ gateway, isAutomatic: true, dimensions: { width: response.width, height: response.height } })
+      await repositoryBatch.requestImage({ gateway, isAutomatic: true, aspectRatio: response.aspectRatio })
     }
   }
 }

@@ -3,4 +3,5 @@ export interface PromptOutput {
   prompt: string
   width: number
   height: number
+  aspectRatio: string
 }
