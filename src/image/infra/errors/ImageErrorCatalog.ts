@@ -13,8 +13,20 @@ export class ImageNotFoundError extends CustomError {
   }
 }
 
+export class Automatic1111DimensionsError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'Automatic1111 aspectRatios allowed: 1:1, 9:16, 16:9')
+  }
+}
+
 export class DalleDimensionsError extends CustomError {
   constructor () {
-    super(HttpStatusCodes.BadRequest, 'Dalle dimension allowed: 1024x1024, 1024x1792 or 1792x1024')
+    super(HttpStatusCodes.BadRequest, 'Dalle 3 aspectRatios allowed: 1:1, 9:16, 16:9')
+  }
+}
+
+export class MidjourneyDimensionsError extends CustomError {
+  constructor () {
+    super(HttpStatusCodes.BadRequest, 'Midjourney aspectRatios allowed: 1:1, 9:16, 16:9')
   }
 }
