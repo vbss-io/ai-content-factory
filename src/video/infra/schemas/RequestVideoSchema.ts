@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
 export const RequestVideoSchema = z.object({
-  gateway: z.enum(['LumaLabs'], {
+  gateway: z.enum(['lumaLabs'], {
     required_error: 'gateway is required',
-    message: 'gateway must be LumaLabs'
+    message: 'gateway must be lumaLabs'
   }),
   prompt: z.string({
     required_error: 'prompt is required',
@@ -12,12 +12,10 @@ export const RequestVideoSchema = z.object({
   imageId: z.string({
     invalid_type_error: 'imageId must be a string'
   }).optional(),
-  width: z.number({
-    invalid_type_error: 'width must be a number'
-  }).optional().default(512),
-  height: z.number({
-    invalid_type_error: 'height must be a number'
-  }).optional().default(512)
+  aspectRatio: z.string({
+    required_error: 'aspectRatio is required',
+    invalid_type_error: 'aspectRatio must be a string'
+  })
 })
 
 export type RequestVideoInput = z.infer<typeof RequestVideoSchema>
