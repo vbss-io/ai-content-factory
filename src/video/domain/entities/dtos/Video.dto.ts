@@ -1,6 +1,7 @@
 export interface VideoCreate {
   width: number
   height: number
+  aspectRatio: string
   path: string
   batchId: string
 }

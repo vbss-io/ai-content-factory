@@ -1,4 +1,3 @@
-import { AspectRatio } from '@/image/domain/vos/AspectRatio'
 import { type VideoCreate, type VideoRestore } from '@/video/domain/entities/dtos/Video.dto'
 
 export class Video {
@@ -23,13 +22,11 @@ export class Video {
   }
 
   static create (input: VideoCreate): Video {
-    const aspectRatio = new AspectRatio(input.width, input.height)
-
     return new Video(
       '',
       input.width,
       input.height,
-      aspectRatio.getValue(),
+      input.aspectRatio,
       input.path,
       input.batchId,
       0
