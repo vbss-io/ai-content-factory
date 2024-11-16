@@ -1,7 +1,6 @@
 export interface ImagineVideoInput {
   prompt: string
-  width: number
-  height: number
+  aspectRatio: string
   imageUrl?: string
   loop?: boolean
   isAutomaticCall?: boolean
