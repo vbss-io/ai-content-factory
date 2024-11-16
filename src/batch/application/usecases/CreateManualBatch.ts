@@ -6,6 +6,7 @@ import { FailedToConvertBatchFile } from '@/batch/infra/errors/BatchErrorCatalog
 import { Image } from '@/image/domain/entities/Image'
 import { type ImageRepository } from '@/image/domain/repositories/ImageRepository'
 import { type ImageStorage } from '@/image/domain/storage/ImageStorage'
+import { AspectRatio } from '@/image/domain/vos/AspectRatio'
 import { Video } from '@/video/domain/entities/Video'
 import { type VideoRepository } from '@/video/domain/repositories/VideoRepository'
 import { type VideoStorage } from '@/video/domain/storage/VideoStorage'
@@ -48,9 +49,11 @@ export class CreateManualBatch {
         if (!base64Image) throw new FailedToConvertBatchFile('image')
         const imagePath = await this.imageStorage.uploadImage(base64Image)
         const size = input.sizes ? input.sizes[name] : { width: 0, height: 0 }
+        const aspectRatio = new AspectRatio(size.width, size.height)
         const newImage = Image.create({
           width: size.width,
           height: size.height,
+          aspectRatio: aspectRatio.getValue(),
           seed: 0,
           path: imagePath,
           batchId: repositoryBatch.id
@@ -64,9 +67,11 @@ export class CreateManualBatch {
         if (!base64Video) throw new FailedToConvertBatchFile('video')
         const videoPath = await this.videoStorage.uploadVideo(base64Video)
         const size = input.sizes ? input.sizes[name] : { width: 0, height: 0 }
+        const aspectRatio = new AspectRatio(size.width, size.height)
         const newVideo = Video.create({
           width: size.width,
           height: size.height,
+          aspectRatio: aspectRatio.getValue(),
           path: videoPath,
           batchId: repositoryBatch.id
         })
