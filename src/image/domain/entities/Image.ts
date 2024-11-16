@@ -1,5 +1,4 @@
 import { type ImageCreate, type ImageRestore } from '@/image/domain/entities/dtos/Image.dto'
-import { AspectRatio } from '@/image/domain/vos/AspectRatio'
 
 export class Image {
   id: string
@@ -24,13 +23,11 @@ export class Image {
   }
 
   static create (input: ImageCreate): Image {
-    const aspectRatio = new AspectRatio(input.width, input.height)
-
     return new Image(
       '',
       input.width,
       input.height,
-      aspectRatio.getValue(),
+      input.aspectRatio,
       input.seed,
       input.path,
       input.batchId,

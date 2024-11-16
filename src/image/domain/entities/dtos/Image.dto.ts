@@ -1,6 +1,7 @@
 export interface ImageCreate {
   width: number
   height: number
+  aspectRatio: string
   seed: number
   path: string
   batchId: string
