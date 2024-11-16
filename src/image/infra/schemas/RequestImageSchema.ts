@@ -21,12 +21,10 @@ export const RequestImageSchema = z.object({
   steps: z.number({
     invalid_type_error: 'steps must be a number'
   }).optional().default(20),
-  width: z.number({
-    invalid_type_error: 'width must be a number'
-  }).optional().default(512),
-  height: z.number({
-    invalid_type_error: 'height must be a number'
-  }).optional().default(512),
+  aspectRatio: z.string({
+    required_error: 'aspectRatio is required',
+    invalid_type_error: 'aspectRatio must be a string'
+  }),
   sampler_index: z.string({
     invalid_type_error: 'sampler_index must be a string'
   }).optional().default('DPM++ 2M'),
