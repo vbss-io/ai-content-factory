@@ -12,14 +12,21 @@ export class OpenAIDalle3GatewayHttp implements ImagineImageGateway {
   @inject('httpClient')
   private readonly httpClient!: HttpClient
 
+  mapAspectRatio = {
+    '1:1': { width: 1024, height: 1024 },
+    '16:9': { width: 1792, height: 1024 },
+    '9:16': { width: 1024, height: 1792 }
+  }
+
   async imagine (input: ImagineImageInput): Promise<ImagineImageOutput> {
+    const aspectRatio = input.aspectRadio as keyof typeof this.mapAspectRatio
     const baseOutput = {
       images: [],
       prompt: input.prompt,
       negativePrompt: 'none',
       seeds: [],
-      width: input.width,
-      height: input.height,
+      width: this.mapAspectRatio[aspectRatio].width,
+      height: this.mapAspectRatio[aspectRatio].height,
       sampler: 'none',
       scheduler: 'none',
       steps: 0,
@@ -28,7 +35,7 @@ export class OpenAIDalle3GatewayHttp implements ImagineImageGateway {
       taskId: 'none'
     }
     try {
-      const dimensions = `${input.width}x${input.height}`
+      const dimensions = `${this.mapAspectRatio[aspectRatio].width}x${this.mapAspectRatio[aspectRatio].height}`
       const request = await this.httpClient.post({
         url: `${this.url}/v1/images/generations`,
         body: {
@@ -44,6 +51,7 @@ export class OpenAIDalle3GatewayHttp implements ImagineImageGateway {
       })
       const images = []
       const seeds = []
+      if (request.error) throw new Error(request.error.message as string)
       for (const image of request.data) {
         const imageBase64 = await this.imageUrlToBase64(image.url as string)
         images.push(imageBase64)

@@ -12,14 +12,25 @@ export class Automatic1111GatewayHttp implements ImagineImageGateway {
   @inject('httpClient')
   private readonly httpClient!: HttpClient
 
+  mapAspectRatio = {
+    '1:1': { width: 1024, height: 1024 },
+    '16:9': { width: 1920, height: 1080 },
+    '9:16': { width: 1080, height: 1920 },
+    '4:3': { width: 1024, height: 768 },
+    '3:4': { width: 768, height: 1024 },
+    '21:9': { width: 2560, height: 1080 },
+    '9:21': { width: 1080, height: 2520 }
+  }
+
   async imagine (input: ImagineImageInput): Promise<ImagineImageOutput> {
+    const aspectRatio = input.aspectRadio as keyof typeof this.mapAspectRatio
     const baseOutput = {
       images: [],
       prompt: input.prompt,
       negativePrompt: input.negative_prompt ?? 'none',
       seeds: [],
-      width: input.width,
-      height: input.height,
+      width: this.mapAspectRatio[aspectRatio].width,
+      height: this.mapAspectRatio[aspectRatio].height,
       sampler: input.sampler_index,
       scheduler: input.scheduler,
       steps: input.steps,
@@ -32,6 +43,8 @@ export class Automatic1111GatewayHttp implements ImagineImageGateway {
         url: `${this.url}/sdapi/v1/txt2img`,
         body: {
           ...this.baseConfig,
+          width: this.mapAspectRatio[aspectRatio].width,
+          height: this.mapAspectRatio[aspectRatio].height,
           ...input
         },
         headers: {
