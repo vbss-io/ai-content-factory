@@ -1,8 +1,9 @@
 import { type BatchConfigurationInput, type BatchConfigurationOutput, type BatchCreate, type BatchProcessUpdate, type BatchRestore } from '@/batch/domain/entities/dtos/Batch.dto'
 import { BatchIdError } from '@/batch/infra/errors/BatchErrorCatalog'
 import { ImageRequested, type ImageRequestedData } from '@/image/domain/events/ImageRequested'
-import { DalleDimensionsError } from '@/image/infra/errors/ImageErrorCatalog'
+import { Automatic1111DimensionsError, DalleDimensionsError, MidjourneyDimensionsError } from '@/image/infra/errors/ImageErrorCatalog'
 import { VideoRequested, type VideoRequestedData } from '@/video/domain/events/VideoRequested'
+import { LumaLabsDimensionsError } from '@/video/infra/errors/VideoErrorCatalog'
 import { Observable } from '@api/infra/events/Observer'
 
 export class Batch extends Observable {
@@ -91,14 +92,14 @@ export class Batch extends Observable {
     )
   }
 
-  async requestImage ({ gateway, dimensions, isAutomatic }: Omit<ImageRequestedData, 'batchId'>): Promise<void> {
+  async requestImage ({ gateway, aspectRatio, isAutomatic }: Omit<ImageRequestedData, 'batchId'>): Promise<void> {
     if (!this.id) throw new BatchIdError()
-    await this.notify(new ImageRequested({ batchId: this.id, gateway, isAutomatic, dimensions }))
+    await this.notify(new ImageRequested({ batchId: this.id, gateway, isAutomatic, aspectRatio }))
   }
 
-  async requestVideo ({ gateway, dimensions, isAutomatic, imageUrl }: Omit<VideoRequestedData, 'batchId'>): Promise<void> {
+  async requestVideo ({ gateway, aspectRatio, isAutomatic, imageUrl }: Omit<VideoRequestedData, 'batchId'>): Promise<void> {
     if (!this.id) throw new BatchIdError()
-    await this.notify(new VideoRequested({ batchId: this.id, gateway, isAutomatic, dimensions, imageUrl }))
+    await this.notify(new VideoRequested({ batchId: this.id, gateway, isAutomatic, aspectRatio, imageUrl }))
   }
 
   process (): void {
@@ -141,58 +142,60 @@ export class Batch extends Observable {
     this.taskId = id
   }
 
-  static isAutomatic1111 (gateway: string): boolean {
-    return gateway === 'automatic1111'
+  static configurationFactory (input: BatchConfigurationInput): BatchConfigurationOutput {
+    if (input.gateway === 'automatic1111') return this.getAutomatic1111Configuration(input)
+    if (input.gateway === 'goApiMidjourney') return this.getGoApiMidjourneyConfiguration(input)
+    if (input.gateway === 'openAiDalle3') return this.getOpenAiDalleConfiguration(input)
+    if (input.gateway === 'lumaLabs') return this.getLumaLabsConfiguration(input)
+    return this.getDefaultConfigurations()
   }
 
-  static isGoApiMidjourney (gateway: string): boolean {
-    return gateway === 'goApiMidjourney'
-  }
-
-  static isOpenAiDalle (gateway: string): boolean {
-    return gateway === 'openAiDalle3'
-  }
-
-  static dalleDimensionsCheck (width: number, height: number): void {
-    const allowedDimensions = ['1024x1024', '1024x1792', '1792x1024']
-    const dimension = `${width}x${height}`
-    if (!allowedDimensions.includes(dimension)) {
-      throw new DalleDimensionsError()
-    }
-  }
-
-  static getConfigurations (gateway: string, input?: BatchConfigurationInput): BatchConfigurationOutput {
-    const baseConfiguration = {
+  static getDefaultConfigurations (): BatchConfigurationOutput {
+    return {
       sampler: 'none',
       scheduler: 'none',
       steps: 0,
       size: 1,
       negativePrompt: 'none'
     }
-    if (!input) return baseConfiguration
-    const negativePrompt = input.negativePrompt ?? 'none'
-    if (this.isAutomatic1111(gateway)) {
-      return {
-        sampler: input.sampler,
-        scheduler: input.scheduler,
-        steps: input.steps,
-        size: input.size,
-        negativePrompt
-      }
+  }
+
+  static getAutomatic1111Configuration (input: BatchConfigurationInput): BatchConfigurationOutput {
+    const allowedAspectRatios = ['1:1', '16:9', '9:16', '4:3', '3:4', '21:9', '9:21']
+    if (!allowedAspectRatios.includes(input.aspectRatio)) throw new Automatic1111DimensionsError()
+    return {
+      sampler: input.sampler as string,
+      scheduler: input.scheduler as string,
+      steps: input.steps as number,
+      size: input.size as number,
+      negativePrompt: input.negativePrompt ?? 'none'
     }
-    if (this.isGoApiMidjourney(gateway)) {
-      return {
-        ...baseConfiguration,
-        size: 4
-      }
+  }
+
+  static getGoApiMidjourneyConfiguration (input: BatchConfigurationInput): BatchConfigurationOutput {
+    // const allowedAspectRatios = ['1:1', '9:16', '16:9']
+    const allowedAspectRatios = ['1:1', '16:9', '9:16', '4:3', '3:4', '21:9', '9:21']
+    if (!allowedAspectRatios.includes(input.aspectRatio)) throw new MidjourneyDimensionsError()
+    return {
+      ...this.getDefaultConfigurations(),
+      size: 4
     }
-    if (this.isOpenAiDalle(gateway)) {
-      this.dalleDimensionsCheck(input.width, input.height)
-      return {
-        ...baseConfiguration,
-        size: input.size
-      }
+  }
+
+  static getOpenAiDalleConfiguration (input: BatchConfigurationInput): BatchConfigurationOutput {
+    const allowedAspectRatios = ['1:1', '9:16', '16:9']
+    if (!allowedAspectRatios.includes(input.aspectRatio)) throw new DalleDimensionsError()
+    return {
+      ...this.getDefaultConfigurations(),
+      size: input.size as number
     }
-    return baseConfiguration
+  }
+
+  static getLumaLabsConfiguration (input: BatchConfigurationInput): BatchConfigurationOutput {
+    const allowedAspectRatios = ['1:1', '16:9', '9:16', '4:3', '3:4', '21:9', '9:21']
+    if (!allowedAspectRatios.includes(input.aspectRatio)) throw new LumaLabsDimensionsError()
+    return {
+      ...this.getDefaultConfigurations()
+    }
   }
 }

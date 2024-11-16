@@ -30,13 +30,13 @@ export interface BatchProcessUpdate {
 }
 
 export interface BatchConfigurationInput {
-  sampler: string
-  scheduler: string
-  steps: number
-  size: number
+  gateway: string
+  sampler?: string
+  scheduler?: string
+  steps?: number
+  size?: number
+  aspectRatio: string
   negativePrompt?: string
-  width: number
-  height: number
 }
 
 export interface BatchConfigurationOutput {
