@@ -11,8 +11,5 @@ export interface VideoRequestedData {
   gateway: string
   isAutomatic?: boolean
   imageUrl: string
-  dimensions: {
-    width: number
-    height: number
-  }
+  aspectRatio: string
 }
