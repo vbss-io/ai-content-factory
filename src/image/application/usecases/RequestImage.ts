@@ -14,7 +14,7 @@ export class RequestImage {
 
   async execute (input: RequestImageInput): Promise<RequestImageOutput> {
     const inputConfiguration = { ...input, sampler: input.sampler_index, size: input.batch_size, negativePrompt: input.negative_prompt }
-    const batchConfiguration = Batch.getConfigurations(input.gateway, inputConfiguration)
+    const batchConfiguration = Batch.configurationFactory(inputConfiguration)
     const batch = Batch.create({
       prompt: input.prompt,
       author: input.author,
@@ -25,7 +25,7 @@ export class RequestImage {
     repositoryBatch.register('imageRequested', async (domainEvent: DomainEvent) => {
       await this.queue.publish(domainEvent.eventName, domainEvent.data)
     })
-    await repositoryBatch.requestImage({ gateway: input.gateway, dimensions: { width: input.width, height: input.height } })
+    await repositoryBatch.requestImage({ gateway: input.gateway, aspectRatio: input.aspectRatio })
     return {
       batchId: repositoryBatch.id,
       batchStatus: batch.status
