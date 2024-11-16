@@ -9,9 +9,6 @@ export class ImageRequested implements DomainEvent {
 export interface ImageRequestedData {
   batchId: string
   gateway: string
+  aspectRatio: string
   isAutomatic?: boolean
-  dimensions: {
-    width: number
-    height: number
-  }
 }
