@@ -4,7 +4,7 @@ import { GatewayNotImplemented } from '@api/infra/errors/ErrorCatalog'
 
 export class ImagineVideoGatewayFactory {
   static create (gateway: string): ImagineVideoGateway {
-    if (gateway === 'LumaLabs') return new LumaLabsGatewayHttp()
+    if (gateway === 'lumaLabs') return new LumaLabsGatewayHttp()
     throw new GatewayNotImplemented()
   }
 }
