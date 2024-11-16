@@ -2,8 +2,7 @@ export interface ImagineImageInput {
   prompt: string
   batch_size: number
   steps: number
-  width: number
-  height: number
+  aspectRadio: string
   sampler_index: string
   scheduler: string
   negative_prompt?: string
